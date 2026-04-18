@@ -1015,12 +1015,11 @@
                     <span class="pm">(a ± b ± c)</span>
                 </h1>
                 <p class="hero-subtitle">
-                    An underexplored representation in mathematics: a single
-                    expression that secretly holds many values. Write four
-                    numbers, describe eight. Write eight, describe a hundred and
-                    twenty-eight. The notation is a compact window onto a
-                    combinatorially large set — and once you see it, you start
-                    noticing places it might be useful.
+                    An underexplored representation in mathematics. A single
+                    expression that secretly holds many values: write four
+                    numbers, describe eight; write eight, describe a hundred and
+                    twenty-eight. Once you see it, you start noticing places it
+                    might be useful.
                 </p>
                 <div class="scroll-cue">start playing below</div>
             </div>
@@ -1032,9 +1031,8 @@
             <h2>One number, <em>many values</em>.</h2>
             <p class="lead">
                 Every <span class="inline-pm">±</span> splits a value in two.
-                Chain them, and the count doubles each time. But the notation
-                stays compact — it's the same trick as writing 2<sup>10</sup>
-                instead of a thousand-and-twenty-four.
+                Chain them, and the count doubles each time. The notation stays
+                compact while the set it represents grows exponentially.
             </p>
 
             <div
@@ -1190,11 +1188,10 @@
             <div class="section-label">§ 3 — why bother</div>
             <h2>The <em>compression</em> idea.</h2>
             <p>
-                Here's what makes duplex numbers more than notation. A single
-                expression with <em>n</em> copies of
+                A single expression with <em>n</em> copies of
                 <span class="inline-pm">±</span> represents
-                <em>2<sup>n</sup></em> values — but you only ever write down
-                <em>n+1</em> numbers. Linear storage, exponential reach.
+                <em>2<sup>n</sup></em> values, but you only ever write down
+                <em>n+1</em> numbers. Short notation, big set.
             </p>
 
             <div class="compression">
@@ -1222,15 +1219,14 @@
                 </div>
                 <p style="font-size: 1rem; color: var(--ink-soft); margin: 0">
                     Every <span class="inline-pm">±</span> doubles the size of
-                    the underlying set. The notation stays compact while the
-                    space it describes grows exponentially.
+                    the underlying set.
                 </p>
             </div>
 
             <div class="aside">
                 <strong>a small caveat</strong><br />
                 Addition, subtraction, and scalar multiplication (duplex times a
-                plain number) preserve the compact form — each operation applies
+                plain number) preserve the compact form: each operation applies
                 uniformly across every branch. Multiplying two duplex numbers
                 together, and nonlinear operations like comparison or
                 trigonometry, don't yet have a clean compact formulation. If you
@@ -1245,7 +1241,7 @@
             <p>
                 Any duplex number corresponds to a symmetric distribution of
                 values, and two classical statistics fall out of the notation
-                directly — no expansion needed.
+                directly, without expanding the set.
             </p>
 
             <div
@@ -1322,16 +1318,15 @@
                     >
                         Sum of squared spreads. Each
                         <span class="inline-pm">±</span> adds its own squared
-                        contribution — independent, Pythagorean-style.
+                        contribution, independent and Pythagorean.
                     </p>
                 </div>
             </div>
 
             <p style="font-size: 1rem; color: var(--ink-soft)">
-                Turn this around and it's interesting: <em>any</em> symmetric
-                distribution over a finite, power-of-two set of values can be
-                written as a duplex number. The notation and the distribution
-                are the same object in two outfits.
+                The reverse direction is more interesting:
+                <em>any</em> symmetric distribution over a finite, power-of-two
+                set of values can be written as a duplex number.
             </p>
         </section>
 
@@ -1340,13 +1335,12 @@
             <div class="section-label">§ 5 — representing inequalities</div>
             <h2>Writing <em>“1 = 0”</em> without breaking maths.</h2>
             <p>
-                Here's something unusual. In ordinary arithmetic, "1 = 0" is
-                just false — you can't write it without the whole system
-                catching fire. But if a duplex number represents its values
-                <em>simultaneously</em> rather than as alternatives, then the
-                expression
+                In ordinary arithmetic, "1 = 0" is just false; you can't write
+                it without the whole system catching fire. But if a duplex
+                number represents its values <em>simultaneously</em> rather than
+                as alternatives, the expression
                 <code>0.5 <span class="inline-pm">±</span> 0.5</code> is a
-                number that's somehow both 0 and 1 at the same time.
+                number that is somehow both 0 and 1 at the same time.
             </p>
 
             <div
@@ -1412,9 +1406,9 @@
             <div class="section-label">§ 6 — a neat trick</div>
             <h2>Eigenvalues of a <em>2×2 matrix</em>.</h2>
             <p>
-                Here's a concrete place where the
-                <span class="inline-pm">±</span> notation pays rent: finding
-                eigenvalues. Type numbers into the matrix and watch the
+                A concrete place where the
+                <span class="inline-pm">±</span> notation earns its keep:
+                finding eigenvalues. Type numbers into the matrix and watch the
                 eigenvalues compute themselves as a duplex number.
             </p>
 
@@ -1453,12 +1447,10 @@
 
             <p style="font-size: 0.95rem; color: var(--ink-soft)">
                 Split the diagonals as duplex numbers <code>a±b</code> and
-                <code>c±d</code>. When the spreads match (b = d), eigenvalues
-                are just <code>a ± c</code>. Otherwise:
-                <code>a ± √(b² + c² − d²)</code>. The
-                <span class="inline-pm">±</span>
-                is doing real work — representing both eigenvalues as a single
-                expression.
+                <code>c±d</code>. When the spreads match (b = d), the
+                eigenvalues are just <code>a ± c</code>. Otherwise:
+                <code>a ± √(b² + c² − d²)</code>. Both eigenvalues sit in a
+                single duplex expression.
             </p>
         </section>
 
@@ -1468,9 +1460,10 @@
             <h2>Parallel lines, <em>written once</em>.</h2>
             <p>
                 The equation
-                <code>y = mx <span class="inline-pm">±</span> b</code> isn't one
-                line — it's a family. Drag the sliders to see how a duplex
-                coefficient becomes a whole pattern of parallel lines.
+                <code>y = mx + (b <span class="inline-pm">±</span> d)</code>
+                describes a whole family of parallel lines in a single
+                expression. Drag the sliders to see how a duplex coefficient
+                becomes a pattern of parallel lines.
             </p>
 
             <div class="demo-box">
@@ -1554,7 +1547,7 @@
             <h2>Places this <em>might be useful</em>.</h2>
             <p class="lead">
                 Applications where holding multiple values as a single identity
-                is the point — not a workaround.
+                is the whole point.
             </p>
 
             <div class="app-grid">
@@ -1565,18 +1558,17 @@
                         during verification:
                         <code>0.5 <span class="inline-pm">±</span> 0.5</code>.
                         Propagate a single duplex input through an arithmetic
-                        circuit and check every combination at once — not by
-                        enumeration, but by shared identity.
+                        circuit and check every combination at once, by shared
+                        identity rather than enumeration.
                     </p>
                 </div>
                 <div class="app-card" data-num="02">
                     <h3>Algebraic identification</h3>
                     <p>
                         Any time you want two or more real values to share a
-                        single algebraic identity — for exploratory maths,
-                        teaching modular-arithmetic-like ideas, or building DSLs
-                        where "these are the same thing" is a first-class
-                        concept.
+                        single algebraic identity: exploratory maths, teaching
+                        modular-arithmetic-like ideas, or building DSLs where
+                        "these are the same thing" is a first-class concept.
                     </p>
                 </div>
                 <div class="app-card" data-num="03">
@@ -1594,10 +1586,10 @@
                     <p>
                         Building conceptual intuition for superposition without
                         the Hilbert-space machinery. A duplex number holds
-                        multiple classical values as one identity — a teaching
-                        bridge to quantum states, and potentially a lightweight
-                        notation for reasoning about classical analogues of
-                        quantum algorithms.
+                        multiple classical values as one identity, acting as a
+                        teaching bridge to quantum states, and possibly a
+                        lightweight notation for reasoning about classical
+                        analogues of quantum algorithms.
                     </p>
                 </div>
                 <div class="app-card" data-num="05">
@@ -1628,37 +1620,33 @@
             <div class="section-label">§ 9 — honest context</div>
             <h2>Not quite <em>anything else</em>.</h2>
             <p>
-                It's tempting to flatten duplex numbers into the nearest
-                established thing.
-                <span class="scribble">Interval arithmetic</span> tracks bounds.
-                Affine arithmetic (<code>x₀ + x₁ε₁ + x₂ε₂ + …</code> with each
-                εᵢ ∈ [−1, 1]) tracks correlated uncertainty. Both are about
-                <em>approximating where a quantity might be</em> — the ± is a
-                fuzz, a noise term, a range.
+                The closest established techniques are
+                <span class="scribble">interval arithmetic</span> and affine
+                arithmetic (<code>x₀ + x₁ε₁ + x₂ε₂ + …</code> with each εᵢ ∈
+                [−1, 1]). Both track uncertainty: the ± represents a range or
+                noise term, and the goal is to approximate where a quantity
+                might be.
             </p>
 
             <p>
-                Duplex numbers under the simultaneity reading are doing
-                something different. The ± isn't a range — it's a discrete
-                branching that produces an exact finite set of values, all held
-                as a <em>single identity</em>. "1 = 0 as 0.5
-                <span class="inline-pm">±</span> 0.5" isn't a statement about
-                uncertainty, it's a statement that two values can share one
-                algebraic identity and be carried forward through arithmetic
-                under that shared identity.
+                Duplex numbers under the simultaneity reading work differently.
+                The ± is a discrete branching that produces an exact finite set
+                of values, all held as a single identity. "0.5 ± 0.5 represents
+                0 and 1" is not saying the value is uncertain; it's saying both
+                values share one algebraic identity and travel together through
+                arithmetic.
             </p>
 
             <p>
-                That puts duplex numbers closer to things like equivalence
-                classes in modular arithmetic (where 3 and 8 <em>are</em> the
-                same, mod 5), multi-sheeted functions in complex analysis, or
-                the superposition intuition from quantum mechanics — than to any
-                interval-style framework. As far as we can tell, no established
-                part of mathematics treats symmetric branching sets as
-                arithmetic objects with their own algebra and their own
-                notation. This is genuinely underexplored territory. If you know
-                of prior work, please tell us — and if you don't, perhaps that's
-                an invitation.
+                That puts duplex numbers closer to equivalence classes in
+                modular arithmetic (where 3 and 8 <em>are</em> the same, mod 5),
+                multi-sheeted functions in complex analysis, or the
+                superposition intuition from quantum mechanics, than to any
+                interval-style framework. As far as I know, no established part
+                of mathematics treats symmetric branching sets as arithmetic
+                objects with their own algebra and notation. If you know of
+                prior work, please tell me. If you don't, perhaps that's an
+                invitation.
             </p>
 
             <div class="margin-note" style="margin-top: 1rem">
