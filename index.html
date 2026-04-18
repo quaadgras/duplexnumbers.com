@@ -3,645 +3,2566 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Duplex Numbers</title>
-        <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+        <title>Duplex Numbers — a small field guide</title>
+        <meta
+            name="description"
+            content="Duplex Numbers — a small field guide. An underexplored representation in mathematics: a single expression that secretly holds many values."
+        />
+        <meta
+            property="og:title"
+            content="Duplex Numbers — a small field guide"
+        />
+        <meta
+            property="og:description"
+            content="An underexplored representation in mathematics: a single expression that secretly holds many values."
+        />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:title"
+            content="Duplex Numbers — a small field guide"
+        />
+        <meta
+            name="twitter:description"
+            content="An underexplored representation in mathematics: a single expression that secretly holds many values."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
         <style>
+            :root {
+                --paper: #f3ecd9;
+                --paper-shade: #e8dfc6;
+                --ink: #1a1814;
+                --ink-soft: #5a5348;
+                --red: #c94a3e;
+                --red-soft: #e06b5c;
+                --blue: #2b5a7a;
+                --blue-soft: #4a7a9a;
+                --yellow: #e8b84a;
+                --green: #6b8e4a;
+                --accent: #d94a3e;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
             body {
-                font-family: "Arial", sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f0f0f0;
-                color: #333;
+                background: var(--paper);
+                color: var(--ink);
+                font-family: "Fraunces", serif;
+                font-optical-sizing: auto;
+                line-height: 1.55;
+                overflow-x: hidden;
+                background-image:
+                    radial-gradient(
+                        ellipse at 20% 10%,
+                        rgba(201, 74, 62, 0.04) 0%,
+                        transparent 50%
+                    ),
+                    radial-gradient(
+                        ellipse at 80% 60%,
+                        rgba(43, 90, 122, 0.04) 0%,
+                        transparent 50%
+                    ),
+                    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' /%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
+                background-attachment: fixed;
             }
-            body > header {
-                text-align: center;
-                padding: 50px;
-                background-color: #fff;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-            h1 {
-                font-family: "Times New Roman", serif;
-                font-size: 3em;
-                margin: 0;
-            }
-            section {
-                max-width: 800px;
-                margin: 20px auto;
-                padding: 20px;
-                background-color: #fff;
-                border-radius: 10px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-            #calculator {
+
+            /* ---------- HERO ---------- */
+            .hero {
+                min-height: 95vh;
+                padding: 4rem 2rem 2rem 2.5rem;
                 display: flex;
-                flex-direction: row;
-            }
-            #calculator header {
-                width: 40%;
-            }
-            .rows {
-                width: fit-content;
-                margin: 0 auto;
-            }
-            .equation-row {
-                margin-bottom: 10px;
-            }
-            .equation {
-                font-size: 1.5em;
-                display: inline-block;
-            }
-            .equation span[contenteditable],
-            #scalar {
-                border-bottom: 2px solid #007bff;
-                padding: 0 5px;
-                min-width: 30px;
-                display: inline-block;
-                text-align: center;
-            }
-            #scalar {
-                font-size: 1.5em;
-            }
-            .pm-symbol {
-                font-size: 1.2em;
-                color: #007bff;
-            }
-            #terms,
-            #result-terms {
-                display: inline;
-            }
-            #operation {
-                gap: 10px;
-                margin: 10px 0;
-            }
-            select {
-                font-size: 1.5em;
-                padding: 5px;
-                border: 1px solid #ffffff;
-                background-color: #fff;
-                color: #333;
-                background-image: none;
-                background-repeat: no-repeat;
-                background-position: right 10px center;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-                width: 1em;
-                margin-left: -1.2em;
-            }
-            select:hover {
-                border: 1px solid #007bff;
-                border-radius: 5px;
-            }
-            #result-duplex {
-                margin-left: -1em;
-            }
-            #values {
-                margin-top: 20px;
-                text-align: center;
-                font-size: 1.2em;
-            }
-            #term-buttons {
-                margin-left: 5px;
-            }
-            #term-buttons button {
-                font-size: 0.8em;
-                border: none;
-                background: none;
-                cursor: pointer;
-                padding: 0;
-                margin: 0 2px;
-            }
-            #remove-term {
-                color: red;
-                position: relative;
-                left: -1em;
-                top: -1em;
-            }
-            #add-term {
-                color: green;
-                position: relative;
-                left: -1.5em;
-            }
-            #result-terms span {
-                padding: 0 0.1em;
-                display: inline-block;
-            }
-            /* Tab view styles */
-            .tab-view {
-                display: flex;
+                flex-direction: column;
                 justify-content: center;
-                margin-top: 20px;
-            }
-            .tab {
-                padding: 10px 20px;
-                cursor: pointer;
-                background-color: #f0f0f0;
-                border: 1px solid #ccc;
-                border-bottom: none;
-                margin-right: 5px;
-            }
-            .tab.active {
-                background-color: #fff;
-                border-bottom: 1px solid #fff;
-            }
-            #tab-content {
-                text-align: center;
-                padding: 20px;
-                background-color: #fff;
-                max-width: 800px;
+                position: relative;
+                max-width: 1400px;
                 margin: 0 auto;
+            }
+
+            .hero-text {
+                position: relative;
+                z-index: 2;
+            }
+
+            .eyebrow {
+                font-family: "Caveat", cursive;
+                font-size: 1.6rem;
+                color: var(--red);
+                transform: rotate(-2deg);
+                margin-bottom: 1rem;
+                display: inline-block;
+            }
+
+            h1 {
+                font-family: "Fraunces", serif;
+                font-weight: 300;
+                font-size: clamp(3rem, 8vw, 7rem);
+                line-height: 0.95;
+                letter-spacing: -0.03em;
+                margin-bottom: 1.5rem;
+                font-variation-settings: "opsz" 144;
+            }
+
+            h1 em {
+                font-style: italic;
+                font-weight: 400;
+                color: var(--red);
+                position: relative;
+            }
+
+            h1 .pm {
+                display: inline-block;
+                color: var(--blue);
+                font-weight: 600;
+                font-style: italic;
+            }
+
+            .hero-subtitle {
+                font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+                color: var(--ink-soft);
+                max-width: 42rem;
+                font-weight: 400;
+                margin-bottom: 3rem;
+                font-style: italic;
+            }
+
+            .scroll-cue {
+                font-family: "Caveat", cursive;
+                color: var(--ink-soft);
+                font-size: 1.3rem;
+                transform: rotate(-3deg);
+                margin-top: 2rem;
+                opacity: 0.7;
+            }
+
+            .scroll-cue::before {
+                content: "↓ ";
+                color: var(--red);
+            }
+
+            /* ---------- SECTIONS ---------- */
+            section {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 5rem 2rem;
+                position: relative;
+            }
+            @media (max-width: 700px) {
+                section {
+                    padding: 3rem 1rem;
+                }
+            }
+
+            .section-label {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.75rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--red);
+                margin-bottom: 1rem;
+            }
+
+            h2 {
+                font-family: "Fraunces", serif;
+                font-weight: 400;
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                line-height: 1.05;
+                letter-spacing: -0.02em;
+                margin-bottom: 1.5rem;
+                max-width: 35rem;
+            }
+
+            h2 em {
+                font-style: italic;
+                color: var(--red);
+            }
+
+            h3 {
+                font-family: "Fraunces", serif;
+                font-weight: 500;
+                font-size: 1.5rem;
+                margin-bottom: 0.75rem;
+                letter-spacing: -0.01em;
+            }
+
+            p {
+                font-size: 1.1rem;
+                max-width: 38rem;
+                margin-bottom: 1.25rem;
+                color: var(--ink);
+            }
+
+            p.lead {
+                font-size: 1.35rem;
+                font-style: italic;
+                color: var(--ink-soft);
+                max-width: 40rem;
+                margin-bottom: 2.5rem;
+            }
+
+            code,
+            .mono {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.92em;
+            }
+
+            .inline-pm {
+                color: var(--red);
+                font-weight: 600;
+                font-style: italic;
+            }
+
+            /* scribble underline */
+            .scribble {
+                position: relative;
+                display: inline-block;
+            }
+            .scribble::after {
+                content: "";
+                position: absolute;
+                left: -4%;
+                right: -4%;
+                bottom: -6px;
+                height: 10px;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%23c94a3e' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+
+            /* ---------- CALCULATOR ---------- */
+            .calc {
+                background: var(--paper-shade);
+                border: 1px solid rgba(26, 24, 20, 0.15);
+                border-radius: 2px;
+                padding: 2.5rem;
+                margin: 2rem 0;
+                box-shadow:
+                    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+                    2px 4px 0 rgba(26, 24, 20, 0.08),
+                    0 20px 40px -20px rgba(26, 24, 20, 0.2);
+                position: relative;
+            }
+            @media (max-width: 700px) {
+                .calc {
+                    padding: 1.5rem 1rem;
+                }
+            }
+
+            .calc::before {
+                content: "";
+                position: absolute;
+                top: -8px;
+                left: 2rem;
+                width: 80px;
+                height: 24px;
+                background: rgba(232, 184, 74, 0.5);
+                transform: rotate(-2deg);
+                border-radius: 1px;
+                box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            }
+
+            .calc-label {
+                font-family: "Caveat", cursive;
+                font-size: 1.3rem;
+                color: var(--ink-soft);
+                margin-bottom: 1.5rem;
+                transform: rotate(-1deg);
+                display: inline-block;
+            }
+
+            .expr-builder {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                flex-wrap: nowrap;
+                font-family: "Fraunces", serif;
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+                overflow: hidden;
+                min-width: 0;
+            }
+
+            .num-input {
+                font-family: "Fraunces", serif;
+                font-size: 1.8rem;
+                width: 3.5rem;
+                padding: 0.3rem 0.5rem;
+                border: none;
+                border-bottom: 2px dashed var(--ink-soft);
+                background: transparent;
+                color: var(--ink);
+                text-align: center;
+                -moz-appearance: textfield;
+            }
+            .num-input::-webkit-outer-spin-button,
+            .num-input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            .num-input:focus {
+                outline: none;
+                border-bottom-color: var(--red);
+                background: rgba(201, 74, 62, 0.05);
+            }
+
+            .pm-sym {
+                color: var(--red);
+                font-style: italic;
+                font-weight: 600;
+                padding: 0 0.2rem;
+            }
+
+            .op-btn {
+                font-family: "Fraunces", serif;
+                font-size: 1.4rem;
+                background: transparent;
+                border: 1.5px solid var(--ink);
+                color: var(--ink);
+                padding: 0.3rem 0.9rem;
+                border-radius: 2px;
+                cursor: pointer;
+                transition: all 0.15s ease;
+                font-style: italic;
+            }
+            .op-btn:hover {
+                background: var(--ink);
+                color: var(--paper);
+            }
+            .op-btn.active {
+                background: var(--red);
+                color: var(--paper);
+                border-color: var(--red);
+            }
+
+            .pm-btn {
+                font-family: "Fraunces", serif;
+                font-size: 1.1rem;
+                background: transparent;
+                border: 1.5px dashed var(--red);
+                color: var(--red);
+                padding: 0.2rem 0.6rem;
+                border-radius: 2px;
+                cursor: pointer;
+                transition: all 0.15s ease;
+                font-weight: 600;
+            }
+            .pm-btn:hover:not(:disabled) {
+                background: var(--red);
+                color: var(--paper);
+            }
+            .pm-btn:disabled {
+                border-color: rgba(26, 24, 20, 0.2);
+                color: rgba(26, 24, 20, 0.3);
+                cursor: not-allowed;
+                font-style: italic;
+            }
+
+            .term-wrap {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+                position: relative;
+                padding-top: 0.5rem;
+            }
+
+            .coeff-wrap {
+                position: relative;
+                display: inline-block;
+                padding-top: 0;
+            }
+
+            .remove-btn {
+                background: transparent;
+                border: none;
+                color: var(--ink-soft);
+                cursor: pointer;
+                font-family: "JetBrains Mono", monospace;
+                padding: 0;
+                line-height: 1;
+                transition: color 0.15s ease;
+            }
+            .remove-btn:hover {
+                color: var(--red);
+            }
+
+            .remove-btn-coeff {
+                position: absolute;
+                top: -0.4rem;
+                right: -0.3rem;
+                font-size: 0.7rem;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--paper);
+                border: 1px solid rgba(26, 24, 20, 0.25);
+                opacity: 0;
+                transition:
+                    opacity 0.15s ease,
+                    color 0.15s ease,
+                    border-color 0.15s ease;
+            }
+            .coeff-wrap:hover .remove-btn-coeff {
+                opacity: 1;
+            }
+            .remove-btn-coeff:hover {
+                border-color: var(--red);
+                color: var(--red);
+            }
+
+            .remove-btn-term {
+                position: absolute;
+                top: -0.2rem;
+                right: -0.4rem;
+                font-size: 0.8rem;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--paper);
+                border: 1px solid rgba(26, 24, 20, 0.3);
+                opacity: 0;
+                transition:
+                    opacity 0.15s ease,
+                    color 0.15s ease,
+                    border-color 0.15s ease;
+            }
+            .term-wrap:hover .remove-btn-term {
+                opacity: 1;
+            }
+            .remove-btn-term:hover {
+                border-color: var(--red);
+                color: var(--red);
+            }
+
+            .calc-output {
+                margin-top: 2rem;
+                padding-top: 2rem;
+                border-top: 1px dashed rgba(26, 24, 20, 0.2);
+            }
+
+            .output-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+                margin-top: 1.5rem;
+            }
+            @media (max-width: 700px) {
+                .output-row {
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                }
+            }
+
+            .output-card {
+                display: flex;
+                flex-direction: column;
+                height: 360px;
+                min-height: 0;
+                min-width: 0;
+            }
+            @media (max-width: 700px) {
+                .output-card {
+                    height: 300px;
+                }
+            }
+
+            .output-card h4 {
+                font-family: "Caveat", cursive;
+                font-size: 1.4rem;
+                color: var(--red);
+                margin-bottom: 0.75rem;
+                transform: rotate(-1deg);
+                flex-shrink: 0;
+            }
+
+            .value-list {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.95rem;
+                line-height: 1.8;
+                color: var(--ink);
+                flex: 1 1 auto;
+                overflow-y: auto;
+                padding: 0.25rem 0.5rem 0.25rem 0;
+                min-height: 0;
+                /* subtle scrollbar styling */
+                scrollbar-width: thin;
+                scrollbar-color: rgba(26, 24, 20, 0.25) transparent;
+            }
+            .value-list::-webkit-scrollbar {
+                width: 6px;
+            }
+            .value-list::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .value-list::-webkit-scrollbar-thumb {
+                background: rgba(26, 24, 20, 0.25);
+                border-radius: 3px;
+            }
+
+            .output-card-footer {
+                flex-shrink: 0;
+                padding-top: 0.75rem;
+                border-top: 1px dashed rgba(26, 24, 20, 0.15);
+                margin-top: 0.75rem;
+            }
+
+            .hide-dupes-toggle {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                margin-top: 0.6rem;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.78rem;
+                color: var(--ink-soft);
+                cursor: pointer;
+                user-select: none;
+                transition: color 0.15s ease;
+            }
+            .hide-dupes-toggle:hover {
+                color: var(--ink);
+            }
+            .hide-dupes-toggle input[type="checkbox"] {
+                appearance: none;
+                -webkit-appearance: none;
+                width: 14px;
+                height: 14px;
+                border: 1.5px solid var(--ink-soft);
+                border-radius: 2px;
+                background: var(--paper);
+                cursor: pointer;
+                position: relative;
+                transition: all 0.15s ease;
+            }
+            .hide-dupes-toggle input[type="checkbox"]:checked {
+                background: var(--red);
+                border-color: var(--red);
+            }
+            .hide-dupes-toggle input[type="checkbox"]:checked::after {
+                content: "✓";
+                position: absolute;
+                top: -2px;
+                left: 1px;
+                color: var(--paper);
+                font-size: 11px;
+                font-weight: 700;
+            }
+
+            .value-chip {
+                display: inline-block;
+                padding: 0.1rem 0.5rem;
+                margin: 0.15rem;
+                background: rgba(43, 90, 122, 0.1);
+                border: 1px solid rgba(43, 90, 122, 0.3);
+                border-radius: 2px;
+                animation: pop 0.3s ease;
+            }
+
+            .stats {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.85rem;
+                color: var(--ink-soft);
+                line-height: 1.5;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            .stats span {
+                color: var(--ink);
+                font-weight: 500;
+            }
+
+            @keyframes pop {
+                0% {
+                    transform: scale(0.8);
+                    opacity: 0;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            /* ---------- TREE VISUAL ---------- */
+            .tree-container {
+                background: var(--paper-shade);
+                border-radius: 2px;
+                border: 1px solid rgba(26, 24, 20, 0.1);
+                flex: 1 1 auto;
+                min-height: 0;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .tree-viewport {
+                width: 100%;
+                height: 100%;
+                cursor: grab;
+                overflow: hidden;
+                touch-action: none;
+            }
+            .tree-viewport:active {
+                cursor: grabbing;
+            }
+
+            .tree-svg {
+                display: block;
+                user-select: none;
+            }
+
+            .tree-hint {
+                position: absolute;
+                bottom: 0.5rem;
+                right: 0.75rem;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.65rem;
+                color: var(--ink-soft);
+                opacity: 0.5;
+                pointer-events: none;
+                letter-spacing: 0.05em;
+            }
+
+            .tree-line {
+                stroke: var(--ink-soft);
+                stroke-width: 1.5;
+                fill: none;
+                opacity: 0.4;
+                stroke-dasharray: 3, 3;
+            }
+
+            .tree-node {
+                fill: var(--paper);
+                stroke: var(--ink);
+                stroke-width: 1.2;
+            }
+            .tree-node.leaf {
+                fill: var(--red);
+                stroke: var(--red);
+            }
+            .tree-text {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 12px;
+                fill: var(--ink);
+                text-anchor: middle;
+                dominant-baseline: middle;
+            }
+            .tree-text.leaf {
+                fill: var(--paper);
+                font-weight: 700;
+            }
+
+            /* ---------- COMPRESSION CALLOUT ---------- */
+            .compression {
+                background: linear-gradient(
+                    135deg,
+                    rgba(201, 74, 62, 0.06),
+                    rgba(43, 90, 122, 0.06)
+                );
+                border-left: 4px solid var(--red);
+                padding: 2rem;
+                margin: 3rem 0;
+                position: relative;
+            }
+
+            .compression-big {
+                font-family: "Fraunces", serif;
+                font-size: clamp(2.5rem, 6vw, 4.5rem);
+                font-weight: 300;
+                line-height: 1;
+                margin: 1rem 0;
+                font-style: italic;
+            }
+            .compression-big .num {
+                color: var(--red);
+                font-weight: 600;
+                font-style: normal;
+            }
+            .compression-big .arrow {
+                color: var(--ink-soft);
+                margin: 0 1rem;
+            }
+
+            /* ---------- APPLICATION CARDS ---------- */
+            .app-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin-top: 3rem;
+            }
+
+            .app-card {
+                background: var(--paper-shade);
+                padding: 2rem;
+                border-radius: 2px;
+                border: 1px solid rgba(26, 24, 20, 0.1);
+                position: relative;
+                transition: transform 0.2s ease;
+            }
+
+            .app-card:hover {
+                transform: translateY(-4px) rotate(-0.3deg);
+            }
+
+            .app-card::before {
+                content: attr(data-num);
+                position: absolute;
+                top: -0.5rem;
+                right: 1rem;
+                font-family: "Fraunces", serif;
+                font-size: 4rem;
+                font-weight: 300;
+                color: var(--red);
+                opacity: 0.25;
+                font-style: italic;
+                line-height: 1;
+            }
+
+            .app-card h3 {
+                margin-top: 0.5rem;
+                font-size: 1.3rem;
+            }
+
+            .app-card p {
+                font-size: 0.95rem;
+                color: var(--ink-soft);
+                margin: 0;
+            }
+
+            /* ---------- PARALLEL LINES DEMO ---------- */
+            .demo-box {
+                background: var(--paper-shade);
+                padding: 2rem;
+                border-radius: 2px;
+                border: 1px solid rgba(26, 24, 20, 0.1);
+                margin: 2rem 0;
+            }
+
+            .demo-controls {
+                display: flex;
+                gap: 1.5rem;
+                align-items: center;
+                margin-bottom: 1rem;
+                flex-wrap: wrap;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.9rem;
+            }
+
+            .demo-controls label {
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+
+            .demo-controls input[type="range"] {
+                width: 150px;
+            }
+
+            /* ---------- EIGENVALUE DEMO ---------- */
+            .matrix {
+                display: inline-grid;
+                grid-template-columns: repeat(2, auto);
+                gap: 0.5rem 1.5rem;
+                padding: 1rem 1.5rem;
+                position: relative;
+                font-family: "Fraunces", serif;
+                font-style: italic;
+                font-size: 1.4rem;
+            }
+            .matrix::before,
+            .matrix::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 10px;
+                border: 2px solid var(--ink);
+            }
+            .matrix::before {
+                left: 0;
+                border-right: none;
+            }
+            .matrix::after {
+                right: 0;
+                border-left: none;
+            }
+            .matrix input {
+                width: 3rem;
+                font-family: "Fraunces", serif;
+                font-size: 1.4rem;
+                font-style: italic;
+                text-align: center;
+                border: none;
+                border-bottom: 1px dashed var(--ink-soft);
+                background: transparent;
+                color: var(--ink);
+            }
+            .matrix input:focus {
+                outline: none;
+                border-bottom-color: var(--red);
+            }
+
+            .eigen-output {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 1.1rem;
+                margin-top: 1.5rem;
+                padding: 1rem;
+                background: var(--paper);
+                border-left: 3px solid var(--red);
+            }
+
+            /* ---------- FOOTER ---------- */
+            footer {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 4rem 2rem 3rem;
+                border-top: 1px dashed rgba(26, 24, 20, 0.2);
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.82rem;
+                color: var(--ink-soft);
+            }
+            footer a {
+                color: var(--red);
+                text-decoration: none;
+                border-bottom: 1px dashed;
+            }
+            footer a:hover {
+                color: var(--ink);
+            }
+
+            .footer-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2.5rem 3rem;
+            }
+            @media (max-width: 700px) {
+                .footer-grid {
+                    gap: 2rem;
+                }
+            }
+
+            .footer-col {
+                min-width: 0;
+            }
+
+            .footer-label {
+                font-family: "Caveat", cursive;
+                font-size: 1.3rem;
+                color: var(--red);
+                transform: rotate(-1deg);
+                display: inline-block;
+                margin-bottom: 0.75rem;
+                letter-spacing: 0;
+                text-transform: none;
+            }
+
+            .footer-text {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.82rem;
+                line-height: 1.65;
+                color: var(--ink-soft);
+                margin: 0;
+                max-width: none;
+            }
+
+            .share-row {
+                margin-bottom: 3rem;
+            }
+
+            .share-label {
+                font-family: "Caveat", cursive;
+                font-size: 1.4rem;
+                color: var(--red);
+                transform: rotate(-1deg);
+                display: inline-block;
+                margin-bottom: 1rem;
+            }
+
+            .share-buttons {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .share-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem 0.9rem;
+                background: var(--paper);
+                border: 1.5px solid rgba(26, 24, 20, 0.2);
+                border-radius: 2px;
+                color: var(--ink);
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.82rem;
+                text-decoration: none;
+                cursor: pointer;
+                transition: all 0.15s ease;
+                line-height: 1;
+            }
+            .share-btn:hover {
+                background: var(--red);
+                border-color: var(--red);
+                color: var(--paper);
+            }
+            .share-btn .share-icon {
+                font-family: "Fraunces", serif;
+                font-weight: 700;
+                font-size: 1rem;
+                font-style: italic;
+            }
+            .share-btn-copy {
+                font-family: "JetBrains Mono", monospace;
+            }
+            .share-btn-copy.copied {
+                background: var(--green, #6b8e4a);
+                border-color: var(--green, #6b8e4a);
+                color: var(--paper);
+            }
+
+            /* ---------- MARGIN NOTES ---------- */
+            .margin-note {
+                font-family: "Caveat", cursive;
+                color: var(--red);
+                font-size: 1.2rem;
+                line-height: 1.3;
+                transform: rotate(-2deg);
+                padding: 0.5rem 0.8rem;
+                display: inline-block;
+                position: relative;
+            }
+
+            .margin-note-arrow {
+                font-family: "Caveat", cursive;
+                color: var(--red);
+                font-size: 1.5rem;
+                display: inline-block;
+                margin-right: 0.3rem;
+            }
+
+            .aside {
+                border: 1px dashed var(--ink-soft);
+                padding: 1.25rem 1.5rem;
+                margin: 1.5rem 0;
+                background: rgba(232, 184, 74, 0.08);
+                font-size: 1rem;
+                max-width: 40rem;
+            }
+
+            .aside strong {
+                font-family: "Caveat", cursive;
+                font-size: 1.3rem;
+                color: var(--red);
+                font-weight: 600;
+            }
+
+            /* fade-in on scroll */
+            .reveal {
+                opacity: 0;
+                transform: translateY(20px);
+                transition:
+                    opacity 0.8s ease,
+                    transform 0.8s ease;
+            }
+            .reveal.visible {
+                opacity: 1;
+                transform: translateY(0);
             }
         </style>
-        <!-- Google tag (gtag.js) -->
-        <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-68LFW89VNM"
-        ></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-            gtag("config", "G-68LFW89VNM");
-        </script>
     </head>
     <body>
-        <a
-            href="https://github.com/Splizard/duplex-numbers"
-            class="github-corner"
-            aria-label="View source on GitHub"
-            ><svg
-                width="80"
-                height="80"
-                viewBox="0 0 250 250"
-                style="
-                    fill: #151513;
-                    color: #fff;
-                    position: absolute;
-                    top: 0;
-                    border: 0;
-                    right: 0;
-                "
-                aria-hidden="true"
-            >
-                <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" />
-                <path
-                    d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-                    fill="currentColor"
-                    style="transform-origin: 130px 106px"
-                    class="octo-arm"
-                />
-                <path
-                    d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-                    fill="currentColor"
-                    class="octo-body"
-                /></svg></a
-        ><style>
-            .github-corner:hover .octo-arm {
-                animation: octocat-wave 560ms ease-in-out;
-            }
-            @keyframes octocat-wave {
-                0%,
-                100% {
-                    transform: rotate(0);
-                }
-                20%,
-                60% {
-                    transform: rotate(-25deg);
-                }
-                40%,
-                80% {
-                    transform: rotate(10deg);
-                }
-            }
-            @media (max-width: 500px) {
-                .github-corner:hover .octo-arm {
-                    animation: none;
-                }
-                .github-corner .octo-arm {
-                    animation: octocat-wave 560ms ease-in-out;
-                }
-            }
-        </style>
-
-        <header>
-            <h1>Duplex Numbers</h1>
-            <p>a ± b ± c</p>
-        </header>
-
-        <section id="calculator">
-            <header>
-                <h2>Calculator</h2>
-                <p>
-                    add, extend or multiply duplex numbers and see the resulting
-                    distribution below
+        <!-- ============ HERO ============ -->
+        <section class="hero">
+            <div class="hero-text">
+                <div class="eyebrow">a small field guide to</div>
+                <h1>
+                    Duplex<br />
+                    <em>Numbers</em>
+                    <span class="pm">(a ± b ± c)</span>
+                </h1>
+                <p class="hero-subtitle">
+                    An underexplored representation in mathematics: a single
+                    expression that secretly holds many values. Write four
+                    numbers, describe eight. Write eight, describe a hundred and
+                    twenty-eight. The notation is a compact window onto a
+                    combinatorially large set — and once you see it, you start
+                    noticing places it might be useful.
                 </p>
-            </header>
-            <div class="rows">
-                <div class="equation-row">
-                    <div class="equation" id="original-duplex">
-                        <span contenteditable id="base">5</span>
-                        <div id="terms" style="display: inline">
-                            <span class="pm-symbol"> ± </span
-                            ><span contenteditable>2</span>
-                            <span class="pm-symbol"> ± </span
-                            ><span contenteditable>1</span>
-                            <span id="term-buttons">
-                                <button id="remove-term">x</button>
-                                <button id="add-term">+</button>
-                            </span>
-                        </div>
+                <div class="scroll-cue">start playing below</div>
+            </div>
+        </section>
+
+        <!-- ============ WHAT IS IT ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 1 — the idea</div>
+            <h2>One number, <em>many values</em>.</h2>
+            <p class="lead">
+                Every <span class="inline-pm">±</span> splits a value in two.
+                Chain them, and the count doubles each time. But the notation
+                stays compact — it's the same trick as writing 2<sup>10</sup>
+                instead of a thousand-and-twenty-four.
+            </p>
+
+            <div
+                style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                    gap: 1rem;
+                    margin-top: 2rem;
+                "
+            >
+                <div>
+                    <code style="font-size: 1.3rem">5</code>
+                    <div
+                        style="
+                            color: var(--ink-soft);
+                            font-size: 0.9rem;
+                            margin-top: 0.3rem;
+                        "
+                    >
+                        1 value
                     </div>
                 </div>
-                <div class="equation-row" id="operation">
-                    <select id="operator">
-                        <option value="+">+</option>
-                        <option value="*">×</option>
-                    </select>
-                    <span contenteditable id="scalar">1</span>
+                <div>
+                    <code style="font-size: 1.3rem"
+                        >5 <span class="inline-pm">±</span> 2</code
+                    >
+                    <div
+                        style="
+                            color: var(--ink-soft);
+                            font-size: 0.9rem;
+                            margin-top: 0.3rem;
+                        "
+                    >
+                        2 values: {3, 7}
+                    </div>
                 </div>
-                <div class="equation-row">
-                    <div class="equation" id="result-duplex">
-                        <span>=</span>
-                        <span id="result-base"></span>
-                        <div id="result-terms" style="display: inline"></div>
+                <div>
+                    <code style="font-size: 1.3rem"
+                        >5 <span class="inline-pm">±</span> 2
+                        <span class="inline-pm">±</span> 1</code
+                    >
+                    <div
+                        style="
+                            color: var(--ink-soft);
+                            font-size: 0.9rem;
+                            margin-top: 0.3rem;
+                        "
+                    >
+                        4 values: {2, 4, 6, 8}
+                    </div>
+                </div>
+                <div>
+                    <code style="font-size: 1.3rem"
+                        >5 <span class="inline-pm">±</span> 2
+                        <span class="inline-pm">±</span> 1
+                        <span class="inline-pm">±</span> 0.5</code
+                    >
+                    <div
+                        style="
+                            color: var(--ink-soft);
+                            font-size: 0.9rem;
+                            margin-top: 0.3rem;
+                        "
+                    >
+                        8 values
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="tab-view">
-            <div class="tab active" data-tab="bag-view">Multiset / Bag</div>
-            <div class="tab" data-tab="set-view">Underlying Set</div>
-        </div>
-        <section id="tab-content">
-            <p id="description"></p>
-            <p>Displayed in depth-first order (following minus before plus).</p>
-            <div id="values"></div>
-        </section>
-
-        <section id="statistical-properties">
-            <header>
-                <h2>Statistical Properties</h2>
-            </header>
-            <p>Consider the duplex number a ± b ± c</p>
-            <ul>
-                <li>the mean of the resulting distribution is a.</li>
-                <li>
-                    the variance of the resulting distribution is
-                    <span id="variance">b² + c²</span>.
-                </li>
-            </ul>
+        <!-- ============ CALCULATOR ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 2 — play with it</div>
+            <h2>The <em>calculator</em>.</h2>
             <p>
-                As such, any symmetrical distribution of numbers can be
-                represented as the underlying set of a duplex number.
+                Build an expression, fiddle with the numbers, watch the
+                branching fan out. The tree on the right shows every value the
+                notation represents.
             </p>
+
+            <div class="calc">
+                <div class="calc-label">build an expression →</div>
+
+                <div id="exprBuilder" class="expr-builder">
+                    <!-- dynamically populated -->
+                </div>
+
+                <div
+                    style="
+                        display: flex;
+                        gap: 0.5rem;
+                        margin-top: 1rem;
+                        flex-wrap: wrap;
+                    "
+                >
+                    <button
+                        class="pm-btn"
+                        id="extendBtn"
+                        onclick="addPmToLast()"
+                    >
+                        ± extend the chain
+                    </button>
+                    <button class="op-btn" onclick="addScalarMult()">
+                        × multiply by a scalar
+                    </button>
+                    <button
+                        class="pm-btn"
+                        onclick="resetCalc()"
+                        style="
+                            border-color: var(--ink-soft);
+                            color: var(--ink-soft);
+                        "
+                    >
+                        ↺ reset
+                    </button>
+                </div>
+
+                <div class="calc-output">
+                    <div class="output-row">
+                        <div class="output-card">
+                            <h4 id="valueHeading">resulting values</h4>
+                            <div id="valueChips" class="value-list"></div>
+                            <div class="output-card-footer">
+                                <div id="stats" class="stats"></div>
+                                <label class="hide-dupes-toggle">
+                                    <input
+                                        type="checkbox"
+                                        id="hideDupesCheckbox"
+                                        onchange="toggleHideDupes(this.checked)"
+                                    />
+                                    <span>hide duplicates</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="output-card">
+                            <h4>the branching tree</h4>
+                            <div class="tree-container">
+                                <div class="tree-viewport" id="treeViewport">
+                                    <svg id="treeSvg" class="tree-svg"></svg>
+                                </div>
+                                <div class="tree-hint">
+                                    drag to pan · scroll to zoom
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="eigenvalues">
-            <header>
-                <h2>Eigenvalues</h2>
-            </header>
+        <!-- ============ COMPRESSION ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 3 — why bother</div>
+            <h2>The <em>compression</em> idea.</h2>
             <p>
-                Duplex numbers can be used to find the eigenvalues for a 2x2
-                matrix. Consider the matrix:
+                Here's what makes duplex numbers more than notation. A single
+                expression with <em>n</em> copies of
+                <span class="inline-pm">±</span> represents
+                <em>2<sup>n</sup></em> values — but you only ever write down
+                <em>n+1</em> numbers. Linear storage, exponential reach.
             </p>
-            <pre>
-    | x  z |
-    | v  y |
-            </pre>
-            First, determine the two duplex numbers that represent the diagonals
-            of the matrix, such that:
-            <pre>
-    a±b = (x,y) and c±d = (v,z)
 
-    a±b = (x+y)/2 ± |(x+y)/2-x|
-    c±d = (v+z)/2 ± |(v+z)/2-v|
-            </pre>
-            when b = d, the eigenvalues are:
-            <pre>       a±c</pre>
-            when b ≠ d, the eigenvalues are:
-            <pre>       a ± √(b² + c² - d²)</pre>
+            <div class="compression">
+                <div
+                    style="
+                        font-family: &quot;Caveat&quot;, cursive;
+                        font-size: 1.4rem;
+                        color: var(--ink-soft);
+                        transform: rotate(-1deg);
+                        display: inline-block;
+                    "
+                >
+                    a <span class="inline-pm">±</span> b
+                    <span class="inline-pm">±</span> c
+                    <span class="inline-pm">±</span> d
+                    <span class="inline-pm">±</span> e
+                    <span class="inline-pm">±</span> f
+                    <span class="inline-pm">±</span> g
+                    <span class="inline-pm">±</span> h
+                </div>
+                <div class="compression-big">
+                    <span class="num">8</span> numbers written
+                    <span class="arrow">→</span>
+                    <span class="num">128</span> values represented
+                </div>
+                <p style="font-size: 1rem; color: var(--ink-soft); margin: 0">
+                    Every <span class="inline-pm">±</span> doubles the size of
+                    the underlying set. The notation stays compact while the
+                    space it describes grows exponentially.
+                </p>
+            </div>
+
+            <div class="aside">
+                <strong>a small caveat</strong><br />
+                Addition, subtraction, and scalar multiplication (duplex times a
+                plain number) preserve the compact form — each operation applies
+                uniformly across every branch. Multiplying two duplex numbers
+                together, and nonlinear operations like comparison or
+                trigonometry, don't yet have a clean compact formulation. If you
+                define any sensible operations, we'd love to hear about it.
+            </div>
         </section>
 
-        <section id="representing-inequalities">
-            <header>
-                <h2>Representing Inequalities</h2>
-            </header>
+        <!-- ============ STATISTICAL PROPERTIES ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 4 — statistical properties</div>
+            <h2>Every duplex is a <em>distribution</em>.</h2>
             <p>
-                Duplex numbers may be used to represent '≠' inequalities. For
-                example, the inequality
+                Any duplex number corresponds to a symmetric distribution of
+                values, and two classical statistics fall out of the notation
+                directly — no expansion needed.
             </p>
-            <pre>1 = 0</pre>
-            <p>can be represented as:</p>
-            <pre>0.5 ± 0.5</pre>
-        </section>
 
-        <section id="plotting-parallel-lines">
-            <header>
-                <h2>Plotting Parallel Lines</h2>
-            </header>
-            <p>
-                Duplex numbers are useful for plotting multiple parallel lines
-                on a graph. For example, the equation: x = 5±2 results in the
-                following graph:
-            </p>
-            <div id="graph" style="width: 100%; height: 600px"></div>
-            <script>
-                // Data for x = 3 (vertical line)
-                const trace1 = {
-                    x: [3, 3],
-                    y: [-10, 10],
-                    mode: "lines",
-                    name: "x = 3",
-                    line: { color: "blue", width: 2 },
-                };
-
-                // Data for x = 7 (vertical line)
-                const trace2 = {
-                    x: [7, 7],
-                    y: [-10, 10],
-                    mode: "lines",
-                    name: "x = 7",
-                    line: { color: "red", width: 2 },
-                };
-
-                // Layout configuration
-                const layout = {
-                    title: {
-                        text: "Parallel Lines: x = 5±2",
-                        x: 0.5,
-                        xanchor: "center",
-                    },
-                    xaxis: {
-                        title: "x",
-                        range: [0, 10],
-                        gridcolor: "#e0e0e0",
-                        zeroline: true,
-                        zerolinecolor: "black",
-                        zerolinewidth: 1,
-                    },
-                    yaxis: {
-                        title: "y",
-                        range: [-10, 10],
-                        gridcolor: "#e0e0e0",
-                        zeroline: true,
-                        zerolinecolor: "black",
-                        zerolinewidth: 1,
-                        scaleanchor: "x",
-                        scaleratio: 1,
-                    },
-                    showlegend: true,
-                    plot_bgcolor: "#f9f9f9",
-                    paper_bgcolor: "#ffffff",
-                    margin: { t: 50, b: 50, l: 50, r: 50 },
-                };
-
-                // Plot the graph
-                Plotly.newPlot("graph", [trace1, trace2], layout);
-            </script>
-        </section>
-
-        <section id="quantum-calculations">
-            <header>
-                <h2>Quantum Calculations</h2>
-            </header>
-            <p>
-                Duplex numbers can be used to build an intuition about quantum
-                calculations being performed on a quantum computer. You can
-                think of a duplex numbers as being an additional numerical type
-                available on the quantum computer, which can efficiently perform
-                modulus and exponentiation operations, which would otherwise
-                become infeasible to do as the number of simultaneously
-                represented values increases.
-            </p>
-        </section>
-
-        <p style="text-align: center">
-            Found a new use-case for duplex numbers?
-            <a href="https://github.com/Splizard/duplex-numbers"
-                >Open a pull request!</a
+            <div
+                style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                    gap: 1.5rem;
+                    margin: 2rem 0;
+                "
             >
-        </p>
+                <div class="demo-box" style="margin: 0">
+                    <div
+                        style="
+                            font-family: &quot;Caveat&quot;, cursive;
+                            font-size: 1.4rem;
+                            color: var(--red);
+                            transform: rotate(-1deg);
+                            display: inline-block;
+                            margin-bottom: 0.75rem;
+                        "
+                    >
+                        mean
+                    </div>
+                    <div
+                        style="
+                            font-family: &quot;Fraunces&quot;, serif;
+                            font-size: 2.2rem;
+                            font-style: italic;
+                            line-height: 1;
+                        "
+                    >
+                        a
+                    </div>
+                    <p
+                        style="
+                            font-size: 0.95rem;
+                            color: var(--ink-soft);
+                            margin: 0.75rem 0 0;
+                        "
+                    >
+                        The centre term. Everything else branches symmetrically
+                        around it, so it's always the mean.
+                    </p>
+                </div>
+                <div class="demo-box" style="margin: 0">
+                    <div
+                        style="
+                            font-family: &quot;Caveat&quot;, cursive;
+                            font-size: 1.4rem;
+                            color: var(--red);
+                            transform: rotate(-1deg);
+                            display: inline-block;
+                            margin-bottom: 0.75rem;
+                        "
+                    >
+                        variance
+                    </div>
+                    <div
+                        style="
+                            font-family: &quot;Fraunces&quot;, serif;
+                            font-size: 2.2rem;
+                            font-style: italic;
+                            line-height: 1;
+                        "
+                    >
+                        b² + c² + …
+                    </div>
+                    <p
+                        style="
+                            font-size: 0.95rem;
+                            color: var(--ink-soft);
+                            margin: 0.75rem 0 0;
+                        "
+                    >
+                        Sum of squared spreads. Each
+                        <span class="inline-pm">±</span> adds its own squared
+                        contribution — independent, Pythagorean-style.
+                    </p>
+                </div>
+            </div>
+
+            <p style="font-size: 1rem; color: var(--ink-soft)">
+                Turn this around and it's interesting: <em>any</em> symmetric
+                distribution over a finite, power-of-two set of values can be
+                written as a duplex number. The notation and the distribution
+                are the same object in two outfits.
+            </p>
+        </section>
+
+        <!-- ============ REPRESENTING INEQUALITIES ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 5 — representing inequalities</div>
+            <h2>Writing <em>“1 = 0”</em> without breaking maths.</h2>
+            <p>
+                Here's something unusual. In ordinary arithmetic, "1 = 0" is
+                just false — you can't write it without the whole system
+                catching fire. But if a duplex number represents its values
+                <em>simultaneously</em> rather than as alternatives, then the
+                expression
+                <code>0.5 <span class="inline-pm">±</span> 0.5</code> is a
+                number that's somehow both 0 and 1 at the same time.
+            </p>
+
+            <div
+                style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                    gap: 1.5rem;
+                    margin: 2rem 0;
+                "
+            >
+                <div class="demo-box" style="margin: 0">
+                    <div
+                        style="
+                            font-family: &quot;Caveat&quot;, cursive;
+                            font-size: 1.4rem;
+                            color: var(--red);
+                            transform: rotate(-1deg);
+                            display: inline-block;
+                            margin-bottom: 0.75rem;
+                        "
+                    >
+                        the equation
+                    </div>
+                    <div
+                        style="
+                            font-family: &quot;Fraunces&quot;, serif;
+                            font-size: 2.4rem;
+                            font-style: italic;
+                            line-height: 1;
+                        "
+                    >
+                        1 = 0
+                    </div>
+                </div>
+                <div class="demo-box" style="margin: 0">
+                    <div
+                        style="
+                            font-family: &quot;Caveat&quot;, cursive;
+                            font-size: 1.4rem;
+                            color: var(--red);
+                            transform: rotate(-1deg);
+                            display: inline-block;
+                            margin-bottom: 0.75rem;
+                        "
+                    >
+                        the duplex number
+                    </div>
+                    <div
+                        style="
+                            font-family: &quot;Fraunces&quot;, serif;
+                            font-size: 2.4rem;
+                            line-height: 1;
+                        "
+                    >
+                        0.5 <span class="inline-pm">±</span> 0.5
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ EIGENVALUES ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 6 — a neat trick</div>
+            <h2>Eigenvalues of a <em>2×2 matrix</em>.</h2>
+            <p>
+                Here's a concrete place where the
+                <span class="inline-pm">±</span> notation pays rent: finding
+                eigenvalues. Type numbers into the matrix and watch the
+                eigenvalues compute themselves as a duplex number.
+            </p>
+
+            <div class="demo-box">
+                <div
+                    style="
+                        display: flex;
+                        gap: 3rem;
+                        align-items: center;
+                        flex-wrap: wrap;
+                    "
+                >
+                    <div class="matrix">
+                        <input type="number" id="m00" value="4" step="0.5" />
+                        <input type="number" id="m01" value="1" step="0.5" />
+                        <input type="number" id="m10" value="2" step="0.5" />
+                        <input type="number" id="m11" value="3" step="0.5" />
+                    </div>
+                    <div>
+                        <div
+                            style="
+                                font-family: &quot;Caveat&quot;, cursive;
+                                font-size: 1.3rem;
+                                color: var(--red);
+                                transform: rotate(-2deg);
+                                display: inline-block;
+                                margin-bottom: 0.5rem;
+                            "
+                        >
+                            eigenvalues →
+                        </div>
+                        <div id="eigenOutput" class="eigen-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 0.95rem; color: var(--ink-soft)">
+                Split the diagonals as duplex numbers <code>a±b</code> and
+                <code>c±d</code>. When the spreads match (b = d), eigenvalues
+                are just <code>a ± c</code>. Otherwise:
+                <code>a ± √(b² + c² − d²)</code>. The
+                <span class="inline-pm">±</span>
+                is doing real work — representing both eigenvalues as a single
+                expression.
+            </p>
+        </section>
+
+        <!-- ============ PARALLEL LINES ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 7 — plot it</div>
+            <h2>Parallel lines, <em>written once</em>.</h2>
+            <p>
+                The equation
+                <code>y = mx <span class="inline-pm">±</span> b</code> isn't one
+                line — it's a family. Drag the sliders to see how a duplex
+                coefficient becomes a whole pattern of parallel lines.
+            </p>
+
+            <div class="demo-box">
+                <div class="demo-controls">
+                    <label>
+                        slope (m)
+                        <input
+                            type="range"
+                            id="slopeSlider"
+                            min="-3"
+                            max="3"
+                            step="0.1"
+                            value="0.8"
+                        />
+                        <span id="slopeVal">0.8</span>
+                    </label>
+                    <label>
+                        center (b)
+                        <input
+                            type="range"
+                            id="centerSlider"
+                            min="-5"
+                            max="5"
+                            step="0.5"
+                            value="0"
+                        />
+                        <span id="centerVal">0</span>
+                    </label>
+                    <label>
+                        ± spread 1
+                        <input
+                            type="range"
+                            id="spread1Slider"
+                            min="0"
+                            max="4"
+                            step="0.25"
+                            value="2"
+                        />
+                        <span id="spread1Val">2</span>
+                    </label>
+                    <label>
+                        ± spread 2
+                        <input
+                            type="range"
+                            id="spread2Slider"
+                            min="0"
+                            max="3"
+                            step="0.25"
+                            value="0"
+                        />
+                        <span id="spread2Val">0.5</span>
+                    </label>
+                </div>
+                <canvas
+                    id="linesCanvas"
+                    width="800"
+                    height="400"
+                    style="
+                        width: 100%;
+                        height: auto;
+                        background: var(--paper);
+                        border-radius: 2px;
+                    "
+                ></canvas>
+                <div
+                    style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 0.9rem;
+                        color: var(--ink-soft);
+                        margin-top: 0.5rem;
+                    "
+                >
+                    y = <span id="eqDisplay"></span>x
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ APPLICATIONS ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 8 — where it might go</div>
+            <h2>Places this <em>might be useful</em>.</h2>
+            <p class="lead">
+                Applications where holding multiple values as a single identity
+                is the point — not a workaround.
+            </p>
+
+            <div class="app-grid">
+                <div class="app-card" data-num="01">
+                    <h3>Circuit verification</h3>
+                    <p>
+                        A digital logic line <em>is</em> simultaneously 0 and 1
+                        during verification:
+                        <code>0.5 <span class="inline-pm">±</span> 0.5</code>.
+                        Propagate a single duplex input through an arithmetic
+                        circuit and check every combination at once — not by
+                        enumeration, but by shared identity.
+                    </p>
+                </div>
+                <div class="app-card" data-num="02">
+                    <h3>Algebraic identification</h3>
+                    <p>
+                        Any time you want two or more real values to share a
+                        single algebraic identity — for exploratory maths,
+                        teaching modular-arithmetic-like ideas, or building DSLs
+                        where "these are the same thing" is a first-class
+                        concept.
+                    </p>
+                </div>
+                <div class="app-card" data-num="03">
+                    <h3>Symmetric-result compaction</h3>
+                    <p>
+                        Results that naturally come in symmetric pairs (or
+                        powers of two) can be written as a single duplex rather
+                        than a set. Eigenvalues of 2×2 matrices, roots of
+                        even-degree polynomials, symmetric solutions to
+                        equations.
+                    </p>
+                </div>
+                <div class="app-card" data-num="04">
+                    <h3>Quantum-style intuition</h3>
+                    <p>
+                        Building conceptual intuition for superposition without
+                        the Hilbert-space machinery. A duplex number holds
+                        multiple classical values as one identity — a teaching
+                        bridge to quantum states, and potentially a lightweight
+                        notation for reasoning about classical analogues of
+                        quantum algorithms.
+                    </p>
+                </div>
+                <div class="app-card" data-num="05">
+                    <h3>AI &amp; parallel evaluation</h3>
+                    <p>
+                        Running a model on a duplex input evaluates every branch
+                        at once under a single identity. For symbolic reasoning,
+                        search over discrete choices, or batched inference where
+                        the branches represent alternative continuations, the
+                        notation could give a compact way to carry multiplicity
+                        through a computation.
+                    </p>
+                </div>
+                <div class="app-card" data-num="06">
+                    <h3>Your use case here</h3>
+                    <p style="font-style: italic">
+                        The simultaneity framing is young, and the applications
+                        above are suggestions rather than finished stories. If
+                        the idea of "values sharing an identity" clicks with
+                        something you're working on, that's worth following.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ RELATED ============ -->
+        <section class="reveal">
+            <div class="section-label">§ 9 — honest context</div>
+            <h2>Not quite <em>anything else</em>.</h2>
+            <p>
+                It's tempting to flatten duplex numbers into the nearest
+                established thing.
+                <span class="scribble">Interval arithmetic</span> tracks bounds.
+                Affine arithmetic (<code>x₀ + x₁ε₁ + x₂ε₂ + …</code> with each
+                εᵢ ∈ [−1, 1]) tracks correlated uncertainty. Both are about
+                <em>approximating where a quantity might be</em> — the ± is a
+                fuzz, a noise term, a range.
+            </p>
+
+            <p>
+                Duplex numbers under the simultaneity reading are doing
+                something different. The ± isn't a range — it's a discrete
+                branching that produces an exact finite set of values, all held
+                as a <em>single identity</em>. "1 = 0 as 0.5
+                <span class="inline-pm">±</span> 0.5" isn't a statement about
+                uncertainty, it's a statement that two values can share one
+                algebraic identity and be carried forward through arithmetic
+                under that shared identity.
+            </p>
+
+            <p>
+                That puts duplex numbers closer to things like equivalence
+                classes in modular arithmetic (where 3 and 8 <em>are</em> the
+                same, mod 5), multi-sheeted functions in complex analysis, or
+                the superposition intuition from quantum mechanics — than to any
+                interval-style framework. As far as we can tell, no established
+                part of mathematics treats symmetric branching sets as
+                arithmetic objects with their own algebra and their own
+                notation. This is genuinely underexplored territory. If you know
+                of prior work, please tell us — and if you don't, perhaps that's
+                an invitation.
+            </p>
+
+            <div class="margin-note" style="margin-top: 1rem">
+                <span class="margin-note-arrow">↪</span>
+                simultaneity ≠ uncertainty.<br />
+                this is a different kind of number, not a fuzzy one.
+            </div>
+        </section>
+
+        <!-- ============ FOOTER ============ -->
+        <footer>
+            <div class="share-row">
+                <div class="share-label">start a discussion →</div>
+                <div class="share-buttons">
+                    <a
+                        class="share-btn"
+                        id="shareHN"
+                        href="#"
+                        target="_blank"
+                        rel="noopener"
+                        title="Share on Hacker News"
+                    >
+                        <span class="share-icon">Y</span>
+                        <span class="share-name">Hacker News</span>
+                    </a>
+                    <a
+                        class="share-btn"
+                        id="shareTwitter"
+                        href="#"
+                        target="_blank"
+                        rel="noopener"
+                        title="Share on X / Twitter"
+                    >
+                        <span class="share-icon">𝕏</span>
+                        <span class="share-name">X</span>
+                    </a>
+                    <a
+                        class="share-btn"
+                        id="shareBluesky"
+                        href="#"
+                        target="_blank"
+                        rel="noopener"
+                        title="Share on Bluesky"
+                    >
+                        <span class="share-icon">🦋</span>
+                        <span class="share-name">Bluesky</span>
+                    </a>
+                    <a
+                        class="share-btn"
+                        id="shareReddit"
+                        href="#"
+                        target="_blank"
+                        rel="noopener"
+                        title="Share on Reddit"
+                    >
+                        <span class="share-icon">r/</span>
+                        <span class="share-name">Reddit</span>
+                    </a>
+                    <a
+                        class="share-btn"
+                        id="shareMastodon"
+                        href="#"
+                        target="_blank"
+                        rel="noopener"
+                        title="Share on Mastodon"
+                    >
+                        <span class="share-icon">M</span>
+                        <span class="share-name">Mastodon</span>
+                    </a>
+                    <button
+                        class="share-btn share-btn-copy"
+                        id="shareCopy"
+                        type="button"
+                        title="Copy link to clipboard"
+                    >
+                        <span class="share-icon">⧉</span>
+                        <span class="share-name" id="shareCopyLabel"
+                            >copy link</span
+                        >
+                    </button>
+                </div>
+            </div>
+
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-label">source</div>
+                    <p class="footer-text">
+                        <a
+                            href="https://github.com/quaadgras/duplex-numbers"
+                            target="_blank"
+                            rel="noopener"
+                            >github.com/quaadgras/duplex-numbers</a
+                        >
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <div class="footer-label">licence</div>
+                    <p class="footer-text">
+                        Released into the public domain under
+                        <a
+                            href="https://creativecommons.org/publicdomain/zero/1.0/"
+                            target="_blank"
+                            rel="noopener"
+                            >CC0 1.0</a
+                        >. Take the idea anywhere. No permission or attribution
+                        required.
+                    </p>
+                </div>
+            </div>
+        </footer>
 
         <script>
-            const MAX_TERMS = 5; // Maximum number of additional components
-            let isMultiSetView = true;
+            // ============ DUPLEX NUMBER LOGIC ============
 
-            function getDuplexNumber() {
-                const base = parseFloat(
-                    document.getElementById("base").textContent,
-                );
-                if (isNaN(base)) return null;
-                const terms = Array.from(
-                    document.querySelectorAll("#terms span[contenteditable]"),
-                )
-                    .map((span) => Math.abs(parseFloat(span.textContent)))
-                    .filter((val) => !isNaN(val));
-                return { base, terms };
-            }
+            // A term is: { coeffs: [a, b, c, ...] } representing a ± b ± c ± ...
+            // Expression is: [{ op: null, term }, { op: '+' | '×', term }, ...]
 
-            function computeResult(original, operator, scalar) {
-                if (!original || isNaN(scalar)) return null;
-                let result;
-                if (operator === "+") {
-                    result = {
-                        base: original.base + scalar,
-                        terms: original.terms,
-                    };
-                } else if (operator === "*") {
-                    result = {
-                        base: original.base * scalar,
-                        terms: original.terms.map(
-                            (term) => Math.abs(scalar) * term,
-                        ),
-                    };
-                }
-                return result;
-            }
+            let expression = [{ op: null, term: { coeffs: [5, 2, 1] } }];
 
-            function displayDuplexNumber(duplex) {
-                if (!duplex) {
-                    document.getElementById("result-base").textContent = "";
-                    document.getElementById("result-terms").innerHTML = "";
-                    return;
-                }
-                document.getElementById("result-base").textContent =
-                    duplex.base;
-                const termsDiv = document.getElementById("result-terms");
-                termsDiv.innerHTML = "";
-                duplex.terms.forEach((term) => {
-                    const pmSymbol = document.createElement("span");
-                    pmSymbol.className = "pm-symbol";
-                    pmSymbol.textContent = " ± ";
-                    const termSpan = document.createElement("span");
-                    termSpan.textContent = term;
-                    termsDiv.appendChild(pmSymbol);
-                    termsDiv.appendChild(termSpan);
-                });
-            }
-
-            function computePossibleValues(duplex) {
-                if (!duplex) return [];
-                const { base, terms } = duplex;
-                if (terms.length === 0) return [base];
-                const n = terms.length;
-                const values = [];
-                function walkTree(index, currentValue) {
-                    if (index === n) {
-                        values.push(currentValue);
-                        return;
+            function expandTerm(term) {
+                // Given [a, b, c, ...], return all 2^(n-1) values
+                const [base, ...pms] = term.coeffs;
+                if (pms.length === 0) return [base];
+                let values = [base];
+                for (const pm of pms) {
+                    const newValues = [];
+                    for (const v of values) {
+                        newValues.push(v - pm);
+                        newValues.push(v + pm);
                     }
-                    walkTree(index + 1, currentValue - terms[index]);
-                    walkTree(index + 1, currentValue + terms[index]);
+                    values = newValues;
                 }
-                walkTree(0, base);
                 return values;
             }
 
-            function displayPossibleValues(values) {
-                const tab = document.querySelector(".tab.active");
-                const selectedTab = tab.getAttribute("data-tab");
-                updateTabContent(selectedTab);
-            }
-
-            function sanitizeInput(event) {
-                const target = event.target;
-                const originalText = target.textContent;
-                const sanitizedText = originalText.replace(/[^0-9.-]/g, "");
-                if (originalText !== sanitizedText) {
-                    target.textContent = sanitizedText;
-                    const range = document.createRange();
-                    range.selectNodeContents(target);
-                    range.collapse(false);
-                    const selection = window.getSelection();
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                }
-                updateResult();
-            }
-
-            function updateResult() {
-                const original = getDuplexNumber();
-                const operator = document.getElementById("operator").value;
-                const scalar = parseFloat(
-                    document.getElementById("scalar").textContent,
-                );
-                const result = computeResult(original, operator, scalar);
-                displayDuplexNumber(result);
-                const values = computePossibleValues(result);
-                displayPossibleValues(values);
-                updateRemoveButtonVisibility();
-            }
-
-            function updateRemoveButtonVisibility() {
-                const termsDiv = document.getElementById("terms");
-                const removeButton = document.getElementById("remove-term");
-                const addButton = document.getElementById("add-term");
-                const termSpans = document.querySelectorAll(
-                    "#terms span[contenteditable]",
-                );
-                if (termSpans.length > 0) {
-                    removeButton.style.display = "inline";
-                } else {
-                    removeButton.style.display = "none";
-                }
-                if (termSpans.length >= MAX_TERMS) {
-                    addButton.style.display = "none";
-                } else {
-                    addButton.style.display = "inline";
-                }
-            }
-
-            document
-                .querySelectorAll(
-                    "#original-duplex span[contenteditable], #scalar",
-                )
-                .forEach((span) => {
-                    span.addEventListener("input", sanitizeInput);
-                });
-
-            document
-                .getElementById("operator")
-                .addEventListener("change", updateResult);
-
-            document
-                .getElementById("add-term")
-                .addEventListener("click", function () {
-                    const termsDiv = document.getElementById("terms");
-                    const termButtons = document.getElementById("term-buttons");
-                    const pmSymbol = document.createElement("span");
-                    pmSymbol.className = "pm-symbol";
-                    pmSymbol.textContent = " ± ";
-                    const newTerm = document.createElement("span");
-                    newTerm.contentEditable = true;
-                    newTerm.textContent = "0";
-                    termsDiv.insertBefore(pmSymbol, termButtons);
-                    termsDiv.insertBefore(newTerm, termButtons);
-                    newTerm.addEventListener("input", sanitizeInput);
-                    updateResult();
-                });
-
-            document
-                .getElementById("remove-term")
-                .addEventListener("click", function () {
-                    const termsDiv = document.getElementById("terms");
-                    const termSpans = document.querySelectorAll(
-                        "#terms span[contenteditable]",
-                    );
-                    if (termSpans.length > 0) {
-                        termsDiv.removeChild(termSpans[termSpans.length - 1]); // remove last term span
-                        const pmSymbols =
-                            document.querySelectorAll("#terms .pm-symbol");
-                        if (pmSymbols.length > 0) {
-                            termsDiv.removeChild(
-                                pmSymbols[pmSymbols.length - 1],
-                            ); // remove last ± symbol
+            function evaluateExpression(expr) {
+                // Start with the first term's values
+                let current = expandTerm(expr[0].term);
+                for (let i = 1; i < expr.length; i++) {
+                    const next = expandTerm(expr[i].term);
+                    const combined = [];
+                    for (const a of current) {
+                        for (const b of next) {
+                            if (expr[i].op === "+") combined.push(a + b);
+                            else if (expr[i].op === "×") combined.push(a * b);
                         }
-                        updateResult();
+                    }
+                    current = combined;
+                }
+                return current;
+            }
+
+            function computeStats(values) {
+                const n = values.length;
+                const mean = values.reduce((s, v) => s + v, 0) / n;
+                const variance =
+                    values.reduce((s, v) => s + (v - mean) ** 2, 0) / n;
+                const min = Math.min(...values);
+                const max = Math.max(...values);
+                return {
+                    n,
+                    mean,
+                    variance,
+                    stdev: Math.sqrt(variance),
+                    min,
+                    max,
+                };
+            }
+
+            // ============ UI RENDERING ============
+
+            function renderExpression() {
+                const builder = document.getElementById("exprBuilder");
+                builder.innerHTML = "";
+
+                expression.forEach((part, idx) => {
+                    if (part.op) {
+                        const opSpan = document.createElement("span");
+                        opSpan.textContent = part.op === "×" ? "×" : "+";
+                        opSpan.style.margin = "0 0.5rem";
+                        opSpan.style.color = "var(--ink-soft)";
+                        builder.appendChild(opSpan);
+                    }
+
+                    const termWrap = document.createElement("span");
+                    termWrap.className = "term-wrap";
+
+                    const showParens =
+                        !part.isScalar && (idx > 0 || expression.length > 1);
+
+                    if (showParens) {
+                        const open = document.createElement("span");
+                        open.textContent = "(";
+                        open.style.color = "var(--ink-soft)";
+                        termWrap.appendChild(open);
+                    }
+
+                    part.term.coeffs.forEach((c, ci) => {
+                        if (ci > 0) {
+                            const pm = document.createElement("span");
+                            pm.className = "pm-sym";
+                            pm.textContent = "±";
+                            termWrap.appendChild(pm);
+                        }
+
+                        // Wrap each coefficient input so we can absolutely-position a remove button
+                        const inputWrap = document.createElement("span");
+                        inputWrap.className = "coeff-wrap";
+
+                        const input = document.createElement("input");
+                        input.type = "number";
+                        input.step = "0.1";
+                        input.className = "num-input";
+                        input.value = c;
+                        input.addEventListener("input", (e) => {
+                            part.term.coeffs[ci] =
+                                parseFloat(e.target.value) || 0;
+                            update();
+                        });
+                        inputWrap.appendChild(input);
+
+                        if (ci > 0) {
+                            const rm = document.createElement("button");
+                            rm.className = "remove-btn remove-btn-coeff";
+                            rm.textContent = "×";
+                            rm.title = "remove this ± branch";
+                            rm.addEventListener("click", () => {
+                                part.term.coeffs.splice(ci, 1);
+                                renderExpression();
+                                update();
+                            });
+                            inputWrap.appendChild(rm);
+                        }
+
+                        termWrap.appendChild(inputWrap);
+                    });
+
+                    if (showParens) {
+                        const close = document.createElement("span");
+                        close.textContent = ")";
+                        close.style.color = "var(--ink-soft)";
+                        termWrap.appendChild(close);
+                    }
+
+                    // Remove button for the whole term (only for non-first terms) — top right of term
+                    if (idx > 0) {
+                        const rm = document.createElement("button");
+                        rm.className = "remove-btn remove-btn-term";
+                        rm.textContent = "×";
+                        rm.title = "remove this term";
+                        rm.addEventListener("click", () => {
+                            expression.splice(idx, 1);
+                            renderExpression();
+                            update();
+                        });
+                        termWrap.appendChild(rm);
+                    }
+
+                    builder.appendChild(termWrap);
+                });
+
+                updateExtendButtonState();
+            }
+
+            function updateExtendButtonState() {
+                const btn = document.getElementById("extendBtn");
+                const builder = document.getElementById("exprBuilder");
+                if (!btn || !builder) return;
+
+                // Defer the measurement to the next frame so layout can settle
+                requestAnimationFrame(() => {
+                    const overflows =
+                        builder.scrollWidth > builder.clientWidth + 1;
+                    btn.disabled = overflows;
+                    btn.title = overflows
+                        ? "the expression already fills the card — remove a branch to extend further"
+                        : "";
+                });
+            }
+
+            function addPmToLast() {
+                // The duplex term is always the first one; scalar multipliers come after.
+                expression[0].term.coeffs.push(0.5);
+                renderExpression();
+                update();
+
+                // If the new branch made us overflow, roll back the change.
+                requestAnimationFrame(() => {
+                    const builder = document.getElementById("exprBuilder");
+                    if (
+                        builder &&
+                        builder.scrollWidth > builder.clientWidth + 1
+                    ) {
+                        expression[0].term.coeffs.pop();
+                        renderExpression();
+                        update();
                     }
                 });
+            }
 
-            // Tab switching logic
-            document.querySelectorAll(".tab").forEach((tab) => {
-                tab.addEventListener("click", function () {
-                    document.querySelectorAll(".tab").forEach((t) => {
-                        t.classList.remove("active");
+            function addScalarMult() {
+                expression.push({
+                    op: "×",
+                    term: { coeffs: [2] },
+                    isScalar: true,
+                });
+                renderExpression();
+                update();
+            }
+
+            function resetCalc() {
+                expression = [{ op: null, term: { coeffs: [5, 2, 1] } }];
+                renderExpression();
+                update();
+            }
+
+            let hideDuplicates = false;
+
+            function toggleHideDupes(checked) {
+                hideDuplicates = checked;
+                update();
+            }
+
+            function renderValues(values) {
+                const chips = document.getElementById("valueChips");
+                chips.innerHTML = "";
+
+                // multiset (default): all values in depth-first branch order
+                // set (hide duplicates): unique values, sorted
+                let display;
+                if (!hideDuplicates) {
+                    display = values;
+                } else {
+                    const seen = [];
+                    for (const v of values) {
+                        if (!seen.some((s) => Math.abs(s - v) < 1e-9))
+                            seen.push(v);
+                    }
+                    display = seen.sort((a, b) => a - b);
+                }
+
+                display.forEach((v) => {
+                    const chip = document.createElement("span");
+                    chip.className = "value-chip";
+                    chip.textContent = Number.isInteger(v) ? v : v.toFixed(2);
+                    chips.appendChild(chip);
+                });
+
+                const stats = computeStats(values);
+                const uniqueCount = new Set(values.map((v) => v.toFixed(6)))
+                    .size;
+                document.getElementById("stats").innerHTML = `
+    <span>${values.length}</span> values ·
+    <span>${uniqueCount}</span> unique ·
+    mean = <span>${stats.mean.toFixed(2)}</span> ·
+    σ = <span>${stats.stdev.toFixed(2)}</span> ·
+    range = <span>[${stats.min.toFixed(2)}, ${stats.max.toFixed(2)}]</span>
+  `;
+            }
+
+            // ============ TREE RENDERING ============
+
+            // Pan/zoom state for the tree — persists across re-renders
+            const treeView = {
+                // The content bounds (updated on each render)
+                contentW: 400,
+                contentH: 300,
+                // The viewBox we display (x, y, w, h) — controls pan & zoom
+                vbX: 0,
+                vbY: 0,
+                vbW: 400,
+                vbH: 300,
+                // Whether the user has manually panned/zoomed (if not, auto-fit on each render)
+                userInteracted: false,
+            };
+
+            function renderTree() {
+                const svg = document.getElementById("treeSvg");
+                const viewport = document.getElementById("treeViewport");
+                svg.innerHTML = "";
+
+                const firstTerm = expression[0].term;
+                const coeffs = firstTerm.coeffs;
+                if (coeffs.length === 0) return;
+
+                // Fixed visual geometry — node spacing stays consistent regardless of depth.
+                // Leaves sit on a grid with LEAF_SPACING pixels between them.
+                const LEAF_SPACING = 54;
+                const LEVEL_HEIGHT = 70;
+                const TOP_PAD = 30;
+                const BOTTOM_PAD = 30;
+                const SIDE_PAD = 30;
+
+                const numLevels = coeffs.length;
+                const numLeaves = Math.pow(2, numLevels - 1);
+                const contentW = Math.max(
+                    400,
+                    numLeaves * LEAF_SPACING + SIDE_PAD * 2,
+                );
+                const contentH =
+                    TOP_PAD + (numLevels - 1) * LEVEL_HEIGHT + BOTTOM_PAD;
+
+                // Build nodes per level
+                const nodesPerLevel = [];
+                for (let level = 0; level < numLevels; level++) {
+                    const count = Math.pow(2, level);
+                    const nodes = [];
+                    for (let i = 0; i < count; i++) {
+                        let val = coeffs[0];
+                        for (let l = 1; l <= level; l++) {
+                            const bit = (i >> (level - l)) & 1;
+                            val += bit ? coeffs[l] : -coeffs[l];
+                        }
+                        const x =
+                            SIDE_PAD +
+                            (contentW - SIDE_PAD * 2) * ((i + 0.5) / count);
+                        const y = TOP_PAD + level * LEVEL_HEIGHT;
+                        nodes.push({ x, y, val });
+                    }
+                    nodesPerLevel.push(nodes);
+                }
+
+                // Draw edges
+                for (let level = 1; level < nodesPerLevel.length; level++) {
+                    const parents = nodesPerLevel[level - 1];
+                    const children = nodesPerLevel[level];
+                    children.forEach((child, ci) => {
+                        const parent = parents[Math.floor(ci / 2)];
+                        const line = document.createElementNS(
+                            "http://www.w3.org/2000/svg",
+                            "line",
+                        );
+                        line.setAttribute("x1", parent.x);
+                        line.setAttribute("y1", parent.y);
+                        line.setAttribute("x2", child.x);
+                        line.setAttribute("y2", child.y);
+                        line.setAttribute("class", "tree-line");
+                        svg.appendChild(line);
                     });
-                    tab.classList.add("active");
-                    const selectedTab = tab.getAttribute("data-tab");
-                    updateTabContent(selectedTab);
+                }
+
+                // Draw nodes — consistent radius regardless of depth
+                const maxLevel = nodesPerLevel.length - 1;
+                nodesPerLevel.forEach((nodes, level) => {
+                    nodes.forEach((node) => {
+                        const isLeaf = level === maxLevel;
+                        const radius = isLeaf ? 16 : 17;
+                        const circle = document.createElementNS(
+                            "http://www.w3.org/2000/svg",
+                            "circle",
+                        );
+                        circle.setAttribute("cx", node.x);
+                        circle.setAttribute("cy", node.y);
+                        circle.setAttribute("r", radius);
+                        circle.setAttribute(
+                            "class",
+                            "tree-node" + (isLeaf ? " leaf" : ""),
+                        );
+                        svg.appendChild(circle);
+
+                        const text = document.createElementNS(
+                            "http://www.w3.org/2000/svg",
+                            "text",
+                        );
+                        text.setAttribute("x", node.x);
+                        text.setAttribute("y", node.y);
+                        text.setAttribute(
+                            "class",
+                            "tree-text" + (isLeaf ? " leaf" : ""),
+                        );
+                        const displayVal = Number.isInteger(node.val)
+                            ? node.val
+                            : node.val.toFixed(1);
+                        text.textContent = displayVal;
+                        svg.appendChild(text);
+                    });
+                });
+
+                // Update content bounds
+                treeView.contentW = contentW;
+                treeView.contentH = contentH;
+
+                // Size the SVG to the viewport (its actual pixel footprint)
+                const vpRect = viewport.getBoundingClientRect();
+                svg.setAttribute("width", vpRect.width);
+                svg.setAttribute("height", vpRect.height);
+
+                // If the user hasn't panned/zoomed yet, auto-fit the content
+                if (!treeView.userInteracted) {
+                    fitTreeToViewport();
+                } else {
+                    applyTreeViewBox();
+                }
+            }
+
+            function fitTreeToViewport() {
+                const viewport = document.getElementById("treeViewport");
+                const vpRect = viewport.getBoundingClientRect();
+                if (vpRect.width === 0 || vpRect.height === 0) return;
+
+                // Keep the tree at its natural 1:1 scale — don't zoom out to fit deep trees.
+                // The viewBox matches the viewport's pixel dimensions, so nodes stay their
+                // designed size and the user can pan down to explore deeper branches.
+                const vbW = vpRect.width;
+                const vbH = vpRect.height;
+
+                // Center horizontally on the content
+                treeView.vbX = (treeView.contentW - vbW) / 2;
+                // Anchor vertically near the top, with a small top margin so the root breathes
+                treeView.vbY = -10;
+                treeView.vbW = vbW;
+                treeView.vbH = vbH;
+                applyTreeViewBox();
+            }
+
+            function applyTreeViewBox() {
+                const svg = document.getElementById("treeSvg");
+                svg.setAttribute(
+                    "viewBox",
+                    `${treeView.vbX} ${treeView.vbY} ${treeView.vbW} ${treeView.vbH}`,
+                );
+            }
+
+            // Pan & zoom handlers
+            (function setupTreePanZoom() {
+                const viewport = document.getElementById("treeViewport");
+                if (!viewport) return;
+
+                let dragging = false;
+                let lastX = 0,
+                    lastY = 0;
+
+                viewport.addEventListener("pointerdown", (e) => {
+                    dragging = true;
+                    lastX = e.clientX;
+                    lastY = e.clientY;
+                    viewport.setPointerCapture(e.pointerId);
+                    treeView.userInteracted = true;
+                });
+
+                viewport.addEventListener("pointermove", (e) => {
+                    if (!dragging) return;
+                    const vpRect = viewport.getBoundingClientRect();
+                    const dx =
+                        (e.clientX - lastX) * (treeView.vbW / vpRect.width);
+                    const dy =
+                        (e.clientY - lastY) * (treeView.vbH / vpRect.height);
+                    treeView.vbX -= dx;
+                    treeView.vbY -= dy;
+                    lastX = e.clientX;
+                    lastY = e.clientY;
+                    applyTreeViewBox();
+                });
+
+                const endDrag = (e) => {
+                    if (dragging) {
+                        dragging = false;
+                        try {
+                            viewport.releasePointerCapture(e.pointerId);
+                        } catch (_) {}
+                    }
+                };
+                viewport.addEventListener("pointerup", endDrag);
+                viewport.addEventListener("pointercancel", endDrag);
+
+                viewport.addEventListener(
+                    "wheel",
+                    (e) => {
+                        e.preventDefault();
+                        treeView.userInteracted = true;
+                        const vpRect = viewport.getBoundingClientRect();
+                        const mx = (e.clientX - vpRect.left) / vpRect.width;
+                        const my = (e.clientY - vpRect.top) / vpRect.height;
+                        // Zoom factor — scroll up zooms in
+                        const factor = Math.exp(e.deltaY * 0.0015);
+                        const newW = Math.max(
+                            50,
+                            Math.min(
+                                treeView.contentW * 10,
+                                treeView.vbW * factor,
+                            ),
+                        );
+                        const newH = Math.max(
+                            50,
+                            Math.min(
+                                treeView.contentH * 10,
+                                treeView.vbH * factor,
+                            ),
+                        );
+                        // Keep the point under the cursor stationary
+                        treeView.vbX += (treeView.vbW - newW) * mx;
+                        treeView.vbY += (treeView.vbH - newH) * my;
+                        treeView.vbW = newW;
+                        treeView.vbH = newH;
+                        applyTreeViewBox();
+                    },
+                    { passive: false },
+                );
+
+                // Double-click to reset view
+                viewport.addEventListener("dblclick", () => {
+                    treeView.userInteracted = false;
+                    fitTreeToViewport();
+                });
+            })();
+
+            // Refit tree and re-check button state whenever layout changes
+            function handleLayoutChange() {
+                const svg = document.getElementById("treeSvg");
+                const viewport = document.getElementById("treeViewport");
+                if (!svg || !viewport) return;
+                const vpRect = viewport.getBoundingClientRect();
+                if (vpRect.width === 0 || vpRect.height === 0) return;
+                svg.setAttribute("width", vpRect.width);
+                svg.setAttribute("height", vpRect.height);
+                if (!treeView.userInteracted) fitTreeToViewport();
+            }
+
+            window.addEventListener("resize", () => {
+                handleLayoutChange();
+                updateExtendButtonState();
+            });
+
+            // Also observe the tree viewport itself — catches media-query breakpoint changes
+            // that alter its height even if window.resize doesn't fire predictably
+            if (typeof ResizeObserver !== "undefined") {
+                const viewport = document.getElementById("treeViewport");
+                if (viewport) {
+                    const ro = new ResizeObserver(() => handleLayoutChange());
+                    ro.observe(viewport);
+                }
+            }
+
+            function update() {
+                const values = evaluateExpression(expression);
+                renderValues(values);
+                renderTree();
+            }
+
+            // ============ EIGENVALUE DEMO ============
+
+            function updateEigen() {
+                const x = parseFloat(document.getElementById("m00").value) || 0;
+                const z = parseFloat(document.getElementById("m01").value) || 0;
+                const v = parseFloat(document.getElementById("m10").value) || 0;
+                const y = parseFloat(document.getElementById("m11").value) || 0;
+
+                const a = (x + y) / 2;
+                const b = Math.abs((x + y) / 2 - x);
+                const c = (v + z) / 2;
+                const d = Math.abs((v + z) / 2 - v);
+
+                const fmt = (n) => (Number.isInteger(n) ? n : n.toFixed(3));
+
+                let result;
+                if (Math.abs(b - d) < 1e-9) {
+                    result = `
+      a ± b = ${fmt(a)} ± ${fmt(b)}<br>
+      c ± d = ${fmt(c)} ± ${fmt(d)}<br>
+      since b = d, <span style="color: var(--red); font-weight: 600;">eigenvalues = ${fmt(a)} ± ${fmt(c)}</span><br>
+      = {${fmt(a - c)}, ${fmt(a + c)}}
+    `;
+                } else {
+                    const disc = b * b + c * c - d * d;
+                    if (disc < 0) {
+                        result = `
+        a ± b = ${fmt(a)} ± ${fmt(b)}<br>
+        c ± d = ${fmt(c)} ± ${fmt(d)}<br>
+        <span style="color: var(--red); font-weight: 600;">b² + c² − d² = ${fmt(disc)} (complex eigenvalues)</span><br>
+        = ${fmt(a)} ± i√${fmt(-disc)}
+      `;
+                    } else {
+                        const root = Math.sqrt(disc);
+                        result = `
+        a ± b = ${fmt(a)} ± ${fmt(b)}<br>
+        c ± d = ${fmt(c)} ± ${fmt(d)}<br>
+        <span style="color: var(--red); font-weight: 600;">eigenvalues = ${fmt(a)} ± √(${fmt(b * b + c * c - d * d)}) = ${fmt(a)} ± ${fmt(root)}</span><br>
+        = {${fmt(a - root)}, ${fmt(a + root)}}
+      `;
+                    }
+                }
+                document.getElementById("eigenOutput").innerHTML = result;
+            }
+
+            ["m00", "m01", "m10", "m11"].forEach((id) => {
+                document
+                    .getElementById(id)
+                    .addEventListener("input", updateEigen);
+            });
+
+            // ============ PARALLEL LINES DEMO ============
+
+            function drawLines() {
+                const canvas = document.getElementById("linesCanvas");
+                const ctx = canvas.getContext("2d");
+                const w = canvas.width,
+                    h = canvas.height;
+
+                const slope = parseFloat(
+                    document.getElementById("slopeSlider").value,
+                );
+                const center = parseFloat(
+                    document.getElementById("centerSlider").value,
+                );
+                const spread1 = parseFloat(
+                    document.getElementById("spread1Slider").value,
+                );
+                const spread2 = parseFloat(
+                    document.getElementById("spread2Slider").value,
+                );
+
+                document.getElementById("slopeVal").textContent =
+                    slope.toFixed(1);
+                document.getElementById("centerVal").textContent =
+                    center.toFixed(1);
+                document.getElementById("spread1Val").textContent =
+                    spread1.toFixed(2);
+                document.getElementById("spread2Val").textContent =
+                    spread2.toFixed(2);
+
+                // expand duplex: center ± spread1 ± spread2
+                const intercepts = expandTerm({
+                    coeffs: [center, spread1, spread2],
+                });
+
+                // display equation
+                let eq = `${slope.toFixed(1)}`;
+                eq += ` + ${center.toFixed(1)}`;
+                if (spread1 > 0)
+                    eq += ` <span class="inline-pm">±</span> ${spread1.toFixed(2)}`;
+                if (spread2 > 0)
+                    eq += ` <span class="inline-pm">±</span> ${spread2.toFixed(2)}`;
+                document.getElementById("eqDisplay").innerHTML = eq.replace(
+                    /^/,
+                    "",
+                );
+                document.getElementById("eqDisplay").innerHTML =
+                    `${slope.toFixed(1)}` +
+                    (center !== 0 || spread1 > 0 || spread2 > 0 ? " + " : "") +
+                    `<span style="color: var(--red); font-style: italic;">(</span>${center.toFixed(1)}` +
+                    (spread1 > 0
+                        ? ` <span class="inline-pm">±</span> ${spread1.toFixed(2)}`
+                        : "") +
+                    (spread2 > 0
+                        ? ` <span class="inline-pm">±</span> ${spread2.toFixed(2)}`
+                        : "") +
+                    `<span style="color: var(--red); font-style: italic;">)</span>`;
+
+                ctx.fillStyle = "#f3ecd9";
+                ctx.fillRect(0, 0, w, h);
+
+                // grid
+                const xMin = -10,
+                    xMax = 10,
+                    yMin = -10,
+                    yMax = 10;
+                const toX = (x) => ((x - xMin) / (xMax - xMin)) * w;
+                const toY = (y) => h - ((y - yMin) / (yMax - yMin)) * h;
+
+                ctx.strokeStyle = "rgba(26, 24, 20, 0.08)";
+                ctx.lineWidth = 1;
+                for (let i = xMin; i <= xMax; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(toX(i), 0);
+                    ctx.lineTo(toX(i), h);
+                    ctx.stroke();
+                }
+                for (let i = yMin; i <= yMax; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, toY(i));
+                    ctx.lineTo(w, toY(i));
+                    ctx.stroke();
+                }
+                // axes
+                ctx.strokeStyle = "rgba(26, 24, 20, 0.3)";
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(0, toY(0));
+                ctx.lineTo(w, toY(0));
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(toX(0), 0);
+                ctx.lineTo(toX(0), h);
+                ctx.stroke();
+
+                // draw lines
+                intercepts.forEach((b, i) => {
+                    ctx.strokeStyle = "#c94a3e";
+                    ctx.lineWidth = 2.2;
+                    ctx.globalAlpha = 0.85;
+                    ctx.beginPath();
+                    ctx.moveTo(toX(xMin), toY(slope * xMin + b));
+                    ctx.lineTo(toX(xMax), toY(slope * xMax + b));
+                    ctx.stroke();
+
+                    // label intercept
+                    ctx.fillStyle = "#1a1814";
+                    ctx.font = "11px JetBrains Mono";
+                    ctx.fillText(b.toFixed(1), toX(0) + 6, toY(b) - 4);
+                });
+                ctx.globalAlpha = 1;
+            }
+
+            [
+                "slopeSlider",
+                "centerSlider",
+                "spread1Slider",
+                "spread2Slider",
+            ].forEach((id) => {
+                document
+                    .getElementById(id)
+                    .addEventListener("input", drawLines);
+            });
+
+            // ============ SCROLL REVEAL ============
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                        }
+                    });
+                },
+                { threshold: 0.1 },
+            );
+
+            document
+                .querySelectorAll(".reveal")
+                .forEach((el) => observer.observe(el));
+
+            // ============ INIT ============
+
+            renderExpression();
+            update();
+            updateEigen();
+            drawLines();
+
+            // Deferred re-fit: layout isn't always ready on first render
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    const svg = document.getElementById("treeSvg");
+                    const viewport = document.getElementById("treeViewport");
+                    if (svg && viewport) {
+                        const vpRect = viewport.getBoundingClientRect();
+                        svg.setAttribute("width", vpRect.width);
+                        svg.setAttribute("height", vpRect.height);
+                        fitTreeToViewport();
+                    }
                 });
             });
 
-            function updateTabContent(selectedTab) {
-                const original = getDuplexNumber();
-                const operator = document.getElementById("operator").value;
-                const scalar = parseFloat(
-                    document.getElementById("scalar").textContent,
+            // ============ SHARE BUTTONS ============
+            (function setupShareButtons() {
+                const pageUrl = window.location.href.split("#")[0];
+                const shareTitle = "Duplex Numbers — a small field guide";
+                const shareText =
+                    "An underexplored representation in mathematics — a single expression that secretly holds many values.";
+
+                const u = encodeURIComponent(pageUrl);
+                const t = encodeURIComponent(shareTitle);
+                const txt = encodeURIComponent(shareText);
+
+                const set = (id, href) => {
+                    const el = document.getElementById(id);
+                    if (el) el.href = href;
+                };
+
+                set(
+                    "shareHN",
+                    `https://news.ycombinator.com/submitlink?u=${u}&t=${t}`,
                 );
-                const result = computeResult(original, operator, scalar);
-                const values = computePossibleValues(result);
-                const uniqueValues = [...new Set(values)];
-                const displayValues =
-                    selectedTab === "bag-view" ? values : uniqueValues;
-                const description = document.getElementById("description");
-                if (selectedTab === "bag-view") {
-                    description.textContent =
-                        "The multiset / bag represents the full resulting distribution of numbers.";
-                } else {
-                    description.textContent =
-                        "The underlying set represents the resulting set of numbers (with duplicates removed).";
+                set(
+                    "shareTwitter",
+                    `https://twitter.com/intent/tweet?url=${u}&text=${t}`,
+                );
+                set(
+                    "shareBluesky",
+                    `https://bsky.app/intent/compose?text=${txt}%20${u}`,
+                );
+                set(
+                    "shareReddit",
+                    `https://www.reddit.com/submit?url=${u}&title=${t}`,
+                );
+                set(
+                    "shareMastodon",
+                    `https://mastodonshare.com/?url=${u}&text=${t}`,
+                );
+
+                // Copy link button
+                const copyBtn = document.getElementById("shareCopy");
+                const copyLabel = document.getElementById("shareCopyLabel");
+                if (copyBtn && copyLabel) {
+                    const originalText = copyLabel.textContent;
+                    copyBtn.addEventListener("click", async () => {
+                        try {
+                            await navigator.clipboard.writeText(pageUrl);
+                            copyLabel.textContent = "copied!";
+                            copyBtn.classList.add("copied");
+                        } catch (_) {
+                            // Fallback: select a temporary textarea
+                            const ta = document.createElement("textarea");
+                            ta.value = pageUrl;
+                            ta.style.position = "fixed";
+                            ta.style.opacity = "0";
+                            document.body.appendChild(ta);
+                            ta.select();
+                            try {
+                                document.execCommand("copy");
+                                copyLabel.textContent = "copied!";
+                                copyBtn.classList.add("copied");
+                            } catch (_) {
+                                copyLabel.textContent = "copy failed";
+                            }
+                            document.body.removeChild(ta);
+                        }
+                        setTimeout(() => {
+                            copyLabel.textContent = originalText;
+                            copyBtn.classList.remove("copied");
+                        }, 1800);
+                    });
                 }
-                document.getElementById("values").innerHTML =
-                    displayValues.join(", ");
-            }
-
-            // Initial tab content update
-            updateTabContent("bag-view");
-
-            updateResult(); // Initial update
+            })();
         </script>
     </body>
 </html>
