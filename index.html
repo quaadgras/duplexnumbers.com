@@ -6,7 +6,7 @@
         <title>Duplex Numbers</title>
         <meta
             name="description"
-            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, the arithmetic that works on it, and a calculator to try it."
+            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, what it represents, and a calculator to try it."
         />
         <link rel="canonical" href="https://duplexnumbers.com/" />
         <meta
@@ -15,7 +15,7 @@
         />
         <meta
             property="og:description"
-            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, the arithmetic that works on it, and a calculator to try it."
+            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, what it represents, and a calculator to try it."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://duplexnumbers.com/" />
@@ -36,7 +36,7 @@
         />
         <meta
             name="twitter:description"
-            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, the arithmetic that works on it, and a calculator to try it."
+            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, what it represents, and a calculator to try it."
         />
         <meta
             name="twitter:image"
@@ -239,6 +239,12 @@
                 font-size: 1.5rem;
                 margin-bottom: 0.75rem;
                 letter-spacing: -0.01em;
+            }
+
+            section a {
+                color: var(--red);
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
             }
 
             p {
@@ -1004,8 +1010,8 @@
                 <p class="hero-subtitle">
                     A duplex number is an expression like 5 ± 2 ± 1, read as
                     one number that holds several values at the same time.
-                    This page explains the notation, shows which arithmetic
-                    works on it, and has a calculator so you can try it for
+                    This page explains the notation, shows what it can
+                    represent, and has a calculator so you can try it for
                     yourself.
                 </p>
             </div>
@@ -1058,8 +1064,12 @@
             <p>
                 An expression with <em>n</em> spreads has
                 <em>2<sup>n</sup></em> values, but you only write down
-                <em>n + 1</em> numbers. The notation stays short while the set
-                it describes doubles with every <span class="inline-pm">±</span>.
+                <em>n + 1</em> numbers. The notation stays short while the
+                distribution it describes doubles with every
+                <span class="inline-pm">±</span>. Values can repeat: 5
+                <span class="inline-pm">±</span> 1
+                <span class="inline-pm">±</span> 1 gives 3, 5, 5 and 7, so the
+                result is a multiset, and 5 counts twice.
             </p>
 
             <div class="compression">
@@ -1078,6 +1088,18 @@
                     <span class="num">128</span> values described
                 </div>
             </div>
+
+            <div class="aside">
+                <strong>Which operations are defined</strong>
+                Adding two duplex numbers adds the centres and keeps both sets
+                of spreads: (a <span class="inline-pm">±</span> b) + (c
+                <span class="inline-pm">±</span> d) = (a + c)
+                <span class="inline-pm">±</span> b
+                <span class="inline-pm">±</span> d. Subtraction works the same
+                way, and multiplying by an ordinary number scales the centre
+                and every spread. Multiplying two duplex numbers together is
+                not defined.
+            </div>
         </section>
 
         <!-- ============ CALCULATOR ============ -->
@@ -1087,7 +1109,9 @@
             <p>
                 Build an expression and change the numbers. The tree shows how
                 the values split at each <span class="inline-pm">±</span>, and
-                every leaf is one way of choosing the signs.
+                every leaf is one way of choosing the signs. The distribution
+                lists every leaf, repeats included. Tick the box to see the
+                underlying set instead.
             </p>
 
             <div class="calc">
@@ -1130,7 +1154,7 @@
                 <div class="calc-output">
                     <div class="output-row">
                         <div class="output-card">
-                            <h4 id="valueHeading">values</h4>
+                            <h4 id="valueHeading">resulting distribution</h4>
                             <div id="valueChips" class="value-list"></div>
                             <div class="output-card-footer">
                                 <div id="stats" class="stats"></div>
@@ -1140,7 +1164,7 @@
                                         id="hideDupesCheckbox"
                                         onchange="toggleHideDupes(this.checked)"
                                     />
-                                    <span>hide duplicates</span>
+                                    <span>underlying set (hide duplicates)</span>
                                 </label>
                             </div>
                         </div>
@@ -1163,31 +1187,32 @@
         <!-- ============ SUPERPOSITION ============ -->
         <section>
             <div class="section-label">3 · Superposition</div>
-            <h2>All of the values at once</h2>
+            <h2>One number, equal to all of its values</h2>
             <p class="lead">
-                There are two ways to read 5 <span class="inline-pm">±</span> 2.
-                This site is about the second one.
+                A duplex number does not just list its values. It says they
+                are the same number.
             </p>
             <p>
-                The usual reading is that the value is 3 or 7, and we have not
-                said which. The other reading is that the number is 3 and 7 at
-                the same time: one object with two values, which stay together
-                through whatever arithmetic comes next. Borrowing a word from
-                physics, the number is a superposition of its values. This is
-                not a statement about uncertainty, and it is not an interval.
-                The set of values is exact and finite, and the number is all
-                of them.
+                Take <code>0.5 <span class="inline-pm">±</span> 0.5</code>.
+                Its values are 0 and 1, and the duplex number is a way of
+                writing down that 0 and 1 are equal. In ordinary arithmetic
+                "1 = 0" is false, and a system that accepts it collapses:
+                every number becomes equal to every other. A duplex number
+                accepts the equation anyway, but keeps both sides written as
+                a centre and a spread, so the collapse stays inside the number
+                that contains it. That is what this site means by
+                superposition: a number that is several values and treats
+                them as one.
             </p>
             <p>
-                The clearest example is
-                <code>0.5 <span class="inline-pm">±</span> 0.5</code>. Read as
-                alternatives, it is either 0 or 1. Read as a superposition, it
-                is a number that is 0 and is 1 and is still one thing. In
-                ordinary arithmetic "1 = 0" is simply false, and any system
-                that accepts it falls apart. This is the closest you can get
-                to writing it down without that happening. The parallel lines
-                section below uses the same move to turn a contradiction into
-                a pair of lines.
+                Things do break. You cannot ask which value a duplex number
+                has, and multiplying two of them together is not defined. But
+                a surprising amount still works. You can add them, scale them,
+                take their mean and variance, and read the eigenvalues of a
+                matrix off one. The parallel lines section shows the clearest
+                case: two lines that never meet produce a contradiction, the
+                contradiction becomes a duplex number, and the number draws
+                both lines.
             </p>
 
             <div class="pair-grid">
@@ -1235,70 +1260,15 @@
             </div>
         </section>
 
-        <!-- ============ ARITHMETIC ============ -->
-        <section>
-            <div class="section-label">4 · Arithmetic</div>
-            <h2>What arithmetic works</h2>
-            <p>
-                Addition and subtraction work directly. Adding two duplex
-                numbers adds the centres and keeps both sets of spreads:
-                (a <span class="inline-pm">±</span> b) + (c
-                <span class="inline-pm">±</span> d) = (a + c)
-                <span class="inline-pm">±</span> b
-                <span class="inline-pm">±</span> d. Multiplying by an ordinary
-                number scales the centre and every spread.
-            </p>
-            <p>
-                Multiplying two duplex numbers together needs one more idea.
-                Write ε for a sign that has not been chosen yet. It has a
-                single property, ε² = 1, because any sign squared is 1. Then
-                <code>a <span class="inline-pm">±</span> b</code> is
-                <code>a + bε</code>, and the two values come from setting ε to
-                +1 or −1. Multiply out (a + bε)(c + dε), replace ε² with 1, and
-                the result is back in duplex form:
-            </p>
-
-            <div class="demo-box">
-                <div class="big-formula" style="font-size: clamp(1.3rem, 3.5vw, 2rem); line-height: 1.4">
-                    (a <span class="inline-pm">±</span> b)(c
-                    <span class="inline-pm">±</span> d) = (ac + bd)
-                    <span class="inline-pm">±</span> (ad + bc)
-                </div>
-                <p class="demo-note">
-                    This holds when both numbers share the same sign. You can
-                    check it by setting ε = +1 and then ε = −1.
-                </p>
-            </div>
-
-            <p>
-                Numbers of the form a + bε are already known. They are the
-                split-complex numbers, a relative of the complex numbers
-                (where i² = −1 instead), studied since the 1840s, and a few
-                authors have called them duplex numbers before. Functions like
-                exp work on them as well:
-                <code>exp(a + bε) = e<sup>a</sup>(cosh b + ε sinh b)</code>,
-                and both values come out right.
-            </p>
-            <p>
-                The difficulty is independent signs. Multiplying
-                (a + bε₁)(c + dε₂) produces a term in ε₁ε₂ that cannot be
-                simplified away, so a fully closed algebra needs one
-                coefficient for every product of signs: 2<sup>n</sup>
-                coefficients instead of n + 1. (Algebraists know this as the
-                group algebra of (ℤ/2)<sup>n</sup>.) The short duplex form is
-                a slice of that larger algebra. Addition keeps you on the
-                slice, and multiplication is what moves you off it.
-            </p>
-        </section>
-
         <!-- ============ STATISTICS ============ -->
         <section>
-            <div class="section-label">5 · Mean and variance</div>
+            <div class="section-label">4 · Mean and variance</div>
             <h2>Every duplex number is a distribution</h2>
             <p>
                 The values of a duplex number sit symmetrically around the
-                centre, so you can treat them as a distribution and read off
-                two statistics without expanding anything.
+                centre, so the resulting multiset is a distribution, and two
+                statistics can be read off without expanding anything. Repeated
+                values count each time they occur.
             </p>
 
             <div class="pair-grid">
@@ -1371,7 +1341,7 @@
 
         <!-- ============ EIGENVALUES ============ -->
         <section>
-            <div class="section-label">6 · Eigenvalues</div>
+            <div class="section-label">5 · Eigenvalues</div>
             <h2>Eigenvalues of a 2×2 matrix</h2>
             <p>
                 The quadratic formula gives the eigenvalues of a 2×2 matrix in
@@ -1411,7 +1381,7 @@
 
         <!-- ============ PARALLEL LINES ============ -->
         <section>
-            <div class="section-label">7 · Parallel lines</div>
+            <div class="section-label">6 · Parallel lines</div>
             <h2>Parallel lines from a contradiction</h2>
             <p>
                 Take two parallel lines, <code>y = x + 1</code> and
@@ -1462,8 +1432,11 @@
                 <span class="inline-pm">±</span> signs the same sign, or
                 independent? Independent signs give four lines. A shared sign
                 gives two, with the steeper slope paired to the higher
-                intercept, because one ε picks both. A set of values cannot
-                express that pairing. Naming the sign can.
+                intercept, because one sign choice picks both. A plain set of
+                values cannot express that pairing. It only records which
+                values occur. The notation needs a way to mark two
+                <span class="inline-pm">±</span> signs as the same sign, and
+                the toggle stands in for that mark.
             </p>
 
             <div class="demo-box">
@@ -1558,111 +1531,52 @@
             </div>
         </section>
 
-        <!-- ============ USES ============ -->
+        <!-- ============ APPLICATIONS ============ -->
         <section>
-            <div class="section-label">8 · Possible uses</div>
-            <h2>Where it might be useful</h2>
-            <p class="lead">
-                None of these are worked out. They are the places I would look
-                first.
+            <div class="section-label">7 · Applications</div>
+            <h2>Quantum calculations</h2>
+            <p>
+                Duplex numbers can help build an intuition for what a quantum
+                computer does. Think of a duplex number as an extra numerical
+                type available on the machine, one that can take a modulus or
+                raise to a power across every value it holds in a single
+                operation. On an ordinary computer each value would have to be
+                handled separately, and the work grows with the number of
+                values represented, which for a chain of
+                <em>n</em> spreads is 2<sup>n</sup>.
             </p>
-
-            <div class="app-grid">
-                <div class="app-card" data-num="1">
-                    <h3>Checking digital circuits</h3>
-                    <p>
-                        A logic line that could be 0 or 1 is
-                        <code>0.5 <span class="inline-pm">±</span> 0.5</code>.
-                        Feed duplex inputs through an arithmetic circuit and
-                        every combination of inputs is evaluated in one pass,
-                        without listing them out.
-                    </p>
-                </div>
-                <div class="app-card" data-num="2">
-                    <h3>Values that belong together</h3>
-                    <p>
-                        Any situation where two or more values should be
-                        treated as one thing: exploratory maths, teaching ideas
-                        like modular arithmetic, or a programming language
-                        where "these are the same" is built in.
-                    </p>
-                </div>
-                <div class="app-card" data-num="3">
-                    <h3>Symmetric results</h3>
-                    <p>
-                        Results that come in symmetric pairs, or in sets of
-                        two, four, eight and so on, can be written as one
-                        duplex number instead of a list. Eigenvalues of 2×2
-                        matrices, roots of even polynomials, and symmetric
-                        solutions of equations all fit.
-                    </p>
-                </div>
-                <div class="app-card" data-num="4">
-                    <h3>Explaining superposition</h3>
-                    <p>
-                        A duplex number holds several ordinary values as one
-                        object, without any of the machinery of quantum
-                        mechanics. That makes it a gentle first step towards
-                        quantum states, and possibly a compact way to reason
-                        about classical versions of quantum algorithms.
-                    </p>
-                </div>
-                <div class="app-card" data-num="5">
-                    <h3>Evaluating many inputs at once</h3>
-                    <p>
-                        Running a computation on a duplex input runs it on
-                        every branch together. For search over discrete
-                        choices, symbolic reasoning, or batched inference where
-                        the branches are alternative continuations, the
-                        notation could carry the multiplicity through the
-                        calculation.
-                    </p>
-                </div>
-                <div class="app-card" data-num="6">
-                    <h3>Something of yours</h3>
-                    <p>
-                        If one of these sits near something you already work
-                        on, you are better placed than I am to test it. The
-                        licence below means you can take the idea and use it
-                        without asking anyone.
-                    </p>
-                </div>
-            </div>
+            <p>
+                Found a new use for duplex numbers?
+                <a
+                    href="https://github.com/quaadgras/duplexnumbers.com"
+                    target="_blank"
+                    rel="noopener"
+                    >Open a pull request</a
+                >.
+            </p>
         </section>
 
         <!-- ============ RELATED ============ -->
         <section>
-            <div class="section-label">9 · Related ideas</div>
+            <div class="section-label">8 · Related ideas</div>
             <h2>How this relates to existing maths</h2>
             <p>
                 The closest established techniques are interval arithmetic and
                 affine arithmetic (<code>x₀ + x₁ε₁ + x₂ε₂ + …</code> with each
                 εᵢ somewhere in [−1, 1]). Both are about uncertainty. Their ±
                 stands for a range or a noise term, and the aim is to bound
-                where a quantity might be.
+                where a quantity might be. Duplex numbers use the same shape of
+                expression with each sign restricted to +1 or −1, and read the
+                result as one number rather than a bound: an exact, finite
+                multiset of values, all of them equal to it.
             </p>
-
             <p>
-                Duplex numbers, read as superpositions, are different. The ± is
-                a discrete branch that produces an exact, finite set of values,
-                and the number is all of those values together. Saying that
-                0.5 ± 0.5 is 0 and 1 makes no claim that the value is unknown.
-                It says the two values are one thing, and stay one thing
-                through arithmetic.
-            </p>
-
-            <p>
-                The idea has more neighbours than I first realised.
-                Split-complex numbers are the single-± case with its sign
-                named, and have occasionally been called duplex numbers
-                already. The coin-toss reading is a Rademacher sum, and the
-                question of repeated values is the Littlewood–Offord problem.
-                Geometrically, the 2<sup>n</sup> values are the corners of an
-                n-dimensional box projected onto a line. What I have not found
-                is anyone treating these sets as numbers in their own right,
-                with notation, arithmetic, and the superposition reading. If
-                you know of prior work that does, I would like to hear about
-                it.
+                Choosing each sign by a coin toss turns a duplex number into a
+                Rademacher sum, and the question of which spreads make values
+                repeat is the Littlewood–Offord problem. Geometrically, the
+                2<sup>n</sup> values are the corners of an n-dimensional box
+                projected onto a line. If you know of other related work, open
+                an issue on the repository.
             </p>
         </section>
 
@@ -1745,10 +1659,10 @@
                     <div class="footer-label">source</div>
                     <p class="footer-text">
                         <a
-                            href="https://github.com/quaadgras/duplex-numbers"
+                            href="https://github.com/quaadgras/duplexnumbers.com"
                             target="_blank"
                             rel="noopener"
-                            >github.com/quaadgras/duplex-numbers</a
+                            >github.com/quaadgras/duplexnumbers.com</a
                         >
                     </p>
                 </div>
