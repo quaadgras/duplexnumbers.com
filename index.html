@@ -179,6 +179,61 @@
                 scroll-margin-top: 1.5rem;
             }
 
+            .maths-switch {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 1.25rem;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.78rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                cursor: pointer;
+            }
+
+            .maths-switch input {
+                accent-color: var(--red);
+            }
+
+            details.maths {
+                margin: 1.5rem 0;
+                border-left: 2px solid rgba(201, 74, 62, 0.45);
+                padding-left: 1.25rem;
+            }
+
+            details.maths > summary {
+                cursor: pointer;
+                list-style: none;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.78rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--red);
+                padding: 0.25rem 0;
+            }
+
+            details.maths > summary::-webkit-details-marker {
+                display: none;
+            }
+
+            details.maths > summary::before {
+                content: "+ ";
+            }
+
+            details.maths[open] > summary::before {
+                content: "− ";
+            }
+
+            details.maths > summary:focus-visible {
+                outline: 1px dashed var(--red);
+                outline-offset: 3px;
+            }
+
+            .maths-body {
+                padding-top: 0.5rem;
+            }
+
             /* ---------- SECTIONS ---------- */
             section {
                 max-width: 1200px;
@@ -1143,6 +1198,10 @@
                     <a href="#applications">applications</a>
                     <a href="#related">related ideas</a>
                 </nav>
+                <label class="maths-switch">
+                    <input type="checkbox" id="mathsSwitch" />
+                    <span>show all the maths</span>
+                </label>
             </div>
         </section>
 
@@ -1231,6 +1290,15 @@
                 4 and 16, which is 10 <span class="inline-pm">±</span> 6.
             </div>
 
+            <p>
+                Multiplying two different duplex numbers usually gives values
+                that no duplex number can hold. What happens instead, and how
+                far the notation can be stretched to cover it, is in the panel
+                below.
+            </p>
+            <details class="maths">
+                <summary>the maths: multiplying two duplex numbers, and whether there is a full algebra</summary>
+                <div class="maths-body">
             <h3 style="margin-top: 3rem; margin-bottom: 0.5rem">
                 Multiplying two duplex numbers
             </h3>
@@ -1277,12 +1345,52 @@
             </div>
 
             <p>
-                The extended numbers close the notation under multiplication,
-                in the way that fractions close the whole numbers under
-                division. The rules fit on one card:
+                The extended numbers do not close the notation under
+                multiplication. They extend it to cover one more kind of
+                factor, at the cost of one extra number per factor. The rules
+                fit on one card:
                 <a href="multiplication.svg">multiplication.svg</a>, also as a
                 <a href="multiplication.png">png</a>.
             </p>
+
+            <h3 style="margin-top: 3rem; margin-bottom: 0.5rem">
+                Is there a full algebra?
+            </h3>
+            <p>
+                Yes, and it is the values themselves. Write out all
+                2<sup>n</sup> values of a duplex number as a list, one per
+                choice of signs. Lists add and multiply entry by entry, and
+                every law of arithmetic holds. That list algebra is the full
+                algebra, and the calculator's resulting distribution is an
+                element of it.
+            </p>
+            <p>
+                A duplex number is the special case where the list has the
+                form a <span class="inline-pm">±</span> b <span class="inline-pm">±</span> c. For one spread, every list of two values
+                has that form, so the duplex numbers and the full algebra are
+                the same thing, the split-complex numbers, and multiplication
+                with a shared sign stays inside:
+                (5 <span class="inline-pm">±</span> 2)(3 <span class="inline-pm">±</span> 1) = 17 <span class="inline-pm">±</span> 11. In this algebra
+                0.5 <span class="inline-pm">±</span> 0.5 is a number equal to its own square, and a number
+                with that property, other than 0 and 1, is exactly a number
+                that is 0 in one place and 1 in another. The equality reading
+                in the superposition section is that fact.
+            </p>
+            <p>
+                For two or more spreads the duplex numbers are a slice of the
+                full algebra, n + 1 numbers out of 2<sup>n</sup>, and no slice
+                that small can be closed under multiplication: the signs tell
+                every choice apart from every other, and anything closed under
+                multiplication that can tell all the choices apart must be the
+                whole algebra. So there is a choice. Keep the short writing and
+                lose closure, or keep closure and write all 2<sup>n</sup>
+                numbers. The duplextended form is a chart for a few extra
+                points that the slice misses, and the
+                <span class="inline-pm">⋇</span> rule is what it costs to
+                reach them.
+            </p>
+                </div>
+            </details>
         </section>
 
         <!-- ============ CALCULATOR ============ -->
@@ -1447,6 +1555,24 @@
                 </div>
             </div>
 
+            <details class="maths">
+                <summary>the maths: why 0.5 ± 0.5 really is 0 and 1</summary>
+                <div class="maths-body">
+            <p>
+                Square it with the shared-sign rule and it comes back
+                unchanged: (0.5 <span class="inline-pm">±</span> 0.5)² = 0.5 <span class="inline-pm">±</span> 0.5. A number that
+                equals its own square, other than 0 and 1, is called an
+                idempotent, and in the two-value algebra of one
+                <span class="inline-pm">±</span> the idempotents are exactly the numbers that are 1 in
+                one place and 0 in the other. Multiply it by its mirror,
+                0.5 ∓ 0.5, and you get 0, so the algebra splits into two
+                halves along it. Algebraists call this a Peirce decomposition.
+                "A number that is 0 and 1 at once" is the plain-English
+                reading of that theorem, not a figure of speech.
+            </p>
+                </div>
+            </details>
+
             <h3 style="margin-top: 3.5rem; margin-bottom: 0.5rem">
                 Grandi's series
             </h3>
@@ -1527,6 +1653,9 @@
                 form.
             </p>
 
+            <details class="maths">
+                <summary>the maths: repeated values, and chains that never stop</summary>
+                <div class="maths-body">
             <div class="aside">
                 <strong>Repeated values</strong>
                 All 2<sup>n</sup> values are different exactly when no signed
@@ -1556,6 +1685,8 @@
                 give a smooth distribution is a question Erdős raised in 1939,
                 and it is still open.
             </p>
+                </div>
+            </details>
         </section>
 
         <!-- ============ EIGENVALUES ============ -->
@@ -1597,6 +1728,9 @@
                 <code>a ± √(b² + c² − d²)</code>.
             </p>
 
+            <details class="maths">
+                <summary>the maths: a duplex number as a matrix, and bigger matrices</summary>
+                <div class="maths-body">
             <h3 style="margin-top: 3.5rem; margin-bottom: 0.5rem">
                 Bigger matrices
             </h3>
@@ -1659,6 +1793,8 @@
                 way that multiplying two duplex numbers leaves the duplex
                 form.
             </p>
+                </div>
+            </details>
         </section>
 
         <!-- ============ PARALLEL LINES ============ -->
@@ -1856,6 +1992,9 @@
                 result as one number rather than a bound: an exact, finite
                 multiset of values, all of them equal to it.
             </p>
+            <details class="maths">
+                <summary>the maths: names for the pieces</summary>
+                <div class="maths-body">
             <p>
                 Choosing each sign by a coin toss turns a duplex number into a
                 Rademacher sum, and the question of which spreads make values
@@ -1864,6 +2003,8 @@
                 projected onto a line. If you know of other related work, open
                 an issue on the repository.
             </p>
+                </div>
+            </details>
         </section>
 
         <!-- ============ FOOTER ============ -->
@@ -2932,6 +3073,35 @@
             document
                 .querySelectorAll('input[name="signMode"]')
                 .forEach((el) => el.addEventListener("change", drawLines));
+
+            // ============ THE MATHS SWITCH ============
+            (function setupMathsSwitch() {
+                const sw = document.getElementById("mathsSwitch");
+                const panels = document.querySelectorAll("details.maths");
+                if (!sw) return;
+                const apply = (on) => {
+                    panels.forEach((d) => (d.open = on));
+                    sw.checked = on;
+                    try {
+                        localStorage.setItem("showMaths", on ? "1" : "0");
+                    } catch (e) {}
+                };
+                let saved = null;
+                try {
+                    saved = localStorage.getItem("showMaths");
+                } catch (e) {}
+                if (saved === "1") apply(true);
+                sw.addEventListener("change", () => apply(sw.checked));
+                // If a link targets a section, open its panels so nothing is hidden.
+                panels.forEach((d) =>
+                    d.addEventListener("toggle", () => {
+                        const allOpen = [...panels].every((p) => p.open);
+                        const noneOpen = [...panels].every((p) => !p.open);
+                        if (allOpen) sw.checked = true;
+                        if (noneOpen) sw.checked = false;
+                    }),
+                );
+            })();
 
             // ============ INIT ============
 
