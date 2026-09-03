@@ -1097,8 +1097,20 @@
                 <span class="inline-pm">±</span> b
                 <span class="inline-pm">±</span> d. Subtraction works the same
                 way, and multiplying by an ordinary number scales the centre
-                and every spread. Multiplying two duplex numbers together is
-                not defined.
+                and every spread. Squaring a duplex number, or applying any
+                function to it, is done value by value:
+                (3 <span class="inline-pm">±</span> 1)² is 4 and 16, which is
+                10 <span class="inline-pm">±</span> 6. Multiplying two
+                different duplex numbers is another matter. Every sign of one
+                meets every sign of the other, and the result usually does
+                not sit symmetrically around any centre, so it leaves the
+                duplex form. Sometimes it stays: (0
+                <span class="inline-pm">±</span> 2)(0
+                <span class="inline-pm">±</span> 2) is 4, −4, −4, 4, which is
+                0 <span class="inline-pm">±</span> 4. Closing the notation
+                under multiplication needs an extended form, in the way that
+                fractions close the whole numbers under division. This page
+                does not cover it yet.
             </div>
         </section>
 
@@ -1209,13 +1221,26 @@
             </p>
             <p>
                 Things do break. You cannot ask which value a duplex number
-                has, and multiplying two of them together is not defined. But
-                a surprising amount still works. You can add them, scale them,
-                take their mean and variance, and read the eigenvalues of a
-                matrix off one. The parallel lines section shows the clearest
-                case: two lines that never meet produce a contradiction, the
-                contradiction becomes a duplex number, and the number draws
-                both lines.
+                has, and multiplying two different duplex numbers usually
+                leaves the duplex form. But a surprising amount still works.
+                You can add them, scale them, take their mean and variance,
+                and read the eigenvalues of a matrix off one. The parallel
+                lines section shows the clearest case: two lines that never
+                meet produce a contradiction, the contradiction becomes a
+                duplex number, and the number draws both lines.
+            </p>
+            <p>
+                The rule for what still works is this: a duplex number is one
+                number, so it takes one value everywhere it appears in a
+                calculation. Square 0 <span class="inline-pm">±</span> 2 and
+                −2 is paired with −2 and 2 with 2, never −2 with 2. Both paths
+                give 4, so (0 <span class="inline-pm">±</span> 2)² = 4, and
+                0 <span class="inline-pm">±</span> 2 is the square root of 4,
+                both roots, as one number. The same rule squares the number
+                above: (0.5 <span class="inline-pm">±</span> 0.5)² is
+                0.5 <span class="inline-pm">±</span> 0.5, its own square, just
+                as 0 and 1 are. Two different duplex numbers do not share a
+                sign, which is why their product behaves differently.
             </p>
 
             <div class="pair-grid">
@@ -1435,11 +1460,15 @@
                 <span class="inline-pm">±</span> signs the same sign, or
                 independent? Independent signs give four lines. A shared sign
                 gives two, with the steeper slope paired to the higher
-                intercept, because one sign choice picks both. A plain set of
-                values cannot express that pairing. It only records which
-                values occur. The notation needs a way to mark two
-                <span class="inline-pm">±</span> signs as the same sign, and
-                the toggle stands in for that mark.
+                intercept, because one sign choice picks both. The rule from
+                the superposition section decides which you get. Build the
+                slope and intercept from one duplex number, t = 0
+                <span class="inline-pm">±</span> 1, as
+                <code>y = (m + kt)x + (b + dt)</code>, and t takes one value
+                in both places, so there are two lines. Write them as two
+                separate duplex numbers and the signs are independent, so
+                there are four. A plain set of values cannot express that
+                difference. It only records which values occur.
             </p>
 
             <div class="demo-box">
@@ -1493,7 +1522,7 @@
                         <span id="spread1Val">1.00</span>
                     </label>
                     <fieldset class="sign-toggle">
-                        <legend>the two ± signs are</legend>
+                        <legend>the two ± come from</legend>
                         <label>
                             <input
                                 type="radio"
@@ -1501,11 +1530,11 @@
                                 value="independent"
                                 checked
                             />
-                            independent
+                            two separate numbers
                         </label>
                         <label>
                             <input type="radio" name="signMode" value="shared" />
-                            the same sign
+                            one number, used twice
                         </label>
                     </fieldset>
                 </div>
@@ -2327,8 +2356,8 @@
                     ` · ${lines.length} line${lines.length === 1 ? "" : "s"}` +
                     (k > 0 && d > 0
                         ? shared
-                            ? ", one shared sign"
-                            : ", independent signs"
+                            ? ", one number used twice"
+                            : ", two separate numbers"
                         : "");
 
                 ctx.fillStyle = "#f3ecd9";
