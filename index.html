@@ -891,6 +891,72 @@
                 right: 0;
                 border-left: none;
             }
+            .mrow {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem 1.25rem;
+                flex-wrap: wrap;
+                overflow-x: auto;
+            }
+
+            .mfig {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .mfig .tag {
+                margin: 0;
+            }
+
+            .mgrid {
+                display: inline-grid;
+                grid-template-columns: repeat(var(--n, 2), auto);
+                gap: 0.3rem 1rem;
+                padding: 0.6rem 1.1rem;
+                position: relative;
+                font-family: "Fraunces", serif;
+                font-size: 1.2rem;
+                line-height: 1.3;
+                text-align: center;
+                font-variant-numeric: tabular-nums;
+            }
+
+            .mgrid::before,
+            .mgrid::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 8px;
+                border: 1.5px solid var(--ink);
+            }
+            .mgrid::before {
+                left: 0;
+                border-right: none;
+            }
+            .mgrid::after {
+                right: 0;
+                border-left: none;
+            }
+
+            .mgrid .z {
+                color: var(--ink-soft);
+                opacity: 0.4;
+            }
+
+            .mgrid .hi {
+                color: var(--red);
+                font-weight: 600;
+            }
+
+            .mop {
+                font-family: "Fraunces", serif;
+                font-size: 1.5rem;
+                color: var(--ink-soft);
+            }
+
             .matrix input {
                 width: 3rem;
                 font-family: "Fraunces", serif;
@@ -1483,29 +1549,63 @@
                 Bigger matrices
             </h3>
             <p>
-                A duplex number is also a matrix in its own right. Let Z be
-                the 2×2 matrix with 1 and −1 on the diagonal. Then
-                5 <span class="inline-pm">±</span> 2 is 5I + 2Z, whose
-                eigenvalues are 7 and 3. Each further
-                <span class="inline-pm">±</span> doubles the size of the
-                matrix, so 5 <span class="inline-pm">±</span> 2
-                <span class="inline-pm">±</span> 1 is a 4×4 matrix with 8, 6,
-                4 and 2 on its diagonal. The calculator's tree is that
-                diagonal.
+                A duplex number is also a matrix in its own right. Put the
+                centre on every diagonal entry, then add the spread to one
+                entry and subtract it from the other. The result has the two
+                values of the duplex number on its diagonal, and a diagonal
+                matrix has its diagonal as its eigenvalues.
             </p>
+
+            <div class="demo-box">
+                <div class="mrow"><div class="mfig"><div class="tag">centre</div><div class="mgrid" style="--n: 2"><span>5</span><span class="z">0</span><span class="z">0</span><span>5</span></div></div><span class="mop">+</span><div class="mfig"><div class="tag">spread</div><div class="mgrid" style="--n: 2"><span>2</span><span class="z">0</span><span class="z">0</span><span>−2</span></div></div><span class="mop">=</span><div class="mfig"><div class="tag">5 <span class="inline-pm">±</span> 2</div><div class="mgrid" style="--n: 2"><span class="hi">7</span><span class="z">0</span><span class="z">0</span><span class="hi">3</span></div></div></div>
+            </div>
+
+            <p>
+                Each further <span class="inline-pm">±</span> doubles the size of the matrix. The first
+                spread is added to the top half and subtracted from the bottom
+                half, the second alternates entry by entry, and so on. The
+                diagonal is the calculator's tree, read from the leftmost leaf
+                to the rightmost.
+            </p>
+
+            <div class="demo-box">
+                <div class="mrow"><div class="mfig"><div class="tag">5 <span class="inline-pm">±</span> 2 <span class="inline-pm">±</span> 1</div><div class="mgrid" style="--n: 4"><span class="hi">8</span><span class="z">0</span><span class="z">0</span><span class="z">0</span><span class="z">0</span><span class="hi">6</span><span class="z">0</span><span class="z">0</span><span class="z">0</span><span class="z">0</span><span class="hi">4</span><span class="z">0</span><span class="z">0</span><span class="z">0</span><span class="z">0</span><span class="hi">2</span></div></div></div>
+                <p class="demo-note">
+                    5 + 2 + 1, 5 + 2 − 1, 5 − 2 + 1, 5 − 2 − 1. A repeated
+                    path is a value that appears twice on the diagonal.
+                </p>
+            </div>
+
+            <p>
+                The 2×2 formula above extends to any matrix built from
+                independent parts. Find the duplex number of each part with
+                the formula, then add the duplex numbers. The combined matrix
+                is full of off-diagonal entries, but its eigenvalues are still
+                one chain.
+            </p>
+
+            <div class="demo-box">
+                <div class="mrow"><div class="mfig"><div class="tag">part 1 → 3.5 <span class="inline-pm">±</span> 1.5</div><div class="mgrid" style="--n: 2"><span>4</span><span>1</span><span>2</span><span>3</span></div></div><span class="mop">and</span><div class="mfig"><div class="tag">part 2 → 1 <span class="inline-pm">±</span> 2</div><div class="mgrid" style="--n: 2"><span>1</span><span>2</span><span>2</span><span>1</span></div></div><span class="mop">→</span><div class="mfig"><div class="tag">together → 4.5 <span class="inline-pm">±</span> 1.5 <span class="inline-pm">±</span> 2</div><div class="mgrid" style="--n: 4"><span>5</span><span>2</span><span>1</span><span class="z">0</span><span>2</span><span>5</span><span class="z">0</span><span>1</span><span>2</span><span class="z">0</span><span>4</span><span>2</span><span class="z">0</span><span>2</span><span>2</span><span>4</span></div></div></div>
+                <p class="demo-note">
+                    The combined matrix applies part 1 to the first half of
+                    each state and part 2 to the second half, and each
+                    combination of one eigenvalue from each part appears once.
+                    That is duplex addition: the four eigenvalues are 1, 4, 5
+                    and 8.
+                </p>
+            </div>
+
             <p>
                 Physicists meet this every day. A system made of
                 <em>n</em> independent parts, each of which can be in one of
                 two states, has 2<sup>n</sup> energy levels, and they are
-                always a duplex number: E₀
-                <span class="inline-pm">±</span> ε₁
-                <span class="inline-pm">±</span> ε₂
-                <span class="inline-pm">±</span> … The n spreads come from a
-                problem of size n, not 2<sup>n</sup>, which is why such
-                systems are called exactly solvable. Levels that coincide are
-                repeated paths. When the parts interact, extra terms appear
-                that the notation cannot hold, in the same way that
-                multiplying two duplex numbers leaves the duplex form.
+                always a duplex number: E₀ <span class="inline-pm">±</span> ε₁ <span class="inline-pm">±</span> ε₂ <span class="inline-pm">±</span> … The n
+                spreads come from a problem of size n, not 2<sup>n</sup>,
+                which is why such systems are called exactly solvable. Levels
+                that coincide are repeated paths. When the parts interact,
+                extra terms appear that the notation cannot hold, in the same
+                way that multiplying two duplex numbers leaves the duplex
+                form.
             </p>
         </section>
 
