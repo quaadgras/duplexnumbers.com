@@ -27,7 +27,7 @@
         <meta property="og:image:height" content="630" />
         <meta
             property="og:image:alt"
-            content="Duplex Numbers. A branching tree showing how 5 ± 2 ± 1 splits into its values."
+            content="Duplex Numbers. 5 ± 2 ± 1 is one number with four values: 2, 4, 6 and 8, shown as a branching tree."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
@@ -44,7 +44,7 @@
         />
         <meta
             name="twitter:image:alt"
-            content="Duplex Numbers. A branching tree showing how 5 ± 2 ± 1 splits into its values."
+            content="Duplex Numbers. 5 ± 2 ± 1 is one number with four values: 2, 4, 6 and 8, shown as a branching tree."
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -146,10 +146,38 @@
                 color: var(--ink-soft);
                 max-width: 42rem;
                 font-weight: 400;
-                margin-bottom: 3rem;
+                margin-bottom: 2rem;
                 font-style: italic;
             }
 
+
+            .contents {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.4rem 1.4rem;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.78rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .contents a {
+                color: var(--ink-soft);
+                text-decoration: none;
+                border-bottom: 1px solid rgba(26, 24, 20, 0.25);
+                padding-bottom: 1px;
+            }
+
+            .contents a:hover,
+            .contents a:focus-visible {
+                color: var(--red);
+                border-bottom-color: var(--red);
+                outline: none;
+            }
+
+            section[id] {
+                scroll-margin-top: 1.5rem;
+            }
 
             /* ---------- SECTIONS ---------- */
             section {
@@ -1105,11 +1133,21 @@
                     represent, and has a calculator so you can try it for
                     yourself.
                 </p>
+                <nav class="contents" aria-label="contents">
+                    <a href="#notation">notation</a>
+                    <a href="#calculator">calculator</a>
+                    <a href="#superposition">superposition</a>
+                    <a href="#statistics">mean and variance</a>
+                    <a href="#eigenvalues">eigenvalues</a>
+                    <a href="#lines">parallel lines</a>
+                    <a href="#applications">applications</a>
+                    <a href="#related">related ideas</a>
+                </nav>
             </div>
         </section>
 
         <!-- ============ NOTATION ============ -->
-        <section>
+        <section id="notation">
             <div class="section-label">1 · The notation</div>
             <h2>One expression, several values</h2>
             <p class="lead">
@@ -1246,7 +1284,7 @@
         </section>
 
         <!-- ============ CALCULATOR ============ -->
-        <section>
+        <section id="calculator">
             <div class="section-label">2 · Calculator</div>
             <h2>Try it</h2>
             <p>
@@ -1301,6 +1339,18 @@
                     >
                         ↺ reset
                     </button>
+                    <button
+                        class="pm-btn"
+                        id="calcLinkBtn"
+                        onclick="copyCalcLink()"
+                        style="
+                            border-color: var(--ink-soft);
+                            color: var(--ink-soft);
+                        "
+                        title="copy a link that opens this expression"
+                    >
+                        ⧉ copy link to this expression
+                    </button>
                 </div>
 
                 <div id="compactForm" class="compact-form" hidden></div>
@@ -1339,7 +1389,7 @@
         </section>
 
         <!-- ============ SUPERPOSITION ============ -->
-        <section>
+        <section id="superposition">
             <div class="section-label">3 · Superposition</div>
             <h2>One number, equal to all of its values</h2>
             <p class="lead">
@@ -1428,7 +1478,7 @@
         </section>
 
         <!-- ============ STATISTICS ============ -->
-        <section>
+        <section id="statistics">
             <div class="section-label">4 · Mean and variance</div>
             <h2>Every duplex number is a distribution</h2>
             <p>
@@ -1507,7 +1557,7 @@
         </section>
 
         <!-- ============ EIGENVALUES ============ -->
-        <section>
+        <section id="eigenvalues">
             <div class="section-label">5 · Eigenvalues</div>
             <h2>Eigenvalues of a 2×2 matrix</h2>
             <p>
@@ -1610,7 +1660,7 @@
         </section>
 
         <!-- ============ PARALLEL LINES ============ -->
-        <section>
+        <section id="lines">
             <div class="section-label">6 · Parallel lines</div>
             <h2>Parallel lines from a contradiction</h2>
             <p>
@@ -1766,7 +1816,7 @@
         </section>
 
         <!-- ============ APPLICATIONS ============ -->
-        <section>
+        <section id="applications">
             <div class="section-label">7 · Applications</div>
             <h2>Quantum calculations</h2>
             <p>
@@ -1791,7 +1841,7 @@
         </section>
 
         <!-- ============ RELATED ============ -->
-        <section>
+        <section id="related">
             <div class="section-label">8 · Related ideas</div>
             <h2>How this relates to existing maths</h2>
             <p>
@@ -1924,6 +1974,110 @@
             // Expression is: [{ op: null, term }, { op: '+' | '×', term }, ...]
 
             let expression = [{ op: null, term: { coeffs: [5, 2, 1] } }];
+
+            // ============ URL STATE ============
+            // #e=5,2,1|x3|x3,1|d2   first part: coefficients of the ± chain;
+            //                      then x (×), d (⋇) or p (+) followed by coefficients.
+            // #l=m,k,b,d,s          parallel lines sliders; s = 1 for one shared sign.
+            const OP_CODE = { "×": "x", "⋇": "d", "+": "p" };
+            const CODE_OP = { x: "×", d: "⋇", p: "+" };
+
+            function encodeExpression() {
+                return expression
+                    .map((part, i) => {
+                        const nums = part.term.coeffs.map((c) => +c).join(",");
+                        return i === 0 ? nums : OP_CODE[part.op] + nums;
+                    })
+                    .join("|");
+            }
+
+            function decodeExpression(text) {
+                try {
+                    const parts = text.split("|");
+                    const nums = (s) =>
+                        s.split(",").map((v) => {
+                            const n = parseFloat(v);
+                            if (!Number.isFinite(n)) throw new Error("bad number");
+                            return n;
+                        });
+                    const first = nums(parts[0]);
+                    if (first.length === 0 || first.length > 8) return null;
+                    const out = [{ op: null, term: { coeffs: first } }];
+                    for (const p of parts.slice(1)) {
+                        const op = CODE_OP[p[0]];
+                        if (!op) return null;
+                        const co = nums(p.slice(1));
+                        if (co.length === 0 || co.length > 2) return null;
+                        out.push({ op, term: { coeffs: co }, isScalar: co.length === 1 });
+                        if (out.length > 6) return null;
+                    }
+                    return out;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function readUrlState() {
+                const params = new URLSearchParams(location.hash.slice(1));
+                const e = params.get("e");
+                if (e) {
+                    const decoded = decodeExpression(e);
+                    if (decoded) expression = decoded;
+                }
+                const l = params.get("l");
+                if (l) {
+                    const v = l.split(",").map(parseFloat);
+                    const set = (id, x) => {
+                        const el = document.getElementById(id);
+                        if (el && Number.isFinite(x)) el.value = x;
+                    };
+                    set("slopeSlider", v[0]);
+                    set("slopeSpreadSlider", v[1]);
+                    set("centerSlider", v[2]);
+                    set("spread1Slider", v[3]);
+                    const shared = document.querySelector(
+                        'input[name="signMode"][value="shared"]',
+                    );
+                    if (shared && v[4] === 1) shared.checked = true;
+                }
+            }
+
+            let urlStateReady = false;
+            function writeUrlState() {
+                if (!urlStateReady) return;
+                const params = new URLSearchParams();
+                const e = encodeExpression();
+                if (e !== "5,2,1") params.set("e", e);
+                const val = (id) => +document.getElementById(id).value;
+                const shared =
+                    document.querySelector('input[name="signMode"]:checked')
+                        .value === "shared";
+                const l = [
+                    val("slopeSlider"),
+                    val("slopeSpreadSlider"),
+                    val("centerSlider"),
+                    val("spread1Slider"),
+                    shared ? 1 : 0,
+                ].join(",");
+                if (l !== "0.8,0,2,1,0") params.set("l", l);
+                const hash = params.toString().replace(/%2C/g, ",").replace(/%7C/g, "|");
+                const url =
+                    location.pathname + location.search + (hash ? "#" + hash : "");
+                history.replaceState(null, "", url);
+            }
+
+            async function copyCalcLink() {
+                writeUrlState();
+                const btn = document.getElementById("calcLinkBtn");
+                const original = btn.textContent;
+                try {
+                    await navigator.clipboard.writeText(location.href);
+                    btn.textContent = "copied";
+                } catch (e) {
+                    btn.textContent = "copy failed";
+                }
+                setTimeout(() => (btn.textContent = original), 1500);
+            }
 
             function expandTerm(term) {
                 // Given [a, b, c, ...], return all 2^(n-1) values
@@ -2580,6 +2734,7 @@
                 renderValues(values);
                 renderTree();
                 renderCompactForm();
+                writeUrlState();
             }
 
             // ============ EIGENVALUE DEMO ============
@@ -2748,6 +2903,8 @@
                 });
                 ctx.globalAlpha = 1;
 
+                writeUrlState();
+
                 // label intercepts once each
                 const labelled = new Set();
                 ctx.fillStyle = "#1a1814";
@@ -2776,10 +2933,12 @@
 
             // ============ INIT ============
 
+            readUrlState();
             renderExpression();
             update();
             updateEigen();
             drawLines();
+            urlStateReady = true;
 
             // Deferred re-fit: layout isn't always ready on first render
             requestAnimationFrame(() => {
