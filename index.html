@@ -3,19 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Duplex Numbers — a small field guide</title>
+        <title>Duplex Numbers</title>
         <meta
             name="description"
-            content="Duplex Numbers — a small field guide. An underexplored representation in mathematics: a single expression that secretly holds many values."
+            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, the arithmetic that works on it, and a calculator to try it."
         />
         <link rel="canonical" href="https://duplexnumbers.com/" />
         <meta
             property="og:title"
-            content="Duplex Numbers — a small field guide"
+            content="Duplex Numbers"
         />
         <meta
             property="og:description"
-            content="An underexplored representation in mathematics: a single expression that secretly holds many values."
+            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, the arithmetic that works on it, and a calculator to try it."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://duplexnumbers.com/" />
@@ -27,16 +27,16 @@
         <meta property="og:image:height" content="630" />
         <meta
             property="og:image:alt"
-            content="Duplex Numbers — a small field guide. A branching tree illustrating how 5 ± 2 ± 1 expands into eight values."
+            content="Duplex Numbers. A branching tree showing how 5 ± 2 ± 1 splits into its values."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
             name="twitter:title"
-            content="Duplex Numbers — a small field guide"
+            content="Duplex Numbers"
         />
         <meta
             name="twitter:description"
-            content="An underexplored representation in mathematics: a single expression that secretly holds many values."
+            content="Duplex numbers: expressions like 5 ± 2 ± 1 read as one number holding several values at once. The notation, the arithmetic that works on it, and a calculator to try it."
         />
         <meta
             name="twitter:image"
@@ -44,12 +44,12 @@
         />
         <meta
             name="twitter:image:alt"
-            content="Duplex Numbers — a small field guide. A branching tree illustrating how 5 ± 2 ± 1 expands into eight values."
+            content="Duplex Numbers. A branching tree showing how 5 ± 2 ± 1 splits into its values."
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400;600&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&display=swap"
             rel="stylesheet"
         />
         <style>
@@ -101,13 +101,13 @@
 
             /* ---------- HERO ---------- */
             .hero {
-                min-height: 95vh;
-                padding: 4rem 2rem 2rem 2.5rem;
+                min-height: 70vh;
+                padding: 4rem 2rem 2rem;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 position: relative;
-                max-width: 1400px;
+                max-width: 1200px;
                 margin: 0 auto;
             }
 
@@ -116,14 +116,6 @@
                 z-index: 2;
             }
 
-            .eyebrow {
-                font-family: "Caveat", cursive;
-                font-size: 1.6rem;
-                color: var(--red);
-                transform: rotate(-2deg);
-                margin-bottom: 1rem;
-                display: inline-block;
-            }
 
             h1 {
                 font-family: "Fraunces", serif;
@@ -158,19 +150,6 @@
                 font-style: italic;
             }
 
-            .scroll-cue {
-                font-family: "Caveat", cursive;
-                color: var(--ink-soft);
-                font-size: 1.3rem;
-                transform: rotate(-3deg);
-                margin-top: 2rem;
-                opacity: 0.7;
-            }
-
-            .scroll-cue::before {
-                content: "↓ ";
-                color: var(--red);
-            }
 
             /* ---------- SECTIONS ---------- */
             section {
@@ -185,23 +164,68 @@
                 }
             }
 
-            .section-label {
+            .section-label,
+            .tag,
+            .calc-label,
+            .output-card h4,
+            .footer-label,
+            .share-label,
+            .aside strong {
+                display: block;
                 font-family: "JetBrains Mono", monospace;
-                font-size: 0.75rem;
-                letter-spacing: 0.2em;
+                font-size: 0.72rem;
+                font-weight: 500;
+                letter-spacing: 0.18em;
                 text-transform: uppercase;
                 color: var(--red);
+                margin-bottom: 0.75rem;
+            }
+
+            .section-label {
                 margin-bottom: 1rem;
+            }
+
+            .example-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 1rem;
+                margin: 2rem 0;
+            }
+
+            .example-note {
+                color: var(--ink-soft);
+                font-size: 0.9rem;
+                margin-top: 0.3rem;
+            }
+
+            .pair-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .big-formula {
+                font-family: "Fraunces", serif;
+                font-size: 2.4rem;
+                font-style: italic;
+                line-height: 1.1;
+            }
+
+            .demo-note {
+                font-size: 0.95rem;
+                color: var(--ink-soft);
+                margin: 0.75rem 0 0;
             }
 
             h2 {
                 font-family: "Fraunces", serif;
                 font-weight: 400;
-                font-size: clamp(2rem, 5vw, 3.5rem);
-                line-height: 1.05;
+                font-size: clamp(1.9rem, 4vw, 3rem);
+                line-height: 1.1;
                 letter-spacing: -0.02em;
                 margin-bottom: 1.5rem;
-                max-width: 35rem;
+                max-width: 38rem;
             }
 
             h2 em {
@@ -244,22 +268,6 @@
                 font-style: italic;
             }
 
-            /* scribble underline */
-            .scribble {
-                position: relative;
-                display: inline-block;
-            }
-            .scribble::after {
-                content: "";
-                position: absolute;
-                left: -4%;
-                right: -4%;
-                bottom: -6px;
-                height: 10px;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%23c94a3e' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-            }
 
             /* ---------- CALCULATOR ---------- */
             .calc {
@@ -280,26 +288,9 @@
                 }
             }
 
-            .calc::before {
-                content: "";
-                position: absolute;
-                top: -8px;
-                left: 2rem;
-                width: 80px;
-                height: 24px;
-                background: rgba(232, 184, 74, 0.5);
-                transform: rotate(-2deg);
-                border-radius: 1px;
-                box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            }
 
             .calc-label {
-                font-family: "Caveat", cursive;
-                font-size: 1.3rem;
-                color: var(--ink-soft);
-                margin-bottom: 1.5rem;
-                transform: rotate(-1deg);
-                display: inline-block;
+                margin-bottom: 1.25rem;
             }
 
             .expr-builder {
@@ -504,11 +495,6 @@
             }
 
             .output-card h4 {
-                font-family: "Caveat", cursive;
-                font-size: 1.4rem;
-                color: var(--red);
-                margin-bottom: 0.75rem;
-                transform: rotate(-1deg);
                 flex-shrink: 0;
             }
 
@@ -699,9 +685,15 @@
                 position: relative;
             }
 
+            .compression-expr {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 1.05rem;
+                color: var(--ink-soft);
+            }
+
             .compression-big {
                 font-family: "Fraunces", serif;
-                font-size: clamp(2.5rem, 6vw, 4.5rem);
+                font-size: clamp(1.8rem, 4vw, 3rem);
                 font-weight: 300;
                 line-height: 1;
                 margin: 1rem 0;
@@ -735,20 +727,18 @@
             }
 
             .app-card:hover {
-                transform: translateY(-4px) rotate(-0.3deg);
+                transform: translateY(-3px);
             }
 
             .app-card::before {
                 content: attr(data-num);
                 position: absolute;
-                top: -0.5rem;
-                right: 1rem;
-                font-family: "Fraunces", serif;
-                font-size: 4rem;
-                font-weight: 300;
+                top: 1.25rem;
+                right: 1.25rem;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.75rem;
                 color: var(--red);
-                opacity: 0.25;
-                font-style: italic;
+                opacity: 0.7;
                 line-height: 1;
             }
 
@@ -790,6 +780,56 @@
 
             .demo-controls input[type="range"] {
                 width: 150px;
+            }
+
+            .sign-toggle {
+                border: 1px dashed var(--ink-soft);
+                padding: 0.5rem 0.9rem 0.6rem;
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+            }
+
+            .sign-toggle legend {
+                padding: 0 0.3rem;
+                color: var(--ink-soft);
+                font-size: 0.8rem;
+            }
+
+            .sign-toggle label {
+                flex-direction: row;
+                align-items: center;
+                gap: 0.4rem;
+                cursor: pointer;
+            }
+
+            .derivation {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 1rem;
+                display: grid;
+                gap: 0.6rem;
+                max-width: 40rem;
+            }
+
+            .derivation-row {
+                display: flex;
+                justify-content: space-between;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                align-items: baseline;
+            }
+
+            .derivation-note {
+                font-family: "Fraunces", serif;
+                font-style: italic;
+                font-size: 0.95rem;
+                color: var(--ink-soft);
+            }
+
+            .derivation-result {
+                border-top: 1px solid rgba(26, 24, 20, 0.2);
+                padding-top: 0.6rem;
+                font-weight: 700;
             }
 
             /* ---------- EIGENVALUE DEMO ---------- */
@@ -879,16 +919,6 @@
                 min-width: 0;
             }
 
-            .footer-label {
-                font-family: "Caveat", cursive;
-                font-size: 1.3rem;
-                color: var(--red);
-                transform: rotate(-1deg);
-                display: inline-block;
-                margin-bottom: 0.75rem;
-                letter-spacing: 0;
-                text-transform: none;
-            }
 
             .footer-text {
                 font-family: "JetBrains Mono", monospace;
@@ -904,11 +934,6 @@
             }
 
             .share-label {
-                font-family: "Caveat", cursive;
-                font-size: 1.4rem;
-                color: var(--red);
-                transform: rotate(-1deg);
-                display: inline-block;
                 margin-bottom: 1rem;
             }
 
@@ -954,25 +979,6 @@
                 color: var(--paper);
             }
 
-            /* ---------- MARGIN NOTES ---------- */
-            .margin-note {
-                font-family: "Caveat", cursive;
-                color: var(--red);
-                font-size: 1.2rem;
-                line-height: 1.3;
-                transform: rotate(-2deg);
-                padding: 0.5rem 0.8rem;
-                display: inline-block;
-                position: relative;
-            }
-
-            .margin-note-arrow {
-                font-family: "Caveat", cursive;
-                color: var(--red);
-                font-size: 1.5rem;
-                display: inline-block;
-                margin-right: 0.3rem;
-            }
 
             .aside {
                 border: 1px dashed var(--ink-soft);
@@ -983,106 +989,61 @@
                 max-width: 40rem;
             }
 
-            .aside strong {
-                font-family: "Caveat", cursive;
-                font-size: 1.3rem;
-                color: var(--red);
-                font-weight: 600;
-            }
 
-            /* fade-in on scroll */
-            .reveal {
-                opacity: 0;
-                transform: translateY(20px);
-                transition:
-                    opacity 0.8s ease,
-                    transform 0.8s ease;
-            }
-            .reveal.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
         </style>
     </head>
     <body>
         <!-- ============ HERO ============ -->
         <section class="hero">
             <div class="hero-text">
-                <div class="eyebrow">a small field guide to</div>
                 <h1>
                     Duplex<br />
                     <em>Numbers</em>
                     <span class="pm">(a ± b ± c)</span>
                 </h1>
                 <p class="hero-subtitle">
-                    An underexplored representation in mathematics. A single
-                    expression that secretly holds many values: write four
-                    numbers, describe eight; write eight, describe a hundred and
-                    twenty-eight. Once you see it, you start noticing places it
-                    might be useful.
+                    A duplex number is an expression like 5 ± 2 ± 1, read as
+                    one number that holds several values at the same time.
+                    This page explains the notation, shows which arithmetic
+                    works on it, and has a calculator so you can try it for
+                    yourself.
                 </p>
-                <div class="scroll-cue">start playing below</div>
             </div>
         </section>
 
-        <!-- ============ WHAT IS IT ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 1 — the idea</div>
-            <h2>One number, <em>many values</em>.</h2>
+        <!-- ============ NOTATION ============ -->
+        <section>
+            <div class="section-label">1 · The notation</div>
+            <h2>One expression, several values</h2>
             <p class="lead">
-                Every <span class="inline-pm">±</span> splits a value in two.
-                Chain them, and the count doubles each time. The notation stays
-                compact while the set it represents grows exponentially.
+                Normally a ± sign is shorthand for two separate answers. Here
+                it is treated as part of the number.
+            </p>
+            <p>
+                Write 5 <span class="inline-pm">±</span> 2 and you have a
+                single number with two values, 3 and 7. Add another
+                <span class="inline-pm">±</span> and each of those values
+                splits again. The first number is the centre, and each number
+                after a <span class="inline-pm">±</span> is a spread.
             </p>
 
-            <div
-                style="
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                    gap: 1rem;
-                    margin-top: 2rem;
-                "
-            >
+            <div class="example-grid">
                 <div>
                     <code style="font-size: 1.3rem">5</code>
-                    <div
-                        style="
-                            color: var(--ink-soft);
-                            font-size: 0.9rem;
-                            margin-top: 0.3rem;
-                        "
-                    >
-                        1 value
-                    </div>
+                    <div class="example-note">1 value</div>
                 </div>
                 <div>
                     <code style="font-size: 1.3rem"
                         >5 <span class="inline-pm">±</span> 2</code
                     >
-                    <div
-                        style="
-                            color: var(--ink-soft);
-                            font-size: 0.9rem;
-                            margin-top: 0.3rem;
-                        "
-                    >
-                        2 values: {3, 7}
-                    </div>
+                    <div class="example-note">2 values: {3, 7}</div>
                 </div>
                 <div>
                     <code style="font-size: 1.3rem"
                         >5 <span class="inline-pm">±</span> 2
                         <span class="inline-pm">±</span> 1</code
                     >
-                    <div
-                        style="
-                            color: var(--ink-soft);
-                            font-size: 0.9rem;
-                            margin-top: 0.3rem;
-                        "
-                    >
-                        4 values: {2, 4, 6, 8}
-                    </div>
+                    <div class="example-note">4 values: {2, 4, 6, 8}</div>
                 </div>
                 <div>
                     <code style="font-size: 1.3rem"
@@ -1090,31 +1051,47 @@
                         <span class="inline-pm">±</span> 1
                         <span class="inline-pm">±</span> 0.5</code
                     >
-                    <div
-                        style="
-                            color: var(--ink-soft);
-                            font-size: 0.9rem;
-                            margin-top: 0.3rem;
-                        "
-                    >
-                        8 values
-                    </div>
+                    <div class="example-note">8 values</div>
+                </div>
+            </div>
+
+            <p>
+                An expression with <em>n</em> spreads has
+                <em>2<sup>n</sup></em> values, but you only write down
+                <em>n + 1</em> numbers. The notation stays short while the set
+                it describes doubles with every <span class="inline-pm">±</span>.
+            </p>
+
+            <div class="compression">
+                <div class="compression-expr">
+                    a <span class="inline-pm">±</span> b
+                    <span class="inline-pm">±</span> c
+                    <span class="inline-pm">±</span> d
+                    <span class="inline-pm">±</span> e
+                    <span class="inline-pm">±</span> f
+                    <span class="inline-pm">±</span> g
+                    <span class="inline-pm">±</span> h
+                </div>
+                <div class="compression-big">
+                    <span class="num">8</span> numbers written
+                    <span class="arrow">→</span>
+                    <span class="num">128</span> values described
                 </div>
             </div>
         </section>
 
         <!-- ============ CALCULATOR ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 2 — play with it</div>
-            <h2>The <em>calculator</em>.</h2>
+        <section>
+            <div class="section-label">2 · Calculator</div>
+            <h2>Try it</h2>
             <p>
-                Build an expression, fiddle with the numbers, watch the
-                branching fan out. The tree on the right shows every value the
-                notation represents.
+                Build an expression and change the numbers. The tree shows how
+                the values split at each <span class="inline-pm">±</span>, and
+                every leaf is one way of choosing the signs.
             </p>
 
             <div class="calc">
-                <div class="calc-label">build an expression →</div>
+                <div class="calc-label">expression</div>
 
                 <div id="exprBuilder" class="expr-builder">
                     <!-- dynamically populated -->
@@ -1133,10 +1110,10 @@
                         id="extendBtn"
                         onclick="addPmToLast()"
                     >
-                        ± extend the chain
+                        ± add a spread
                     </button>
                     <button class="op-btn" onclick="addScalarMult()">
-                        × multiply by a scalar
+                        × multiply by a number
                     </button>
                     <button
                         class="pm-btn"
@@ -1153,7 +1130,7 @@
                 <div class="calc-output">
                     <div class="output-row">
                         <div class="output-card">
-                            <h4 id="valueHeading">resulting values</h4>
+                            <h4 id="valueHeading">values</h4>
                             <div id="valueChips" class="value-list"></div>
                             <div class="output-card-footer">
                                 <div id="stats" class="stats"></div>
@@ -1168,7 +1145,7 @@
                             </div>
                         </div>
                         <div class="output-card">
-                            <h4>the branching tree</h4>
+                            <h4>tree</h4>
                             <div class="tree-container">
                                 <div class="tree-viewport" id="treeViewport">
                                     <svg id="treeSvg" class="tree-svg"></svg>
@@ -1183,305 +1160,223 @@
             </div>
         </section>
 
-        <!-- ============ COMPRESSION ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 3 — why bother</div>
-            <h2>The <em>compression</em> idea.</h2>
+        <!-- ============ SUPERPOSITION ============ -->
+        <section>
+            <div class="section-label">3 · Superposition</div>
+            <h2>All of the values at once</h2>
+            <p class="lead">
+                There are two ways to read 5 <span class="inline-pm">±</span> 2.
+                This site is about the second one.
+            </p>
             <p>
-                A single expression with <em>n</em> copies of
-                <span class="inline-pm">±</span> represents
-                <em>2<sup>n</sup></em> values, but you only ever write down
-                <em>n+1</em> numbers. Short notation, big set.
+                The usual reading is that the value is 3 or 7, and we have not
+                said which. The other reading is that the number is 3 and 7 at
+                the same time: one object with two values, which stay together
+                through whatever arithmetic comes next. Borrowing a word from
+                physics, the number is a superposition of its values. This is
+                not a statement about uncertainty, and it is not an interval.
+                The set of values is exact and finite, and the number is all
+                of them.
             </p>
-
-            <div class="compression">
-                <div
-                    style="
-                        font-family: &quot;Caveat&quot;, cursive;
-                        font-size: 1.4rem;
-                        color: var(--ink-soft);
-                        transform: rotate(-1deg);
-                        display: inline-block;
-                    "
-                >
-                    a <span class="inline-pm">±</span> b
-                    <span class="inline-pm">±</span> c
-                    <span class="inline-pm">±</span> d
-                    <span class="inline-pm">±</span> e
-                    <span class="inline-pm">±</span> f
-                    <span class="inline-pm">±</span> g
-                    <span class="inline-pm">±</span> h
-                </div>
-                <div class="compression-big">
-                    <span class="num">8</span> numbers written
-                    <span class="arrow">→</span>
-                    <span class="num">128</span> values represented
-                </div>
-                <p style="font-size: 1rem; color: var(--ink-soft); margin: 0">
-                    Every <span class="inline-pm">±</span> doubles the size of
-                    the underlying set.
-                </p>
-            </div>
-
-            <div class="aside">
-                <strong>a small caveat</strong><br />
-                Addition, subtraction, and scalar multiplication (duplex times a
-                plain number) preserve the compact form: each operation applies
-                uniformly across every branch. Multiplying two duplex numbers
-                together, and nonlinear operations like comparison or
-                trigonometry, don't yet have a clean compact formulation. If you
-                define any sensible operations, we'd love to hear about it.
-            </div>
-        </section>
-
-        <!-- ============ STATISTICAL PROPERTIES ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 4 — statistical properties</div>
-            <h2>Every duplex is a <em>distribution</em>.</h2>
             <p>
-                Any duplex number corresponds to a symmetric distribution of
-                values, and two classical statistics fall out of the notation
-                directly, without expanding the set.
+                The clearest example is
+                <code>0.5 <span class="inline-pm">±</span> 0.5</code>. Read as
+                alternatives, it is either 0 or 1. Read as a superposition, it
+                is a number that is 0 and is 1 and is still one thing. In
+                ordinary arithmetic "1 = 0" is simply false, and any system
+                that accepts it falls apart. This is the closest you can get
+                to writing it down without that happening. The parallel lines
+                section below uses the same move to turn a contradiction into
+                a pair of lines.
             </p>
 
-            <div
-                style="
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-                    gap: 1.5rem;
-                    margin: 2rem 0;
-                "
-            >
+            <div class="pair-grid">
                 <div class="demo-box" style="margin: 0">
-                    <div
-                        style="
-                            font-family: &quot;Caveat&quot;, cursive;
-                            font-size: 1.4rem;
-                            color: var(--red);
-                            transform: rotate(-1deg);
-                            display: inline-block;
-                            margin-bottom: 0.75rem;
-                        "
-                    >
-                        mean
-                    </div>
-                    <div
-                        style="
-                            font-family: &quot;Fraunces&quot;, serif;
-                            font-size: 2.2rem;
-                            font-style: italic;
-                            line-height: 1;
-                        "
-                    >
-                        a
-                    </div>
-                    <p
-                        style="
-                            font-size: 0.95rem;
-                            color: var(--ink-soft);
-                            margin: 0.75rem 0 0;
-                        "
-                    >
-                        The centre term. Everything else branches symmetrically
-                        around it, so it's always the mean.
-                    </p>
+                    <div class="tag">the equation</div>
+                    <div class="big-formula">1 = 0</div>
                 </div>
                 <div class="demo-box" style="margin: 0">
-                    <div
-                        style="
-                            font-family: &quot;Caveat&quot;, cursive;
-                            font-size: 1.4rem;
-                            color: var(--red);
-                            transform: rotate(-1deg);
-                            display: inline-block;
-                            margin-bottom: 0.75rem;
-                        "
-                    >
-                        variance
-                    </div>
-                    <div
-                        style="
-                            font-family: &quot;Fraunces&quot;, serif;
-                            font-size: 2.2rem;
-                            font-style: italic;
-                            line-height: 1;
-                        "
-                    >
-                        b² + c² + …
-                    </div>
-                    <p
-                        style="
-                            font-size: 0.95rem;
-                            color: var(--ink-soft);
-                            margin: 0.75rem 0 0;
-                        "
-                    >
-                        Sum of squared spreads. Each
-                        <span class="inline-pm">±</span> adds its own squared
-                        contribution, independent and Pythagorean.
-                    </p>
-                </div>
-            </div>
-
-            <p style="font-size: 1rem; color: var(--ink-soft)">
-                The reverse direction is more interesting:
-                <em>any</em> symmetric distribution over a finite, power-of-two
-                set of values can be written as a duplex number.
-            </p>
-        </section>
-
-        <!-- ============ REPRESENTING INEQUALITIES ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 5 — representing inequalities</div>
-            <h2>Writing <em>“1 = 0”</em> without breaking maths.</h2>
-            <p>
-                In ordinary arithmetic, "1 = 0" is just false; you can't write
-                it without the whole system catching fire. But if a duplex
-                number represents its values <em>simultaneously</em> rather than
-                as alternatives, the expression
-                <code>0.5 <span class="inline-pm">±</span> 0.5</code> is a
-                number that is somehow both 0 and 1 at the same time.
-            </p>
-
-            <div
-                style="
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-                    gap: 1.5rem;
-                    margin: 2rem 0;
-                "
-            >
-                <div class="demo-box" style="margin: 0">
-                    <div
-                        style="
-                            font-family: &quot;Caveat&quot;, cursive;
-                            font-size: 1.4rem;
-                            color: var(--red);
-                            transform: rotate(-1deg);
-                            display: inline-block;
-                            margin-bottom: 0.75rem;
-                        "
-                    >
-                        the equation
-                    </div>
-                    <div
-                        style="
-                            font-family: &quot;Fraunces&quot;, serif;
-                            font-size: 2.4rem;
-                            font-style: italic;
-                            line-height: 1;
-                        "
-                    >
-                        1 = 0
-                    </div>
-                </div>
-                <div class="demo-box" style="margin: 0">
-                    <div
-                        style="
-                            font-family: &quot;Caveat&quot;, cursive;
-                            font-size: 1.4rem;
-                            color: var(--red);
-                            transform: rotate(-1deg);
-                            display: inline-block;
-                            margin-bottom: 0.75rem;
-                        "
-                    >
-                        the duplex number
-                    </div>
-                    <div
-                        style="
-                            font-family: &quot;Fraunces&quot;, serif;
-                            font-size: 2.4rem;
-                            line-height: 1;
-                        "
-                    >
+                    <div class="tag">the duplex number</div>
+                    <div class="big-formula" style="font-style: normal">
                         0.5 <span class="inline-pm">±</span> 0.5
                     </div>
                 </div>
             </div>
 
             <h3 style="margin-top: 3.5rem; margin-bottom: 0.5rem">
-                Grandi's series.
+                Grandi's series
             </h3>
             <p>
-                The same
-                <code>0.5 <span class="inline-pm">±</span> 0.5</code> answers a
-                puzzle that mathematicians have argued over since 1703: what is
-                the sum of <code>1 − 1 + 1 − 1 + 1 − 1 + …</code>? Stop after an
-                even number of terms and you get 0. Stop after an odd number and
-                you get 1. Different summation methods give different answers,
-                and the Cesàro sum (the average of the partial sums) lands on ½.
-                The duplex number encodes all three answers in one expression:
-                centre ½, reaching both 0 and 1.
+                The same number answers a question that has been argued over
+                since 1703: what is the sum of
+                <code>1 − 1 + 1 − 1 + 1 − 1 + …</code>? Stop after an even
+                number of terms and you get 0. Stop after an odd number and you
+                get 1. Different ways of summing the series give different
+                answers, and the Cesàro sum, which averages the partial sums,
+                gives ½. The duplex number
+                <code>0.5 <span class="inline-pm">±</span> 0.5</code> holds all
+                three answers in one expression: a centre of ½, with values 0
+                and 1.
             </p>
 
-            <div
-                style="
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-                    gap: 1.5rem;
-                    margin: 2rem 0;
-                "
-            >
+            <div class="pair-grid">
                 <div class="demo-box" style="margin: 0">
-                    <div
-                        style="
-                            font-family: &quot;Caveat&quot;, cursive;
-                            font-size: 1.4rem;
-                            color: var(--red);
-                            transform: rotate(-1deg);
-                            display: inline-block;
-                            margin-bottom: 0.75rem;
-                        "
-                    >
-                        the series
-                    </div>
-                    <div
-                        style="
-                            font-family: &quot;Fraunces&quot;, serif;
-                            font-size: 1.8rem;
-                            font-style: italic;
-                            line-height: 1.3;
-                        "
-                    >
+                    <div class="tag">the series</div>
+                    <div class="big-formula" style="font-size: 1.8rem">
                         1 − 1 + 1 − 1 + 1 − 1 + …
                     </div>
                 </div>
                 <div class="demo-box" style="margin: 0">
-                    <div
-                        style="
-                            font-family: &quot;Caveat&quot;, cursive;
-                            font-size: 1.4rem;
-                            color: var(--red);
-                            transform: rotate(-1deg);
-                            display: inline-block;
-                            margin-bottom: 0.75rem;
-                        "
-                    >
-                        the duplex number
-                    </div>
-                    <div
-                        style="
-                            font-family: &quot;Fraunces&quot;, serif;
-                            font-size: 2.4rem;
-                            line-height: 1;
-                        "
-                    >
+                    <div class="tag">the duplex number</div>
+                    <div class="big-formula" style="font-style: normal">
                         0.5 <span class="inline-pm">±</span> 0.5
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============ EIGENVALUES ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 6 — a neat trick</div>
-            <h2>Eigenvalues of a <em>2×2 matrix</em>.</h2>
+        <!-- ============ ARITHMETIC ============ -->
+        <section>
+            <div class="section-label">4 · Arithmetic</div>
+            <h2>What arithmetic works</h2>
             <p>
-                A concrete place where the
-                <span class="inline-pm">±</span> notation earns its keep:
-                finding eigenvalues. Type numbers into the matrix and watch the
-                eigenvalues compute themselves as a duplex number.
+                Addition and subtraction work directly. Adding two duplex
+                numbers adds the centres and keeps both sets of spreads:
+                (a <span class="inline-pm">±</span> b) + (c
+                <span class="inline-pm">±</span> d) = (a + c)
+                <span class="inline-pm">±</span> b
+                <span class="inline-pm">±</span> d. Multiplying by an ordinary
+                number scales the centre and every spread.
+            </p>
+            <p>
+                Multiplying two duplex numbers together needs one more idea.
+                Write ε for a sign that has not been chosen yet. It has a
+                single property, ε² = 1, because any sign squared is 1. Then
+                <code>a <span class="inline-pm">±</span> b</code> is
+                <code>a + bε</code>, and the two values come from setting ε to
+                +1 or −1. Multiply out (a + bε)(c + dε), replace ε² with 1, and
+                the result is back in duplex form:
+            </p>
+
+            <div class="demo-box">
+                <div class="big-formula" style="font-size: clamp(1.3rem, 3.5vw, 2rem); line-height: 1.4">
+                    (a <span class="inline-pm">±</span> b)(c
+                    <span class="inline-pm">±</span> d) = (ac + bd)
+                    <span class="inline-pm">±</span> (ad + bc)
+                </div>
+                <p class="demo-note">
+                    This holds when both numbers share the same sign. You can
+                    check it by setting ε = +1 and then ε = −1.
+                </p>
+            </div>
+
+            <p>
+                Numbers of the form a + bε are already known. They are the
+                split-complex numbers, a relative of the complex numbers
+                (where i² = −1 instead), studied since the 1840s, and a few
+                authors have called them duplex numbers before. Functions like
+                exp work on them as well:
+                <code>exp(a + bε) = e<sup>a</sup>(cosh b + ε sinh b)</code>,
+                and both values come out right.
+            </p>
+            <p>
+                The difficulty is independent signs. Multiplying
+                (a + bε₁)(c + dε₂) produces a term in ε₁ε₂ that cannot be
+                simplified away, so a fully closed algebra needs one
+                coefficient for every product of signs: 2<sup>n</sup>
+                coefficients instead of n + 1. (Algebraists know this as the
+                group algebra of (ℤ/2)<sup>n</sup>.) The short duplex form is
+                a slice of that larger algebra. Addition keeps you on the
+                slice, and multiplication is what moves you off it.
+            </p>
+        </section>
+
+        <!-- ============ STATISTICS ============ -->
+        <section>
+            <div class="section-label">5 · Mean and variance</div>
+            <h2>Every duplex number is a distribution</h2>
+            <p>
+                The values of a duplex number sit symmetrically around the
+                centre, so you can treat them as a distribution and read off
+                two statistics without expanding anything.
+            </p>
+
+            <div class="pair-grid">
+                <div class="demo-box" style="margin: 0">
+                    <div class="tag">mean</div>
+                    <div class="big-formula" style="font-size: 2.2rem">a</div>
+                    <p class="demo-note">
+                        The centre. Every <span class="inline-pm">±</span> is
+                        symmetric around it.
+                    </p>
+                </div>
+                <div class="demo-box" style="margin: 0">
+                    <div class="tag">variance</div>
+                    <div class="big-formula" style="font-size: 2.2rem">
+                        b² + c² + …
+                    </div>
+                    <p class="demo-note">
+                        Each spread contributes its square, the same way
+                        independent errors add.
+                    </p>
+                </div>
+            </div>
+
+            <p>
+                Another way to see it: choose each sign by tossing a coin. Then
+                a duplex number is a random walk that starts at a and steps b
+                to the left or right, then c, and so on. Probability theory
+                calls the total a Rademacher sum, and its mean and variance are
+                exactly the ones above.
+            </p>
+
+            <p>
+                The reverse only goes so far. Any symmetric pair of values is a
+                duplex number, and so is any symmetric set of four, because the
+                two gaps fix b and c. From eight values upward there are more
+                points than coefficients, so most symmetric sets have no duplex
+                form.
+            </p>
+
+            <div class="aside">
+                <strong>Repeated values</strong>
+                All 2<sup>n</sup> values are different exactly when no signed
+                combination of the spreads adds up to zero. 5
+                <span class="inline-pm">±</span> 2
+                <span class="inline-pm">±</span> 1 has four distinct values,
+                but 5 <span class="inline-pm">±</span> 2
+                <span class="inline-pm">±</span> 1
+                <span class="inline-pm">±</span> 1 repeats some, because 1 − 1
+                = 0. How many branches can land on the same value is known as
+                the Littlewood–Offord problem. Erdős showed in 1945 that with
+                nonzero spreads at most
+                <span class="mono">C(n, ⌊n/2⌋)</span> of the 2<sup>n</sup>
+                branches can coincide, and ±1 ± 1 ± … ± 1 reaches that bound.
+                At the other extreme, spreads of ½, 1, 2, 4 give sixteen
+                distinct values spaced exactly one apart, which is binary
+                notation read as a distribution.
+            </div>
+
+            <p>
+                If the chain never stops, take 0
+                <span class="inline-pm">±</span> 1
+                <span class="inline-pm">±</span> λ
+                <span class="inline-pm">±</span> λ²
+                <span class="inline-pm">±</span> … for some λ between ½ and 1.
+                The limit is called a Bernoulli convolution. Which values of λ
+                give a smooth distribution is a question Erdős raised in 1939,
+                and it is still open.
+            </p>
+        </section>
+
+        <!-- ============ EIGENVALUES ============ -->
+        <section>
+            <div class="section-label">6 · Eigenvalues</div>
+            <h2>Eigenvalues of a 2×2 matrix</h2>
+            <p>
+                The quadratic formula gives the eigenvalues of a 2×2 matrix in
+                <span class="inline-pm">±</span> form already, so both fit in
+                one duplex number. Type numbers into the matrix to see it.
             </p>
 
             <div class="demo-box">
@@ -1500,42 +1395,75 @@
                         <input type="number" id="m11" value="3" step="0.5" />
                     </div>
                     <div>
-                        <div
-                            style="
-                                font-family: &quot;Caveat&quot;, cursive;
-                                font-size: 1.3rem;
-                                color: var(--red);
-                                transform: rotate(-2deg);
-                                display: inline-block;
-                                margin-bottom: 0.5rem;
-                            "
-                        >
-                            eigenvalues →
-                        </div>
+                        <div class="tag">eigenvalues</div>
                         <div id="eigenOutput" class="eigen-output"></div>
                     </div>
                 </div>
             </div>
 
             <p style="font-size: 0.95rem; color: var(--ink-soft)">
-                Split the diagonals as duplex numbers <code>a±b</code> and
-                <code>c±d</code>. When the spreads match (b = d), the
-                eigenvalues are just <code>a ± c</code>. Otherwise:
-                <code>a ± √(b² + c² − d²)</code>. Both eigenvalues sit in a
-                single duplex expression.
+                Write the diagonal as <code>a ± b</code> and the off-diagonal
+                as <code>c ± d</code>. When b = d the eigenvalues are simply
+                <code>a ± c</code>. Otherwise they are
+                <code>a ± √(b² + c² − d²)</code>.
             </p>
         </section>
 
         <!-- ============ PARALLEL LINES ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 7 — plot it</div>
-            <h2>Parallel lines, <em>written once</em>.</h2>
+        <section>
+            <div class="section-label">7 · Parallel lines</div>
+            <h2>Parallel lines from a contradiction</h2>
             <p>
-                The equation
-                <code>y = mx + (b <span class="inline-pm">±</span> d)</code>
-                describes a whole family of parallel lines in a single
-                expression. Drag the sliders to see how a duplex coefficient
-                becomes a pattern of parallel lines.
+                Take two parallel lines, <code>y = x + 1</code> and
+                <code>y = x + 3</code>, and ask where they cross. Set them
+                equal and the x cancels, leaving <code>1 = 3</code>. In
+                ordinary algebra that contradiction is the end of the story:
+                there is no solution, so the lines never meet.
+            </p>
+            <p>
+                Now do what the superposition section did with 1 = 0. Read the
+                contradiction as a duplex number: 1 and 3 together are
+                <code>2 <span class="inline-pm">±</span> 1</code>. Put that
+                back into the equation and you get
+                <code>y = x + (2 <span class="inline-pm">±</span> 1)</code>,
+                one equation whose graph is both lines. The contradiction has
+                not been thrown away. It has become the spread.
+            </p>
+
+            <div class="demo-box derivation">
+                <div class="derivation-row">
+                    <span>y = x + 1 &nbsp;&nbsp;and&nbsp;&nbsp; y = x + 3</span>
+                    <span class="derivation-note">two parallel lines</span>
+                </div>
+                <div class="derivation-row">
+                    <span>x + 1 = x + 3</span>
+                    <span class="derivation-note">where do they meet?</span>
+                </div>
+                <div class="derivation-row">
+                    <span>1 = 3</span>
+                    <span class="derivation-note">a contradiction</span>
+                </div>
+                <div class="derivation-row">
+                    <span>1 = 3 &nbsp;→&nbsp; 2 <span class="inline-pm">±</span> 1</span>
+                    <span class="derivation-note">keep both, as a duplex number</span>
+                </div>
+                <div class="derivation-row derivation-result">
+                    <span>y = x + (2 <span class="inline-pm">±</span> 1)</span>
+                    <span class="derivation-note">both lines, one equation</span>
+                </div>
+            </div>
+
+            <p>
+                The plot below draws
+                <code>y = (m <span class="inline-pm">±</span> k)x + (b
+                <span class="inline-pm">±</span> d)</code>. With no slope
+                spread it is a family of parallel lines. Give the slope a
+                spread as well and a choice appears: are the two
+                <span class="inline-pm">±</span> signs the same sign, or
+                independent? Independent signs give four lines. A shared sign
+                gives two, with the steeper slope paired to the higher
+                intercept, because one ε picks both. A set of values cannot
+                express that pairing. Naming the sign can.
             </p>
 
             <div class="demo-box">
@@ -1553,41 +1481,57 @@
                         <span id="slopeVal">0.8</span>
                     </label>
                     <label>
-                        center (b)
+                        slope spread (k)
+                        <input
+                            type="range"
+                            id="slopeSpreadSlider"
+                            min="0"
+                            max="2"
+                            step="0.1"
+                            value="0"
+                        />
+                        <span id="slopeSpreadVal">0.0</span>
+                    </label>
+                    <label>
+                        intercept (b)
                         <input
                             type="range"
                             id="centerSlider"
                             min="-5"
                             max="5"
                             step="0.5"
-                            value="0"
+                            value="2"
                         />
-                        <span id="centerVal">0</span>
+                        <span id="centerVal">2.0</span>
                     </label>
                     <label>
-                        ± spread 1
+                        intercept spread (d)
                         <input
                             type="range"
                             id="spread1Slider"
                             min="0"
                             max="4"
                             step="0.25"
-                            value="2"
+                            value="1"
                         />
-                        <span id="spread1Val">2</span>
+                        <span id="spread1Val">1.00</span>
                     </label>
-                    <label>
-                        ± spread 2
-                        <input
-                            type="range"
-                            id="spread2Slider"
-                            min="0"
-                            max="3"
-                            step="0.25"
-                            value="0"
-                        />
-                        <span id="spread2Val">0.5</span>
-                    </label>
+                    <fieldset class="sign-toggle">
+                        <legend>the two ± signs are</legend>
+                        <label>
+                            <input
+                                type="radio"
+                                name="signMode"
+                                value="independent"
+                                checked
+                            />
+                            independent
+                        </label>
+                        <label>
+                            <input type="radio" name="signMode" value="shared" />
+                            the same sign
+                        </label>
+                    </fieldset>
                 </div>
                 <canvas
                     id="linesCanvas"
@@ -1608,130 +1552,124 @@
                         margin-top: 0.5rem;
                     "
                 >
-                    y = <span id="eqDisplay"></span>x
+                    y = <span id="eqDisplay"></span>
+                    <span id="lineCount"></span>
                 </div>
             </div>
         </section>
 
-        <!-- ============ APPLICATIONS ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 8 — where it might go</div>
-            <h2>Places this <em>might be useful</em>.</h2>
+        <!-- ============ USES ============ -->
+        <section>
+            <div class="section-label">8 · Possible uses</div>
+            <h2>Where it might be useful</h2>
             <p class="lead">
-                Applications where holding multiple values as a single identity
-                is the whole point.
+                None of these are worked out. They are the places I would look
+                first.
             </p>
 
             <div class="app-grid">
-                <div class="app-card" data-num="01">
-                    <h3>Circuit verification</h3>
+                <div class="app-card" data-num="1">
+                    <h3>Checking digital circuits</h3>
                     <p>
-                        A digital logic line <em>is</em> simultaneously 0 and 1
-                        during verification:
+                        A logic line that could be 0 or 1 is
                         <code>0.5 <span class="inline-pm">±</span> 0.5</code>.
-                        Propagate a single duplex input through an arithmetic
-                        circuit and check every combination at once, by shared
-                        identity rather than enumeration.
+                        Feed duplex inputs through an arithmetic circuit and
+                        every combination of inputs is evaluated in one pass,
+                        without listing them out.
                     </p>
                 </div>
-                <div class="app-card" data-num="02">
-                    <h3>Algebraic identification</h3>
+                <div class="app-card" data-num="2">
+                    <h3>Values that belong together</h3>
                     <p>
-                        Any time you want two or more real values to share a
-                        single algebraic identity: exploratory maths, teaching
-                        modular-arithmetic-like ideas, or building DSLs where
-                        "these are the same thing" is a first-class concept.
+                        Any situation where two or more values should be
+                        treated as one thing: exploratory maths, teaching ideas
+                        like modular arithmetic, or a programming language
+                        where "these are the same" is built in.
                     </p>
                 </div>
-                <div class="app-card" data-num="03">
-                    <h3>Symmetric-result compaction</h3>
+                <div class="app-card" data-num="3">
+                    <h3>Symmetric results</h3>
                     <p>
-                        Results that naturally come in symmetric pairs (or
-                        powers of two) can be written as a single duplex rather
-                        than a set. Eigenvalues of 2×2 matrices, roots of
-                        even-degree polynomials, symmetric solutions to
-                        equations.
+                        Results that come in symmetric pairs, or in sets of
+                        two, four, eight and so on, can be written as one
+                        duplex number instead of a list. Eigenvalues of 2×2
+                        matrices, roots of even polynomials, and symmetric
+                        solutions of equations all fit.
                     </p>
                 </div>
-                <div class="app-card" data-num="04">
-                    <h3>Quantum-style intuition</h3>
+                <div class="app-card" data-num="4">
+                    <h3>Explaining superposition</h3>
                     <p>
-                        Building conceptual intuition for superposition without
-                        the Hilbert-space machinery. A duplex number holds
-                        multiple classical values as one identity, acting as a
-                        teaching bridge to quantum states, and possibly a
-                        lightweight notation for reasoning about classical
-                        analogues of quantum algorithms.
+                        A duplex number holds several ordinary values as one
+                        object, without any of the machinery of quantum
+                        mechanics. That makes it a gentle first step towards
+                        quantum states, and possibly a compact way to reason
+                        about classical versions of quantum algorithms.
                     </p>
                 </div>
-                <div class="app-card" data-num="05">
-                    <h3>AI &amp; parallel evaluation</h3>
+                <div class="app-card" data-num="5">
+                    <h3>Evaluating many inputs at once</h3>
                     <p>
-                        Running a model on a duplex input evaluates every branch
-                        at once under a single identity. For symbolic reasoning,
-                        search over discrete choices, or batched inference where
-                        the branches represent alternative continuations, the
-                        notation could give a compact way to carry multiplicity
-                        through a computation.
+                        Running a computation on a duplex input runs it on
+                        every branch together. For search over discrete
+                        choices, symbolic reasoning, or batched inference where
+                        the branches are alternative continuations, the
+                        notation could carry the multiplicity through the
+                        calculation.
                     </p>
                 </div>
-                <div class="app-card" data-num="06">
-                    <h3>Your use case here</h3>
-                    <p style="font-style: italic">
-                        The simultaneity framing is young, and the applications
-                        above are suggestions rather than finished stories. If
-                        the idea of "values sharing an identity" clicks with
-                        something you're working on, that's worth following.
+                <div class="app-card" data-num="6">
+                    <h3>Something of yours</h3>
+                    <p>
+                        If one of these sits near something you already work
+                        on, you are better placed than I am to test it. The
+                        licence below means you can take the idea and use it
+                        without asking anyone.
                     </p>
                 </div>
             </div>
         </section>
 
         <!-- ============ RELATED ============ -->
-        <section class="reveal">
-            <div class="section-label">§ 9 — honest context</div>
-            <h2>Not quite <em>anything else</em>.</h2>
+        <section>
+            <div class="section-label">9 · Related ideas</div>
+            <h2>How this relates to existing maths</h2>
             <p>
-                The closest established techniques are
-                <span class="scribble">interval arithmetic</span> and affine
-                arithmetic (<code>x₀ + x₁ε₁ + x₂ε₂ + …</code> with each εᵢ ∈
-                [−1, 1]). Both track uncertainty: the ± represents a range or
-                noise term, and the goal is to approximate where a quantity
-                might be.
+                The closest established techniques are interval arithmetic and
+                affine arithmetic (<code>x₀ + x₁ε₁ + x₂ε₂ + …</code> with each
+                εᵢ somewhere in [−1, 1]). Both are about uncertainty. Their ±
+                stands for a range or a noise term, and the aim is to bound
+                where a quantity might be.
             </p>
 
             <p>
-                Duplex numbers under the simultaneity reading work differently.
-                The ± is a discrete branching that produces an exact finite set
-                of values, all held as a single identity. "0.5 ± 0.5 represents
-                0 and 1" is not saying the value is uncertain; it's saying both
-                values share one algebraic identity and travel together through
-                arithmetic.
+                Duplex numbers, read as superpositions, are different. The ± is
+                a discrete branch that produces an exact, finite set of values,
+                and the number is all of those values together. Saying that
+                0.5 ± 0.5 is 0 and 1 makes no claim that the value is unknown.
+                It says the two values are one thing, and stay one thing
+                through arithmetic.
             </p>
 
             <p>
-                That puts duplex numbers closer to equivalence classes in
-                modular arithmetic (where 3 and 8 <em>are</em> the same, mod 5),
-                multi-sheeted functions in complex analysis, or the
-                superposition intuition from quantum mechanics, than to any
-                interval-style framework. As far as I know, no established part
-                of mathematics treats symmetric branching sets as arithmetic
-                objects with their own algebra and notation. If you know of
-                prior work, please tell me. If you don't, perhaps that's an
-                invitation.
+                The idea has more neighbours than I first realised.
+                Split-complex numbers are the single-± case with its sign
+                named, and have occasionally been called duplex numbers
+                already. The coin-toss reading is a Rademacher sum, and the
+                question of repeated values is the Littlewood–Offord problem.
+                Geometrically, the 2<sup>n</sup> values are the corners of an
+                n-dimensional box projected onto a line. What I have not found
+                is anyone treating these sets as numbers in their own right,
+                with notation, arithmetic, and the superposition reading. If
+                you know of prior work that does, I would like to hear about
+                it.
             </p>
-
-            <div class="margin-note" style="margin-top: 1rem">
-                <span class="margin-note-arrow">↪</span>
-                simultaneity ≠ uncertainty.<br />
-                this is a different kind of number, not a fuzzy one.
-            </div>
         </section>
 
         <!-- ============ FOOTER ============ -->
         <footer>
             <div class="share-row">
-                <div class="share-label">start a discussion →</div>
+                <div class="share-label">share this page</div>
                 <div class="share-buttons">
                     <a
                         class="share-btn"
@@ -2418,55 +2356,63 @@
                 const w = canvas.width,
                     h = canvas.height;
 
-                const slope = parseFloat(
-                    document.getElementById("slopeSlider").value,
-                );
-                const center = parseFloat(
-                    document.getElementById("centerSlider").value,
-                );
-                const spread1 = parseFloat(
-                    document.getElementById("spread1Slider").value,
-                );
-                const spread2 = parseFloat(
-                    document.getElementById("spread2Slider").value,
-                );
+                const val = (id) =>
+                    parseFloat(document.getElementById(id).value);
+                const m = val("slopeSlider");
+                const k = val("slopeSpreadSlider");
+                const b = val("centerSlider");
+                const d = val("spread1Slider");
+                const shared =
+                    document.querySelector('input[name="signMode"]:checked')
+                        .value === "shared";
 
-                document.getElementById("slopeVal").textContent =
-                    slope.toFixed(1);
+                document.getElementById("slopeVal").textContent = m.toFixed(1);
+                document.getElementById("slopeSpreadVal").textContent =
+                    k.toFixed(1);
                 document.getElementById("centerVal").textContent =
-                    center.toFixed(1);
+                    b.toFixed(1);
                 document.getElementById("spread1Val").textContent =
-                    spread1.toFixed(2);
-                document.getElementById("spread2Val").textContent =
-                    spread2.toFixed(2);
+                    d.toFixed(2);
 
-                // expand duplex: center ± spread1 ± spread2
-                const intercepts = expandTerm({
-                    coeffs: [center, spread1, spread2],
+                // Each line is [slope, intercept].
+                let lines;
+                if (shared) {
+                    // one sign chooses both: (m + k, b + d) and (m - k, b - d)
+                    lines = [
+                        [m - k, b - d],
+                        [m + k, b + d],
+                    ];
+                } else {
+                    lines = [];
+                    for (const s of expandTerm({ coeffs: [m, k] }))
+                        for (const c of expandTerm({ coeffs: [b, d] }))
+                            lines.push([s, c]);
+                }
+                // drop duplicates (when a spread is zero)
+                const seen = new Set();
+                lines = lines.filter(([s, c]) => {
+                    const key = s.toFixed(6) + "," + c.toFixed(6);
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
                 });
 
-                // display equation
-                let eq = `${slope.toFixed(1)}`;
-                eq += ` + ${center.toFixed(1)}`;
-                if (spread1 > 0)
-                    eq += ` <span class="inline-pm">±</span> ${spread1.toFixed(2)}`;
-                if (spread2 > 0)
-                    eq += ` <span class="inline-pm">±</span> ${spread2.toFixed(2)}`;
-                document.getElementById("eqDisplay").innerHTML = eq.replace(
-                    /^/,
-                    "",
-                );
+                const pm = ' <span class="inline-pm">±</span> ';
+                const paren = (text) =>
+                    `<span style="color: var(--red); font-style: italic;">(</span>${text}<span style="color: var(--red); font-style: italic;">)</span>`;
+                const slopeText =
+                    k > 0 ? paren(m.toFixed(1) + pm + k.toFixed(1)) : m.toFixed(1);
+                const interceptText =
+                    d > 0 ? paren(b.toFixed(1) + pm + d.toFixed(2)) : b.toFixed(1);
                 document.getElementById("eqDisplay").innerHTML =
-                    `${slope.toFixed(1)}` +
-                    (center !== 0 || spread1 > 0 || spread2 > 0 ? " + " : "") +
-                    `<span style="color: var(--red); font-style: italic;">(</span>${center.toFixed(1)}` +
-                    (spread1 > 0
-                        ? ` <span class="inline-pm">±</span> ${spread1.toFixed(2)}`
-                        : "") +
-                    (spread2 > 0
-                        ? ` <span class="inline-pm">±</span> ${spread2.toFixed(2)}`
-                        : "") +
-                    `<span style="color: var(--red); font-style: italic;">)</span>`;
+                    `${slopeText}x + ${interceptText}`;
+                document.getElementById("lineCount").textContent =
+                    ` · ${lines.length} line${lines.length === 1 ? "" : "s"}` +
+                    (k > 0 && d > 0
+                        ? shared
+                            ? ", one shared sign"
+                            : ", independent signs"
+                        : "");
 
                 ctx.fillStyle = "#f3ecd9";
                 ctx.fillRect(0, 0, w, h);
@@ -2506,50 +2452,42 @@
                 ctx.stroke();
 
                 // draw lines
-                intercepts.forEach((b, i) => {
+                lines.forEach(([s, c]) => {
                     ctx.strokeStyle = "#c94a3e";
                     ctx.lineWidth = 2.2;
                     ctx.globalAlpha = 0.85;
                     ctx.beginPath();
-                    ctx.moveTo(toX(xMin), toY(slope * xMin + b));
-                    ctx.lineTo(toX(xMax), toY(slope * xMax + b));
+                    ctx.moveTo(toX(xMin), toY(s * xMin + c));
+                    ctx.lineTo(toX(xMax), toY(s * xMax + c));
                     ctx.stroke();
-
-                    // label intercept
-                    ctx.fillStyle = "#1a1814";
-                    ctx.font = "11px JetBrains Mono";
-                    ctx.fillText(b.toFixed(1), toX(0) + 6, toY(b) - 4);
                 });
                 ctx.globalAlpha = 1;
+
+                // label intercepts once each
+                const labelled = new Set();
+                ctx.fillStyle = "#1a1814";
+                ctx.font = "11px JetBrains Mono";
+                lines.forEach(([, c]) => {
+                    const key = c.toFixed(6);
+                    if (labelled.has(key)) return;
+                    labelled.add(key);
+                    ctx.fillText(c.toFixed(1), toX(0) + 6, toY(c) - 4);
+                });
             }
 
             [
                 "slopeSlider",
+                "slopeSpreadSlider",
                 "centerSlider",
                 "spread1Slider",
-                "spread2Slider",
             ].forEach((id) => {
                 document
                     .getElementById(id)
                     .addEventListener("input", drawLines);
             });
-
-            // ============ SCROLL REVEAL ============
-
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add("visible");
-                        }
-                    });
-                },
-                { threshold: 0.1 },
-            );
-
             document
-                .querySelectorAll(".reveal")
-                .forEach((el) => observer.observe(el));
+                .querySelectorAll('input[name="signMode"]')
+                .forEach((el) => el.addEventListener("change", drawLines));
 
             // ============ INIT ============
 
@@ -2575,9 +2513,9 @@
             // ============ SHARE BUTTONS ============
             (function setupShareButtons() {
                 const pageUrl = window.location.href.split("#")[0];
-                const shareTitle = "Duplex Numbers — a small field guide";
+                const shareTitle = "Duplex Numbers";
                 const shareText =
-                    "An underexplored representation in mathematics — a single expression that secretly holds many values.";
+                    "Duplex numbers: 5 ± 2 ± 1 read as one number holding four values at once.";
 
                 const u = encodeURIComponent(pageUrl);
                 const t = encodeURIComponent(shareTitle);
