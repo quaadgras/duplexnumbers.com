@@ -386,6 +386,31 @@
                 font-style: italic;
             }
 
+            .compact-form {
+                margin-top: 1.25rem;
+                padding-top: 1rem;
+                border-top: 1px dashed rgba(26, 24, 20, 0.2);
+                font-family: "Fraunces", serif;
+                font-size: 1.15rem;
+            }
+
+            .compact-form .label {
+                display: block;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.72rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--red);
+                margin-bottom: 0.4rem;
+            }
+
+            .compact-form .note {
+                display: block;
+                font-size: 0.9rem;
+                color: var(--ink-soft);
+                margin-top: 0.3rem;
+            }
+
             .term-wrap {
                 display: inline-flex;
                 align-items: center;
@@ -1117,13 +1142,23 @@
                     rel="noopener"
                     >duplextended number</a
                 >, where other operator pairs join
-                <span class="inline-pm">±</span> in the chain. Here it is
-                (10 <span class="inline-pm">±</span> 4) ×
-                2<sup>0.5 <span class="inline-pm">±</span> 0.5</sup>, a duplex
-                number scaled by a spread in the exponent. The extended
-                numbers close the notation under multiplication, in the way
-                that fractions close the whole numbers under division. This
-                page stays with <span class="inline-pm">±</span> on its own.
+                <span class="inline-pm">±</span> in the chain. The next one
+                is <span class="inline-pm">⋇</span>, multiply-divide: a
+                <span class="inline-pm">⋇</span> r is a ÷ r and a × r at
+                once. Every single-<span class="inline-pm">±</span> number
+                with positive values is also a
+                <span class="inline-pm">⋇</span> number, 3
+                <span class="inline-pm">±</span> 1 is √8
+                <span class="inline-pm">⋇</span> √2, so a product of duplex
+                numbers folds into one <span class="inline-pm">±</span> chain
+                followed by a <span class="inline-pm">⋇</span> chain:
+                (5 <span class="inline-pm">±</span> 2)(3
+                <span class="inline-pm">±</span> 1) = (10√2
+                <span class="inline-pm">±</span> 4√2)
+                <span class="inline-pm">⋇</span> √2. The calculator below
+                works this out for you. The extended numbers close the notation under
+                multiplication, in the way that fractions close the whole
+                numbers under division.
             </div>
         </section>
 
@@ -1167,6 +1202,12 @@
                     <button class="op-btn" onclick="addScalarMult()">
                         × multiply by a number
                     </button>
+                    <button class="op-btn" onclick="addTimesDivide()">
+                        ⋇ multiply-divide by a number
+                    </button>
+                    <button class="op-btn" onclick="addDuplexMult()">
+                        × multiply by a duplex number
+                    </button>
                     <button
                         class="pm-btn"
                         onclick="resetCalc()"
@@ -1178,6 +1219,8 @@
                         ↺ reset
                     </button>
                 </div>
+
+                <div id="compactForm" class="compact-form" hidden></div>
 
                 <div class="calc-output">
                     <div class="output-row">
@@ -1197,7 +1240,7 @@
                             </div>
                         </div>
                         <div class="output-card">
-                            <h4>tree</h4>
+                            <h4>tree of the first term</h4>
                             <div class="tree-container">
                                 <div class="tree-viewport" id="treeViewport">
                                     <svg id="treeSvg" class="tree-svg"></svg>
@@ -1791,6 +1834,11 @@
                         for (const b of next) {
                             if (expr[i].op === "+") combined.push(a + b);
                             else if (expr[i].op === "×") combined.push(a * b);
+                            else if (expr[i].op === "⋇") {
+                                // a ⋇ b is a ÷ b and a × b at once
+                                if (b === 0) combined.push(a, a);
+                                else combined.push(a / b, a * b);
+                            }
                         }
                     }
                     current = combined;
@@ -1824,9 +1872,10 @@
                 expression.forEach((part, idx) => {
                     if (part.op) {
                         const opSpan = document.createElement("span");
-                        opSpan.textContent = part.op === "×" ? "×" : "+";
+                        opSpan.textContent = part.op;
                         opSpan.style.margin = "0 0.5rem";
-                        opSpan.style.color = "var(--ink-soft)";
+                        if (part.op === "⋇") opSpan.className = "pm-sym";
+                        else opSpan.style.color = "var(--ink-soft)";
                         builder.appendChild(opSpan);
                     }
 
@@ -1956,10 +2005,140 @@
                 update();
             }
 
+            function addTimesDivide() {
+                expression.push({
+                    op: "⋇",
+                    term: { coeffs: [2] },
+                    isScalar: true,
+                });
+                renderExpression();
+                update();
+            }
+
+            function addDuplexMult() {
+                expression.push({
+                    op: "×",
+                    term: { coeffs: [3, 1] },
+                });
+                renderExpression();
+                update();
+            }
+
             function resetCalc() {
                 expression = [{ op: null, term: { coeffs: [5, 2, 1] } }];
                 renderExpression();
                 update();
+            }
+
+            // ============ COMPACT FORM ============
+            // Fold the expression into  sign · (a ± s₁ ± s₂ …) ⋇ r₁ ⋇ r₂ …
+            // using two rules for a single-± factor (c ± d):
+            //   c = 0        :  (0 ± d)(A)  = 0 ± d·a ± d·s₁ ± …      (centre becomes a spread)
+            //   |c| > |d|    :  c ± d = g ⋇ r  with  g = √(c² − d²),  r = √((|c|+|d|)/(|c|−|d|))
+            //                   so  (A)(c ± d) = (g·A) ⋇ r
+            // Anything else has no compact form.
+            function computeCompactForm() {
+                const first = expression[0].term.coeffs;
+                let a = first[0];
+                let spreads = first.slice(1).map(Math.abs);
+                const tds = [];
+                let reason = null;
+
+                for (let i = 1; i < expression.length && !reason; i++) {
+                    const part = expression[i];
+                    const co = part.term.coeffs;
+                    if (part.op === "+") {
+                        if (tds.length) {
+                            reason = "addition after ⋇ has no compact form here";
+                            break;
+                        }
+                        a += co[0];
+                        spreads = spreads.concat(co.slice(1).map(Math.abs));
+                    } else if (part.op === "⋇") {
+                        const r = Math.abs(co[0]);
+                        if (r === 0) continue;
+                        tds.push(r < 1 ? 1 / r : r);
+                    } else if (part.op === "×") {
+                        if (co.length === 1) {
+                            a *= co[0];
+                            spreads = spreads.map((s) => s * Math.abs(co[0]));
+                        } else if (co.length === 2) {
+                            const c = co[0],
+                                d = Math.abs(co[1]);
+                            if (c === 0) {
+                                spreads = [Math.abs(a) * d].concat(
+                                    spreads.map((s) => s * d),
+                                );
+                                a = 0;
+                            } else if (Math.abs(c) > d) {
+                                const g = Math.sqrt(c * c - d * d);
+                                const r = Math.sqrt(
+                                    (Math.abs(c) + d) / (Math.abs(c) - d),
+                                );
+                                a *= g * Math.sign(c);
+                                spreads = spreads.map((s) => s * g);
+                                if (r !== 1) tds.push(r);
+                            } else {
+                                reason =
+                                    "a factor whose values straddle zero has no compact form";
+                            }
+                        } else {
+                            reason =
+                                "a factor with two or more ± has no compact form";
+                        }
+                    }
+                }
+                if (reason) return { ok: false, reason };
+
+                // Self-check: the compact form must reproduce the expanded multiset.
+                let check = expandTerm({ coeffs: [a].concat(spreads) });
+                for (const r of tds) {
+                    const next = [];
+                    for (const v of check) next.push(v / r, v * r);
+                    check = next;
+                }
+                const actual = evaluateExpression(expression);
+                const key = (arr) =>
+                    arr
+                        .map((v) => v.toFixed(6))
+                        .sort()
+                        .join(",");
+                if (check.length !== actual.length || key(check) !== key(actual))
+                    return { ok: false, reason: "no compact form" };
+
+                return { ok: true, a, spreads, tds };
+            }
+
+            function renderCompactForm() {
+                const box = document.getElementById("compactForm");
+                if (expression.length < 2) {
+                    box.hidden = true;
+                    return;
+                }
+                box.hidden = false;
+                const fmt = (v) => {
+                    const r = Math.round(v * 1000) / 1000;
+                    return Number.isInteger(r) ? String(r) : r.toFixed(3);
+                };
+                const res = computeCompactForm();
+                if (!res.ok) {
+                    box.innerHTML = `<span class="label">compact form</span>${res.reason}. The values on the left are exact.`;
+                    return;
+                }
+                const pm = '<span class="pm-sym">±</span>';
+                const td = '<span class="pm-sym">⋇</span>';
+                let s = fmt(res.a);
+                for (const sp of res.spreads) s += ` ${pm} ${fmt(sp)}`;
+                if (res.tds.length && res.spreads.length) s = `(${s})`;
+                for (const r of res.tds) s += ` ${td} ${fmt(r)}`;
+                const n = res.spreads.length + res.tds.length;
+                box.innerHTML =
+                    `<span class="label">compact form</span>${s}` +
+                    `<span class="note">${n + 1} numbers written, ${Math.pow(2, n)} values` +
+                    (res.tds.length
+                        ? "; each ⋇ r divides and multiplies by r at once"
+                        : "") +
+                    `</span>`;
             }
 
             let hideDuplicates = false;
@@ -2283,6 +2462,7 @@
                 const values = evaluateExpression(expression);
                 renderValues(values);
                 renderTree();
+                renderCompactForm();
             }
 
             // ============ EIGENVALUE DEMO ============
