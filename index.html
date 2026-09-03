@@ -1122,44 +1122,61 @@
                 <span class="inline-pm">±</span> b
                 <span class="inline-pm">±</span> d. Subtraction works the same
                 way, and multiplying by an ordinary number scales the centre
-                and every spread. Squaring a duplex number, or applying any
-                function to it, is done value by value:
-                (3 <span class="inline-pm">±</span> 1)² is 4 and 16, which is
-                10 <span class="inline-pm">±</span> 6. Multiplying two
-                different duplex numbers is another matter. Every sign of one
-                meets every sign of the other, and the result usually does
-                not sit symmetrically around any centre, so it leaves the
-                duplex form. Sometimes it stays: (0
-                <span class="inline-pm">±</span> 2)(0
+                and every spread. Any function of one duplex number applies
+                value by value, so (3 <span class="inline-pm">±</span> 1)² is
+                4 and 16, which is 10 <span class="inline-pm">±</span> 6.
+            </div>
+
+            <h3 style="margin-top: 3rem; margin-bottom: 0.5rem">
+                Multiplying two duplex numbers
+            </h3>
+            <p>
+                Every sign of one meets every sign of the other. Sometimes
+                the result is still a duplex number:
+                (0 <span class="inline-pm">±</span> 2)(0
                 <span class="inline-pm">±</span> 2) is 4, −4, −4, 4, which is
-                0 <span class="inline-pm">±</span> 4. Usually it does not:
-                (3 <span class="inline-pm">±</span> 1)(5
-                <span class="inline-pm">±</span> 2) is 6, 12, 14 and 28. That
-                is a
+                0 <span class="inline-pm">±</span> 4. Usually it is not:
+                (5 <span class="inline-pm">±</span> 2)(3
+                <span class="inline-pm">±</span> 1) is 6, 12, 14 and 28, which
+                sits symmetrically around nothing.
+            </p>
+            <p>
+                The fix is a
                 <a
                     href="https://quentinquaadgras.com/post/174819689898/206-duplextended"
                     target="_blank"
                     rel="noopener"
                     >duplextended number</a
                 >, where other operator pairs join
-                <span class="inline-pm">±</span> in the chain. The next one
-                is <span class="inline-pm">⋇</span>, multiply-divide: a
+                <span class="inline-pm">±</span> in the chain. The first is
+                <span class="inline-pm">⋇</span>, multiply-divide: a
                 <span class="inline-pm">⋇</span> r is a ÷ r and a × r at
-                once. Every single-<span class="inline-pm">±</span> number
-                with positive values is also a
-                <span class="inline-pm">⋇</span> number, 3
-                <span class="inline-pm">±</span> 1 is √8
-                <span class="inline-pm">⋇</span> √2, so a product of duplex
-                numbers folds into one <span class="inline-pm">±</span> chain
-                followed by a <span class="inline-pm">⋇</span> chain:
-                (5 <span class="inline-pm">±</span> 2)(3
-                <span class="inline-pm">±</span> 1) = (10√2
-                <span class="inline-pm">±</span> 4√2)
-                <span class="inline-pm">⋇</span> √2. The calculator below
-                works this out for you. The extended numbers close the notation under
-                multiplication, in the way that fractions close the whole
-                numbers under division.
+                once. Any single-<span class="inline-pm">±</span> number with
+                positive values is also a <span class="inline-pm">⋇</span>
+                number, 3 <span class="inline-pm">±</span> 1 is √8
+                <span class="inline-pm">⋇</span> √2, so a product folds into
+                one <span class="inline-pm">±</span> chain followed by a
+                <span class="inline-pm">⋇</span> chain:
+            </p>
+
+            <div class="demo-box">
+                <div class="big-formula" style="font-size: clamp(1.3rem, 3.5vw, 2rem); line-height: 1.4">
+                    (5 <span class="inline-pm">±</span> 2)(3
+                    <span class="inline-pm">±</span> 1) = (10√2
+                    <span class="inline-pm">±</span> 4√2)
+                    <span class="inline-pm">⋇</span> √2
+                </div>
+                <p class="demo-note">
+                    Four numbers written, four values: 6, 12, 14, 28. The
+                    calculator below works this out for any product.
+                </p>
             </div>
+
+            <p>
+                The extended numbers close the notation under multiplication,
+                in the way that fractions close the whole numbers under
+                division.
+            </p>
         </section>
 
         <!-- ============ CALCULATOR ============ -->
